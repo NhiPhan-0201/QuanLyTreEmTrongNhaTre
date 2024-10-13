@@ -1,0 +1,82 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.feedback-category .container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+.feedback-category h2,
+.feedback-category h3 {
+  color: #388e3c;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.feedback-category .form {
+  margin-bottom: 20px;
+}
+
+.feedback-category .form-group {
+  margin-bottom: 15px;
+}
+
+.feedback-category .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.feedback-category .form-control:focus {
+  border-color: #388e3c;
+  outline: none;
+}
+
+.feedback-category .btn {
+  background-color: #388e3c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.feedback-category .btn:hover {
+  background-color: #357a38;
+}
+
+.feedback-category .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.feedback-category .table th,
+.feedback-category .table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.feedback-category .table tbody tr:hover {
+  background-color: #e9f7ef;
+}
+
+.feedback-category .btn-danger {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.feedback-category .btn-danger:hover {
+  background-color: #c82333;
+}
