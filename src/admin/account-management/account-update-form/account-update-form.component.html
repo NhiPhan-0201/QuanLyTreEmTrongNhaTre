@@ -1,0 +1,18 @@
+<div class="account-update-form">
+    <h3>Edit User</h3>
+    <form [formGroup]="updateAccountForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email">
+
+        <label for="role">Role:</label>
+        <input type="text" id="role" formControlName="role">
+
+        <div class="form-actions">
+            <button type="button" (click)="save()">Save</button>
+            <button type="button" (click)="close()">Cancel</button>
+        </div>
+    </form>
+</div>

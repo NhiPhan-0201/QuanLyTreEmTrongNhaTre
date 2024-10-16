@@ -1,0 +1,88 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Màu nền đen mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Đảm bảo overlay xuất hiện phía trước */
+}
+
+.user-management-panel {
+    padding: 10px 10px;
+    background-color: var(--dark-primary-background-color);
+    color: var(--dark-primary-text-color);
+    min-height: 80vh;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.user-management-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.user-management-table th,
+.user-management-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.user-management-table th {
+    background-color: #b4ecfa;
+    color: #333;
+    font-weight: bold;
+}
+
+.user-management-table tr {
+    color: #333;
+}
+
+.user-management-table tr:nth-child(odd) {
+    background-color: #c4c4c4;
+}
+
+.user-management-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+.user-management-table span {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.actions {
+    text-align: right;
+}
+
+.actions button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background-color: #45a049;
+}

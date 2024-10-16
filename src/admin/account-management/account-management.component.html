@@ -1,0 +1,61 @@
+<div class="user-management-panel">
+    <h2>Account Management</h2>
+    <div class="search-bar">
+        <input type="text" placeholder="Search user..." [(ngModel)]="searchTerm" (input)="onSearch()" />
+    </div>
+
+    <table class="user-management-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Accountname</th>
+                <th>Cha</th>
+                <th>Mẹ</th>
+                <th>Giáo Viên</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="!isLoading; else loadingTemplate">
+                <tr *ngFor="let user of filteredAccounts">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.phuHuynh.hoTenCha }}</td>
+                    <td>{{ user.phuHuynh.hoTenMe }}</td>
+                    <td>{{ user.giaoVien.hoTen }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <button (click)="updateAccount(user)">Edit</button>
+                        <span>|</span>
+                        <button (click)="deleteAccount(user)">Delete</button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <div *ngIf="openEditForm" class="overlay">
+        <app-account-update-form [account]="selectedAccount" (closeForm)="closeForm()"
+            (saveAccount)="handleUpdateAccount($event)" />
+    </div>
+
+    <div *ngIf="openAddForm" class="overlay">
+        <app-account-add-new-form (closeForm)="closeForm()" (saveAccount)="handleSaveNewAccount($event)" />
+    </div>
+
+    <div *ngIf="openDeleteConfirmation" class="overlay">
+        <app-account-delete-confirmation-dialog (closeDialog)="closeForm()" (deleteAccount)="handleDeleteAccount()" />
+    </div>
+
+    <div class="actions">
+        <button (click)="addNewAccount()">Add New Account</button>
+    </div>
+</div>
+
+<!-- Loading Template -->
+<ng-template #loadingTemplate>
+    <tr>
+        <td colspan="5">Loading...</td>
+    </tr>
+</ng-template>

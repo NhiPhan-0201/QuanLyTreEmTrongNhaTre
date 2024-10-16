@@ -1,0 +1,10 @@
+.admin-page {
+    display: flex;
+    height: auto;
+    background-color: #f0f0f0;
+}
+
+.content {
+    flex: 1;
+    background-color: white;
+}
