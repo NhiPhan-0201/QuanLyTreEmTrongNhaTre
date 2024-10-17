@@ -2,60 +2,124 @@
     <h2>Account Management</h2>
     <div class="search-bar">
         <input type="text" placeholder="Search user..." [(ngModel)]="searchTerm" (input)="onSearch()" />
+
+        <div class="actions">
+            <button (click)="handleOpenAddAccountForm()">Add New Account</button>
+        </div>
     </div>
 
-    <table class="user-management-table">
+    <table class="account-management-table phu-huynh-table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Accountname</th>
-                <th>Cha</th>
-                <th>Mẹ</th>
-                <th>Giáo Viên</th>
-                <th>Role</th>
+                <th>Tên tài khoản</th>
+                <th>Họ tên Cha</th>
+                <th>Họ tên Mẹ</th>
+                <th>SĐT Cha</th>
+                <th>SĐT Mẹ</th>
+                <th>Email Cha</th>
+                <th>Email Mẹ</th>
+                <th>Địa chỉ</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <ng-container *ngIf="!isLoading; else loadingTemplate">
-                <tr *ngFor="let user of filteredAccounts">
-                    <td>{{ user.id }}</td>
+            <ng-container *ngIf="!isLoading; else loadingPhuHuynhTemplate">
+                <tr *ngFor="let user of phuHuynhAccounts">
                     <td>{{ user.username }}</td>
-                    <td>{{ user.phuHuynh.hoTenCha }}</td>
+                    <td>{{ user.phuHuynh.hoTenCha }}</td>\
                     <td>{{ user.phuHuynh.hoTenMe }}</td>
-                    <td>{{ user.giaoVien.hoTen }}</td>
-                    <td>{{ user.role }}</td>
+                    <td>{{ user.phuHuynh.sdtCha }}</td>
+                    <td>{{ user.phuHuynh.sdtMe }}</td>
+                    <td>{{ user.phuHuynh.emailCha }}</td>
+                    <td>{{ user.phuHuynh.emailMe }}</td>
+                    <td>{{ user.phuHuynh.diaChi }}</td>
                     <td>
-                        <button (click)="updateAccount(user)">Edit</button>
+                        <button (click)="handleOpenUpdateAccountForm(user)">Edit</button>
                         <span>|</span>
-                        <button (click)="deleteAccount(user)">Delete</button>
+                        <button (click)="handleOpenDeleteAccountConfirmation(user)">Delete</button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+    <div class="page-navigator">
+        <button class="prev" [disabled]="currentPhuHuynhAccountsPage === 1"
+            (click)="prevPhuHuynhAccountsPage()">Prev</button>
+        <span>{{ currentPhuHuynhAccountsPage}}/{{totalPhuHuynhAccountsPage}}</span>
+        <button class="next" [disabled]="currentPhuHuynhAccountsPage >= totalPhuHuynhAccountsPage"
+            (click)="nextPhuHuynhAccountsPage()">Next</button>
+    </div>
+
+    <table class="account-management-table giao-vien-table">
+        <thead>
+            <tr>
+                <th>Tên tài khoản</th>
+                <th>Họ tên</th>
+                <th>Giới tính</th>
+                <th>Số ĐT</th>
+                <th>Địa chỉ</th>
+                <th>Chuyên môn</th>
+                <th>Email</th>
+                <th>Ảnh</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="!isLoading; else loadingGiaoVienTemplate">
+                <tr *ngFor="let user of giaoVienAccounts">
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.giaoVien.hoTen }}</td>
+                    <td>{{ user.giaoVien.gioiTinh }}</td>
+                    <td>{{ user.giaoVien.soDienThoai }}</td>
+                    <td>{{ user.giaoVien.diaChi }}</td>
+                    <td>{{ user.giaoVien.chuyenMon }}</td>
+                    <td>{{ user.giaoVien.email }}</td>
+                    <td>
+                        <div class="image-container">
+                            <img class="anh-giao-vien" [src]="user.giaoVien.anh" alt="avatar" />
+                        </div>
+                    </td>
+                    <td>
+                        <button (click)="handleOpenUpdateAccountForm(user)">Edit</button>
+                        <span>|</span>
+                        <button (click)="handleOpenDeleteAccountConfirmation(user)">Delete</button>
                     </td>
                 </tr>
             </ng-container>
         </tbody>
     </table>
 
-    <div *ngIf="openEditForm" class="overlay">
+    <div class="page-navigator">
+        <button class="prev" [disabled]="currentGiaoVienAccountsPage === 1"
+            (click)="prevGiaoVienAccountsPage()">Prev</button>
+        <span>{{ currentGiaoVienAccountsPage}}/{{totalGiaoVienAccountsPage}}</span>
+        <button class="next" [disabled]="currentGiaoVienAccountsPage >= totalGiaoVienAccountsPage"
+            (click)="nextGiaoVienAccountsPage()">Next</button>
+    </div>
+
+    <div *ngIf="openUpdateAccountForm" class="overlay">
         <app-account-update-form [account]="selectedAccount" (closeForm)="closeForm()"
             (saveAccount)="handleUpdateAccount($event)" />
     </div>
 
-    <div *ngIf="openAddForm" class="overlay">
+    <div *ngIf="openAddAccountForm" class="overlay">
         <app-account-add-new-form (closeForm)="closeForm()" (saveAccount)="handleSaveNewAccount($event)" />
     </div>
 
-    <div *ngIf="openDeleteConfirmation" class="overlay">
+    <div *ngIf="openDeleteConfirmationDialog" class="overlay">
         <app-account-delete-confirmation-dialog (closeDialog)="closeForm()" (deleteAccount)="handleDeleteAccount()" />
     </div>
 
-    <div class="actions">
-        <button (click)="addNewAccount()">Add New Account</button>
-    </div>
 </div>
 
 <!-- Loading Template -->
-<ng-template #loadingTemplate>
+<ng-template #loadingPhuHuynhTemplate>
     <tr>
-        <td colspan="5">Loading...</td>
+        <td colspan="9">Loading...</td>
+    </tr>
+</ng-template>
+<ng-template #loadingGiaoVienTemplate>
+    <tr>
+        <td colspan="9">Loading...</td>
     </tr>
 </ng-template>

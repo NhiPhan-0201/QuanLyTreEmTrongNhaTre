@@ -1,18 +1,81 @@
 <div class="account-update-form">
     <h3>Edit User</h3>
     <form [formGroup]="updateAccountForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" formControlName="name">
+        <div class="form-row">
+            <div class="thong-tin-account form-col">
+                <h3>Account Information</h3>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email">
+                <label for="username">Username:</label>
+                <input type="text" id="username" formControlName="username">
 
-        <label for="role">Role:</label>
-        <input type="text" id="role" formControlName="role">
+                <label for="password">Mật khẩu:</label>
+                <input type="password" id="password" formControlName="password">
+
+                <label for="confirmPassword">Nhập lại mật khẩu:</label>
+                <input type="password" id="confirmPassword" formControlName="confirmPassword">
+
+                <label for="status">Trạng thái:</label>
+                <select class="status" formControlName="status">
+                    <option [value]="ENABLED_STATUS">Đang sử dụng</option>
+                    <option [value]="DISABLED_STATUS">Không còn sử dụng</option>
+                </select>
+            </div>
+            <div class="thong-tin-phu-huynh form-col" formGroupName="phuHuynh"
+                *ngIf="updateAccountForm.value.role === PARENT_ROLE">
+                <h3>Parent Information</h3>
+
+                <label for="hoTenCha">Họ tên cha:</label>
+                <input type="text" id="hoTenCha" formControlName="hoTenCha">
+
+                <label for="hoTenMe">Họ tên mẹ:</label>
+                <input type="text" id="hoTenMe" formControlName="hoTenMe">
+
+                <label for="sdtCha">Số điện thoại cha:</label>
+                <input type="text" id="sdtCha" formControlName="sdtCha">
+
+                <label for="sdtMe">Số điện thoại mẹ:</label>
+                <input type="text" id="sdtMe" formControlName="sdtMe">
+
+                <label for="emailCha">Email cha:</label>
+                <input type="text" id="emailCha" formControlName="emailCha">
+
+                <label for="emailMe">Email mẹ:</label>
+                <input type="text" id="emailMe" formControlName="emailMe">
+
+            </div>
+            <div class="thong-tin-giao-vien form-col" formGroupName="giaoVien"
+                *ngIf="updateAccountForm.value.role === TEACHER_ROLE">
+                <h3>Teacher Information</h3>
+
+                <label for="hoTen">Họ tên:</label>
+                <input type="text" id="hoTen" formControlName="hoTen">
+
+                <label for="gioiTinh">Giới tính:</label>
+                <select class="gioiTinh" formControlName="gioiTinh">
+                    <option [value]="MALE_GENDER">Nam</option>
+                    <option [value]="FEMALE_GENDER">Nữ</option>
+                </select>
+
+                <label for="soDienThoai">Số điện thoại:</label>
+                <input type="text" id="soDienThoai" formControlName="soDienThoai">
+
+                <label for="diaChi">Địa chỉ:</label>
+                <input type="text" id="diaChi" formControlName="diaChi">
+
+                <label for="anh">Ảnh:</label>
+                <input type="file" id="anh" formControlName="anh">
+
+                <label for="chuyenMon">Chuyên môn:</label>
+                <input type="text" id="chuyenMon" formControlName="chuyenMon">
+
+                <label for="email">Email:</label>
+                <input type="text" id="email" formControlName="email">
+            </div>
+        </div>
 
         <div class="form-actions">
-            <button type="button" (click)="save()">Save</button>
-            <button type="button" (click)="close()">Cancel</button>
+            <button class="confirm-button" (click)="save()">Xóa</button>
+            <button class="cancel-button" (click)="close()">Hủy</button>
         </div>
     </form>
 </div>
