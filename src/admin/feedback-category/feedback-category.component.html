@@ -1,17 +1,8 @@
 <div class="feedback-category container">
   <h2 class="feedback-category text-center">Quản lý Thể loại Ý kiến</h2>
 
-  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="feedback-category form">
-    <div class="feedback-category form-group">
-      <label for="tenTheLoai">Tên Thể loại</label>
-      <input id="tenTheLoai" formControlName="tenTheLoai" class="feedback-category form-control"
-        placeholder="Nhập tên thể loại..." required />
-    </div>
-
-    <button type="submit" class="feedback-category btn btn-primary">Thêm mới</button>
-  </form>
-
-  <h3 class="feedback-category list-title">Danh sách Thể loại</h3>
+  <!-- Nút để mở form thêm mới -->
+  <button (click)="openAddCategory()" class="feedback-category btn">Thêm mới</button>
   <table class="feedback-category table">
     <thead>
       <tr>
@@ -25,9 +16,36 @@
         <td>{{ category.id }}</td>
         <td>{{ category.tenTheLoai }}</td>
         <td>
-          <button (click)="onDelete(category.id)" class="feedback-category btn btn-danger">Xóa</button>
+          <button (click)="openEditCategory(category)" class="feedback-category btn">Sửa</button>
+          <button (click)="openDeletePopup(category.id)" class="feedback-category btn btn-danger">Xóa</button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <!-- Popup xác nhận xóa -->
+  <div class="popup" *ngIf="showPopup">
+    <div class="popup-content">
+      <h4>Xác nhận xóa</h4>
+      <p>Bạn có chắc chắn muốn xóa thể loại này không?</p>
+      <button (click)="confirmDelete()" class="btn">Xác nhận</button>
+      <button (click)="cancelDelete()" class="btn-danger">Hủy</button>
+    </div>
+  </div>
+
+  <!-- Popup cho form thêm/sửa -->
+  <div class="popup" *ngIf="showFormPopup">
+    <div class="popup-content">
+      <h2>{{ isEditMode ? 'Sửa Thể loại' : 'Thêm Thể loại' }}</h2>
+      <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="feedback-category form">
+        <div class="feedback-category form-group">
+          <input id="tenTheLoai" formControlName="tenTheLoai" class="feedback-category form-control"
+            placeholder="Nhập tên thể loại..." required />
+        </div>
+
+        <button type="submit" class="feedback-category btn">{{ isEditMode ? 'Cập nhật' : 'Thêm mới' }}</button>
+        <button type="button" (click)="closeForm()" class="btn-danger">Hủy</button> <!-- Nút Hủy -->
+      </form>
+    </div>
+  </div>
 </div>
