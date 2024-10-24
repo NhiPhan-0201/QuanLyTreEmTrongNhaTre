@@ -1,9 +1,9 @@
 <div class="admin-page">
     <!-- Sidebar Component -->
-    <app-management-side-bar />
+    <app-management-side-bar [sideBarItems]="sideBarItems" />
 
     <!-- Main Content (User Management Table) -->
-    <main class="content">
-        <app-account-management />
+    <main class="management-content">
+        <router-outlet />
     </main>
 </div>

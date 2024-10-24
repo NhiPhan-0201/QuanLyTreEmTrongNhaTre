@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Account } from '../../../model/account';
-import { AccountRole, AccountStatus, Gender } from '../../../constants/enums';
+import { Account } from '../../../../models/account';
+import { AccountRole, AccountStatus, Gender } from '../../../../constants/enums';
 
 @Component({
   selector: 'app-account-update-form',
@@ -26,6 +26,11 @@ export class AccountUpdateFormComponent implements OnChanges {
   DISABLED_STATUS = AccountStatus.Disabled;
 
   errors: object = {};
+
+  anhGiaoVienPreview: string | ArrayBuffer | null = null;
+  anhGiaoVienUploaded: File | null = null;
+  anhGiaoVienFileName: string | null = null;
+
 
   @Input() account!: Account;
   @Output() closeForm = new EventEmitter<void>();
@@ -65,12 +70,42 @@ export class AccountUpdateFormComponent implements OnChanges {
     }
   }
 
+  onImagePicked(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files.length > 0) {
+      this.anhGiaoVienUploaded = input.files[0];
+      this.anhGiaoVienFileName = this.anhGiaoVienUploaded.name;
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.anhGiaoVienPreview = reader.result;
+      };
+
+      reader.readAsDataURL(this.anhGiaoVienUploaded);
+    }
+    input.value = '';
+  }
+
+  cancelUploadAnh() {
+    this.anhGiaoVienPreview = null;
+    this.anhGiaoVienUploaded = null;
+    this.anhGiaoVienFileName = null;
+  }
+
+  deleteAnh() {
+    this.anhGiaoVienPreview = null;
+    this.anhGiaoVienUploaded = null;
+    this.anhGiaoVienFileName = null;
+  }
 
   save() {
 
     if (Object.keys(this.errors).length > 0) {
-
+      return;
     }
+
+    let data = this.updateAccountForm.value;
+    this.saveAccount.emit(data);
   }
 
   close() {

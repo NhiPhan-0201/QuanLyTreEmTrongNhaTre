@@ -1,6 +1,6 @@
-<div class="account-add-new-form">
+<div class="account-update-form">
     <h3>Edit User</h3>
-    <form [formGroup]="newAccountForm">
+    <form [formGroup]="updateAccountForm" id="account-update-form">
         <div class="form-row">
             <div class="thong-tin-account form-col">
                 <h3>Account Information</h3>
@@ -15,20 +15,15 @@
                 <input type="password" id="confirmPassword" formControlName="confirmPassword">
 
                 <label for="status">Trạng thái:</label>
-                <select class="status" formControlName="status">
+                <select id="status" class="status" formControlName="status">
                     <option [value]="ENABLED_STATUS">Đang sử dụng</option>
                     <option [value]="DISABLED_STATUS">Không còn sử dụng</option>
                 </select>
-
-                <label for="role">Role:</label>
-                <select class="role" formControlName="role">
-                    <option [value]="ADMIN_ROLE">Admin</option>
-                    <option [value]="PARENT_ROLE">Phụ Huynh</option>
-                    <option [value]="TEACHER_ROLE">Giáo Viên</option>
-                </select>
+                <img [src]="anhGiaoVienPreview"
+                    *ngIf="anhGiaoVienPreview && updateAccountForm.value.role === TEACHER_ROLE" />
             </div>
             <div class="thong-tin-phu-huynh form-col" formGroupName="phuHuynh"
-                *ngIf="newAccountForm.value.role === PARENT_ROLE">
+                *ngIf="updateAccountForm.value.role === PARENT_ROLE">
                 <h3>Parent Information</h3>
 
                 <label for="hoTenCha">Họ tên cha:</label>
@@ -51,14 +46,14 @@
 
             </div>
             <div class="thong-tin-giao-vien form-col" formGroupName="giaoVien"
-                *ngIf="newAccountForm.value.role === TEACHER_ROLE">
+                *ngIf="updateAccountForm.value.role === TEACHER_ROLE">
                 <h3>Teacher Information</h3>
 
                 <label for="hoTen">Họ tên:</label>
                 <input type="text" id="hoTen" formControlName="hoTen">
 
                 <label for="gioiTinh">Giới tính:</label>
-                <select class="gioiTinh" formControlName="gioiTinh">
+                <select id="gioiTinh" class="gioiTinh" formControlName="gioiTinh">
                     <option [value]="MALE_GENDER">Nam</option>
                     <option [value]="FEMALE_GENDER">Nữ</option>
                 </select>
@@ -70,7 +65,12 @@
                 <input type="text" id="diaChi" formControlName="diaChi">
 
                 <label for="anh">Ảnh:</label>
-                <input type="file" id="anh" formControlName="anh">
+                <input id="anh" type="file" #filePicker (change)="onImagePicked($event)">
+                <div style="display: flex; margin-bottom: 10px;" *ngIf="anhGiaoVienUploaded">
+                    <button class="cancel-upload-anh-btn" (click)="cancelUploadAnh()">
+                        <span>Không upload ảnh nữa</span>
+                    </button>
+                </div>
 
                 <label for="chuyenMon">Chuyên môn:</label>
                 <input type="text" id="chuyenMon" formControlName="chuyenMon">
@@ -81,7 +81,7 @@
         </div>
 
         <div class="form-actions">
-            <button class="confirm-button" (click)="save()">Xóa</button>
+            <button class="confirm-button" (click)="save()">Lưu</button>
             <button class="cancel-button" (click)="close()">Hủy</button>
         </div>
     </form>

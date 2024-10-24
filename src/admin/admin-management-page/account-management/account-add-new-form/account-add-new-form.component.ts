@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Account } from '../../../model/account';
-import { AccountRole, AccountStatus, Gender } from '../../../constants/enums';
+import { Account } from '../../../../models/account';
+import { AccountRole, AccountStatus, Gender } from '../../../../constants/enums';
 
 @Component({
   selector: 'app-account-add-new-form',
@@ -25,6 +25,10 @@ export class AccountAddNewFormComponent {
   DISABLED_STATUS = AccountStatus.Disabled;
 
   errors: object = {};
+
+  anhGiaoVienPreview: string | ArrayBuffer | null = null;
+  anhGiaoVienUploaded: File | null = null;
+  anhGiaoVienFileName: string | null = null;
 
   @Output() closeForm = new EventEmitter<void>();
   @Output() saveAccount = new EventEmitter<Account>();
@@ -50,13 +54,33 @@ export class AccountAddNewFormComponent {
         gioiTinh: '',
         soDienThoai: '',
         diaChi: '',
-        anh: '',
+        anh: null,
         chuyenMon: '',
         email: '',
       }),
     });
   }
 
+  onImagePicked(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files.length > 0) {
+      this.anhGiaoVienUploaded = input.files[0];
+      this.anhGiaoVienFileName = this.anhGiaoVienUploaded.name;
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.anhGiaoVienPreview = reader.result;
+      };
+
+      reader.readAsDataURL(this.anhGiaoVienUploaded);
+    }
+    input.value = '';
+  }
+
+  cancelUploadAnh() {
+    this.anhGiaoVienPreview = null;
+    this.anhGiaoVienUploaded = null;
+  }
 
   save() {
     this.saveAccount.emit(this.newAccountForm.value);

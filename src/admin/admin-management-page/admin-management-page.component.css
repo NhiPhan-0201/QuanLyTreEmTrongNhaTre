@@ -4,7 +4,14 @@
     background-color: #f0f0f0;
 }
 
-.content {
+.management-content {
     flex: 1;
-    background-color: white;
+    padding-top: 28px;
+    background-color: var(--dark-primary-background-color);
+}
+
+@media screen and (min-width: 1200px) {
+    .management-content {
+        padding-top: 0;
+    }
 }

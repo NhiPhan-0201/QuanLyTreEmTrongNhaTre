@@ -5,3 +5,7 @@
     --primary-background-color: #cedffc;
     --primary-text-color: #242526;
 }
+
+html body.html-body {
+    margin: 0;
+}

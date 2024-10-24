@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Account } from '../model/account';
+import { Account } from '../models/account';
 import { CRUDService } from './CRUD.service.interface';
 
 @Injectable({

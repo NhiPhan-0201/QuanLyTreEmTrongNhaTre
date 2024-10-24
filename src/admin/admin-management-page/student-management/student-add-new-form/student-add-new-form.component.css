@@ -1,0 +1,132 @@
+.student-add-new-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  width: 600px;
+  height: auto;
+  max-height: 700px;
+  overflow-y: auto;
+}
+
+.student-add-new-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90%;
+}
+
+form .form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.student-add-new-form .form-col {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.student-add-new-form .form-col:first-child {
+  margin-right: 40px;
+}
+
+.student-add-new-form .form-col label {
+  margin-bottom: 8px;
+}
+
+.student-add-new-form .form-col input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.student-add-new-form .form-col input:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.student-add-new-form .form-col select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.student-add-new-form .form-col select:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.student-add-new-form .form-col input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.student-add-new-form .form-col input[type="file"]:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.student-add-new-form .form-col input[type="file"]::-webkit-file-upload-button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.student-add-new-form .form-col input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #45a049;
+}
+
+.student-add-new-form .form-col input[type="file"]::-webkit-file-upload-button:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.student-add-new-form .form-col input[type="file"]::-webkit-file-upload-button:active {
+  background-color: #45a049;
+}
+
+.student-add-new-form .form-col img {
+  height: 200px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-actions button {
+  font-size: large;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+
+.form-actions .confirm-button {
+  background-color: #4CAF50;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  margin-left: 100px;
+}
+
+.form-actions .cancel-button {
+  background-color: #4d4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-right: 100px;
+}

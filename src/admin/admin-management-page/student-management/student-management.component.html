@@ -1,0 +1,67 @@
+<div class="user-management-panel">
+  <h2>Account Management</h2>
+  <div class="search-bar">
+    <input type="text" placeholder="Tìm kiếm theo tên..." (input)="onSearchStudent($event)" />
+    <div class="actions">
+      <button (click)="handleOpenAddStudentForm()">Thêm học sinh mới</button>
+    </div>
+  </div>
+
+  <table class="account-management-table phu-huynh-table">
+    <thead>
+      <tr>
+        <th>Họ và tên</th>
+        <th>Ngày sinh</th>
+        <th>Giới tính</th>
+        <!-- <th>Lớp</th> -->
+        <th>Ảnh</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="!isLoading; else loadingHocSinhTemplate">
+        <tr *ngFor="let student of filteredStudents.slice((currentPage-1)*5, currentPage*5)">
+          <td data-label="Họ và tên">{{ student.hoTen }}</td>
+          <td data-label="Ngày sinh">{{ student.ngaySinh }}</td>
+          <td data-label="Giới tính">{{ student.gioiTinh }}</td>
+          <!-- <td data-label="Lớp">{{ student.lop }}</td> -->
+          <td data-label="Ảnh">
+            <div class="image-container">
+              <img class="anh-hoc-sinh" [src]="student.anh" alt="avatar" />
+            </div>
+          <td data-label="Hành động">
+            <button (click)="handleOpenUpdateStudentForm(student)">Edit</button>
+            <span>|</span>
+            <button (click)="handleOpenDeleteStudentConfirmation(student)">Delete</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <div class="page-navigator">
+    <button class="prev" [disabled]="currentPage === 1" (click)="handlePageChange(currentPage-1)">Prev</button>
+    <span>{{ currentPage}}/{{totalPage}}</span>
+    <button class="next" [disabled]="currentPage >= totalPage" (click)="handlePageChange(currentPage+1)">Next</button>
+  </div>
+
+  <div *ngIf="openAddAccountForm" class="overlay">
+    <app-student-add-new-form (closeForm)="closeForm()" (saveStudent)="handleSaveNewAccount($event)" />
+  </div>
+
+  <div *ngIf="openUpdateStudentForm" class="overlay">
+    <app-student-update-form [student]="selectedStudent" (closeForm)="closeForm()"
+      (updateStudent)="handleUpdateAccount($event)" />
+  </div>
+
+  <div *ngIf="openDeleteConfirmationDialog" class="overlay">
+    <app-student-delete-confirmation-dialog (closeDialog)="closeForm()" (deleteAccount)="handleDeleteAccount()" />
+  </div>
+
+</div>
+
+<!-- Loading Template -->
+<ng-template #loadingHocSinhTemplate>
+  <tr>
+    <td colspan="5">Loading...</td>
+  </tr>
+</ng-template>

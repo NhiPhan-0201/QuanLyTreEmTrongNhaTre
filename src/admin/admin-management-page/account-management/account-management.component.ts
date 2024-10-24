@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AccountUpdateFormComponent } from './account-update-form/account-update-form.component';
 import { AccountAddNewFormComponent } from './account-add-new-form/account-add-new-form.component';
 import { AccountDeleteConfirmationDialogComponent } from './account-delete-confirmation-dialog/account-delete-confirmation-dialog.component';
-import { Account } from '../../model/account';
-import { AccountService } from '../../APIService/account.service';
+import { Account } from '../../../models/account';
+import { AccountService } from '../../../APIService/account.service';
 
 @Component({
   selector: 'app-account-management',
   standalone: true,
-  imports: [FormsModule, CommonModule, AccountUpdateFormComponent, AccountAddNewFormComponent, AccountDeleteConfirmationDialogComponent],
+  imports: [ReactiveFormsModule, CommonModule, AccountUpdateFormComponent, AccountAddNewFormComponent, AccountDeleteConfirmationDialogComponent],
   templateUrl: './account-management.component.html',
   styleUrls: ['./account-management.component.css']
 })
@@ -34,9 +34,9 @@ export class AccountManagementComponent implements OnInit {
   currentPhuHuynhAccountsPage: number = 1;
   totalPhuHuynhAccountsPage!: number;
 
-
   constructor(private accountService: AccountService) {
   }
+
   ngOnInit(): void {
     this.onRefresh();
   }
@@ -51,11 +51,13 @@ export class AccountManagementComponent implements OnInit {
     //   }
     // });
     this.accounts = [
-      {
-        id: 1,
-        username: 'quoc123',
+    ]
+    for (let i = 0; i < 30; i++) {
+      this.accounts.push({
+        id: i + 1,
+        username: 'quoc123' + (i + 1),
         password: '123',
-        role: 'Admin',
+        role: i % 2 === 0 ? 'PhuHuynh' : 'GiaoVien',
         status: 'Enabled',
         giaoVien: {
           id: 1,
@@ -64,7 +66,7 @@ export class AccountManagementComponent implements OnInit {
           soDienThoai: '',
           email: '',
           diaChi: '',
-          anh: '',
+          anh: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0wfMn21lSychqXUKvWQrfOZ-sO-CdRWuvEw&s',
           chuyenMon: ''
         },
         phuHuynh: {
@@ -77,9 +79,8 @@ export class AccountManagementComponent implements OnInit {
           emailMe: '',
           diaChi: ''
         }
-      },
-    ]
-    this.selectedAccount = this.accounts[0];
+      })
+    }
   }
 
   onRefresh() {
@@ -87,7 +88,11 @@ export class AccountManagementComponent implements OnInit {
     this.onSearch();
   }
 
-  onSearch() {
+  onSearch(event?: Event) {
+    if (event) {
+      this.searchTerm = (event.target as HTMLInputElement).value;
+    }
+
     this.isLoading = true;
 
     this.filteredAccounts = this.accounts.filter(account =>
