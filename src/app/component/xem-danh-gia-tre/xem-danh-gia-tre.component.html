@@ -1,0 +1,25 @@
+<div class="container">
+  <!-- Phần header ảo -->
+  <header class="header">
+    Phần Header
+  </header>
+
+  <div class="content">
+    <!-- Menu ảo bên trái -->
+    <nav class="menu">
+      Menu
+    </nav>
+
+    <!-- Phần nội dung đánh giá -->
+    <div class="review-section">
+      <h2>Đánh giá của bé {{ studentName }}</h2>
+      <div class="reviews">
+        <div class="review-card" *ngFor="let review of teacherReviews">
+          <h3>Giáo viên: {{ review.teacherName }}</h3>
+          <p>{{ review.comment }}</p>
+          <strong>Điểm số: {{ review.score }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

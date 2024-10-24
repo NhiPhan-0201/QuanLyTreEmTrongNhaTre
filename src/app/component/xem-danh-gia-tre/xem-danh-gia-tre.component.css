@@ -1,0 +1,92 @@
+/* Căn chỉnh layout chung */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f4ff;
+  padding: 20px;
+  min-height: 100vh; /* Đảm bảo chiếm hết chiều cao của màn hình */
+}
+
+/* Phần header */
+.header {
+  width: 100%;
+  background-color: #d9e6fc;
+  padding: 20px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng đổ bóng */
+}
+
+/* Phần nội dung */
+.content {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1400px;
+  margin-top: 40px;
+}
+
+/* Menu ảo */
+.menu {
+  width: 250px; /* Tăng kích thước menu */
+  background-color: #f2f2f2;
+  padding: 30px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-right: 30px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng đổ bóng */
+}
+
+/* Phần đánh giá */
+.review-section {
+  flex: 1;
+  background-color: #d9e6fc;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng đổ bóng */
+}
+
+h2 {
+  color: #3c64a3;
+  text-align: center;
+  font-size: 26px; /* Tăng kích thước tiêu đề */
+  margin-bottom: 30px; /* Thêm khoảng cách dưới tiêu đề */
+}
+
+.reviews {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Linh hoạt với số lượng cột */
+  gap: 30px;
+}
+
+.review-card {
+  background-color: #ffffff;
+  border: 1px solid #cfd8e3;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tăng hiệu ứng đổ bóng */
+  transition: transform 0.3s ease; /* Tạo hiệu ứng hover */
+}
+
+.review-card:hover {
+  transform: translateY(-5px); /* Tạo hiệu ứng nổi lên khi hover */
+}
+
+.review-card h3 {
+  margin-top: 0;
+  color: #3c64a3;
+  font-size: 18px; /* Tăng kích thước font cho tên giáo viên */
+}
+
+.review-card p {
+  font-size: 16px; /* Tăng kích thước font cho phần mô tả */
+  margin-bottom: 10px;
+}
+
+.review-card strong {
+  font-size: 16px;
+  color: #333;
+}
