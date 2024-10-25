@@ -1,0 +1,39 @@
+<div class="admin-feedback-filter">
+    <label for="category">Chọn thể loại:</label>
+    <select id="category" [formControl]="theLoaiIdControl" (change)="onFilterChange()">
+        <option value="">Tất cả</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.tenTheLoai }}</option>
+    </select>
+</div>
+
+<div class="admin-feedback-list">
+    <h2>Danh sách phản hồi</h2>
+    <ul>
+        <li *ngFor="let feedback of feedbacks" (click)="openFeedbackDetails(feedback)">
+            <p><strong>Tên phụ huynh:</strong> {{ feedback.account.username }}</p>
+            <p><strong>Thể loại:</strong> {{ feedback.theLoai.tenTheLoai }}</p>
+            <p><strong>Tiêu đề:</strong> {{ feedback.tieuDe }}</p>
+        </li>
+    </ul>
+</div>
+
+<div class="admin-feedback-pagination">
+    <button (click)="pageControl.setValue(pageControl.value - 1); onFilterChange()"
+        [disabled]="pageControl.value === 0">Trang trước</button>
+    <span>Trang {{ pageControl.value +1 }} </span>
+    <button (click)="pageControl.setValue(pageControl.value + 1); onFilterChange()">Trang tiếp</button>
+</div>
+
+<div class="admin-feedback modal" *ngIf="selectedFeedback">
+    <div class="admin-feedback modal-content">
+        <span class="admin-feedback close" (click)="closeFeedbackDetails()">&times;</span>
+        <h2>Chi tiết phản hồi</h2>
+        <p><strong>Tên phụ huynh:</strong> {{ selectedFeedback.account.username }}</p>
+        <p><strong>Thể loại:</strong> {{ selectedFeedback.theLoai.tenTheLoai }}</p>
+        <p><strong>Tiêu đề:</strong> {{ selectedFeedback.tieuDe }}</p>
+        <p><strong>Hình ảnh:</strong>
+            <img [src]="selectedFeedback.hinhAnh" alt="Hình ảnh phản hồi" />
+        </p>
+        <p><strong>Nội dung:</strong> {{ selectedFeedback.noiDung }}</p>
+    </div>
+</div>
