@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="class-list">
+    <h2 class="title">Danh Sách Nhóm Lớp</h2>
+    <div class="class-grid">
+      <div *ngFor="let nhom of nhomLop" class="class-card">
+        <h3>{{ nhom.tenNhom }}</h3>
+        <p><strong>ID:</strong> {{ nhom.id }}</p>
+      </div>
+    </div>
+  </div>
+</div>
