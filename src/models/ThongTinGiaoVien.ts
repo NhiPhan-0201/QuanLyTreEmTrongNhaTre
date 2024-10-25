@@ -3,8 +3,8 @@ export interface ThongTinGiaoVien {
     hoTen: string;
     gioiTinh: string;
     soDienThoai: string;
-    diaChi: string;
-    anh: string;
-    chuyenMon: string;
+    diaChi?: string;
+    anh?: string;
+    chuyenMon?: string;
     email: string;
 }

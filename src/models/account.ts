@@ -8,6 +8,9 @@ export interface Account {
     role: string;
     status: string;
 
-    phuHuynh: ThongTinPhuHuynh;
-    giaoVien: ThongTinGiaoVien;
+    phuHuynh?: ThongTinPhuHuynh;
+    phuHuynhId?: number;
+
+    giaoVien?: ThongTinGiaoVien;
+    giaoVienId?: number;
 }
