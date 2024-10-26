@@ -1,0 +1,99 @@
+<div class="admin-school-fee">
+    <h2>Quản lý Học Phí</h2>
+
+    <div class="header-container">
+        <button class="add-fee-btn button" (click)="openPopup()">Thêm học phí</button>
+        <div class="filter-container">
+            <div class="filter">
+                <label for="nhomLop">Nhóm Lớp:</label>
+                <select id="nhomLop" [(ngModel)]="selectedClass" (change)="applyFilters()">
+                    <option value=''>Tất cả</option>
+                    <option *ngFor="let cls of classes" [value]="cls.tenNhom">{{ cls.tenNhom }}</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label for="nam">Năm:</label>
+                <select id="nam" [(ngModel)]="selectedYear" (change)="applyFilters()">
+                    <option [ngValue]="0">Tất cả</option>
+                    <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label for="thang">Tháng:</label>
+                <select id="thang" [(ngModel)]="selectedMonth" (change)="applyFilters()">
+                    <option [ngValue]="0">Tất cả</option>
+                    <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup" [ngClass]="{ 'active': showPopup }">
+        <div class="popup-content">
+            <h3>{{ editingFee ? 'Chỉnh sửa Học Phí' : 'Thêm Học Phí' }}</h3>
+
+            <form [formGroup]="schoolFeeForm" (ngSubmit)="saveSchoolFee()">
+                <div>
+                    <label for="tenHocPhi">Tên học phí:</label>
+                    <input id="tenHocPhi" formControlName="tenHocPhi" />
+                </div>
+                <div>
+                    <label for="mucHocPhi">Mức học phí (VND):</label>
+                    <input type="number" id="mucHocPhi" formControlName="mucHocPhi" />
+                </div>
+                <div>
+                    <label for="idNhomLop">Nhóm Lớp:</label>
+                    <select id="idNhomLop" formControlName="idNhomLop">
+                        <option *ngFor="let cls of classes" [value]="cls.id">{{ cls.tenNhom }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="nam">Năm:</label>
+                    <select id="nam" formControlName="nam">
+                        <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="thang">Tháng:</label>
+                    <select id="thang" formControlName="thang">
+                        <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
+                    </select>
+                </div>
+                <button type="submit">{{ editingFee ? 'Cập nhật' : 'Thêm' }}</button>
+                <button type="button" class="delete-btn" (click)="closePopup()">Hủy</button>
+            </form>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nhóm Lớp</th>
+                <th>Tên Học Phí</th>
+                <th>Số Tiền (VND)</th>
+                <th>Tháng</th>
+                <th>Năm</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let fee of paginatedFees">
+                <td>{{ fee.nhomLop.tenNhom }}</td>
+                <td>{{ fee.tenHocPhi }}</td>
+                <td>{{ fee.mucHocPhi | currency:'VND' }}</td>
+                <td>{{ fee.thang }}</td>
+                <td>{{ fee.nam }}</td>
+                <td>
+                    <button class="edit-btn button" (click)="editSchoolFee(fee)">Chỉnh sửa</button>
+                    <button class="delete-btn button" (click)="deleteSchoolFee(fee.id)">Xóa</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button class="button" (click)="previousPage()" [disabled]="currentPage === 1">Trước</button>
+        <span>Trang {{ currentPage }} trên {{ totalPages }}</span>
+        <button class="button " (click)="nextPage()" [disabled]="currentPage === totalPages">Sau</button>
+    </div>
+</div>

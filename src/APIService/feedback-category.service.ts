@@ -12,7 +12,7 @@ export class FeedbackCategoryService {
 
   // Lấy token 
   private getAuthHeaders(): HttpHeaders {
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTQ0NjczNSwiZXhwIjoxNzI5NTMzMTM1fQ.GOzPpAYqUoiYJ1I5QUMh9fG4h91vVor_MiIqRyWSO8U";
+    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTkzNjM4MCwiZXhwIjoxNzMwMDIyNzgwfQ.iReS6y1ncwtxDRRrjXHZXtHoTmokCpVet5JxI85l1TM";
     return new HttpHeaders().set('Authorization', `Bearer ${token || ''}`);
   }
 
