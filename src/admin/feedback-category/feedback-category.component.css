@@ -27,15 +27,18 @@ body {
 }
 
 .feedback-category .form-control {
-  width: 100%;
-  padding: 10px;
+  width: 400px;
+  padding: 12px 15px;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .feedback-category .form-control:focus {
   border-color: #388e3c;
   outline: none;
+  box-shadow: 0 0 5px rgba(56, 142, 60, 0.5);
 }
 
 .feedback-category .btn {
@@ -45,6 +48,9 @@ body {
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
+  width: auto;
+  max-width: 200px;
+  margin: 5px;
 }
 
 .feedback-category .btn:hover {
@@ -71,12 +77,36 @@ body {
 .feedback-category .btn-danger {
   background-color: #dc3545;
   color: white;
-  padding: 5px 10px;
+  padding: 10px 15px;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
+  width: auto;
+  max-width: 200px;
+  margin: 5px;
 }
 
 .feedback-category .btn-danger:hover {
   background-color: #c82333;
+}
+
+.feedback-category .popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.feedback-category .popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
