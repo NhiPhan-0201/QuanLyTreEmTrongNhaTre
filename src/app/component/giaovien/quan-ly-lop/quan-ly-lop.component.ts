@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 interface Class {
@@ -17,7 +17,7 @@ interface Class {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './quan-ly-lop.component.html',
-  styleUrl: './quan-ly-lop.component.css',
+  styleUrls: ['./quan-ly-lop.component.css'],
   styles: [`
     .class-list { background-color: #f0f4ff; padding: 20px; }
     .class-card { background: #fff; padding: 10px; border: 1px solid #ccc; margin: 10px; cursor: pointer; }
@@ -26,19 +26,32 @@ interface Class {
 })
 export class QuanLyLopComponent implements OnInit {
   classes: Class[] = [];
+  private readonly apiUrl = 'http://localhost:8080/api/v1/quan-li-lop/lop';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchClasses();
+    const idGiaoVien = 1;
+    this.fetchClasses(idGiaoVien);
   }
 
-  fetchClasses(): void {
-    this.http.get<{ DT: Class[] }>('http://localhost:8080/api/v1/quan-li-lop')
-      .subscribe(response => {
-        this.classes = response.DT;
-      }, error => {
-        console.error('Error fetching classes:', error);
-      });
+  fetchClasses(idGiaoVien: number): void {
+    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDAzMTk1NywiZXhwIjoxNzMwMTE4MzU3fQ.csvvN4y60W5aHewJvV7DMJXoev2okQx04Kxzrdr1jQI';
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get<{ DT: Class[]; EM: string }>(`${this.apiUrl}/${idGiaoVien}`, { headers })
+      .subscribe(
+        response => {
+          if (response.EM === 'success') {
+            this.classes = response.DT;
+          } else {
+            console.error('Error fetching classes:', response.EM);
+          }
+        },
+        error => {
+          console.error('Request failed:', error);
+        }
+      );
   }
 }
