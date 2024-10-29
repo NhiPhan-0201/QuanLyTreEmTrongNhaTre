@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AccountUpdateFormComponent } from './account-update-form/account-update-form.component';
 import { AccountAddNewFormComponent } from './account-add-new-form/account-add-new-form.component';
 import { AccountDeleteConfirmationDialogComponent } from './account-delete-confirmation-dialog/account-delete-confirmation-dialog.component';
-import { Account } from '../../../models/account';
+import { Account } from '../../../models/Account';
 import { AccountService } from '../../../APIService/account.service';
 
 @Component({
@@ -97,9 +97,9 @@ export class AccountManagementComponent implements OnInit {
 
     this.filteredAccounts = this.accounts.filter(account =>
       account.username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      account.phuHuynh.hoTenCha.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      account.phuHuynh.hoTenMe.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      account.giaoVien.hoTen.toLowerCase().includes(this.searchTerm.toLowerCase())
+      account.phuHuynh?.hoTenCha?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      account.phuHuynh?.hoTenMe?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      account.giaoVien?.hoTen.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
 
     this.giaoVienAccounts = this.filteredAccounts.filter(account => account.role === 'GiaoVien');

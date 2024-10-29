@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Account } from '../../../../models/account';
+import { Account } from '../../../../models/Account';
 import { AccountRole, AccountStatus, Gender } from '../../../../constants/enums';
 
 @Component({
@@ -50,21 +50,21 @@ export class AccountUpdateFormComponent implements OnChanges {
         role: [this.account.role, Validators.required],
         status: [this.account.status, Validators.required],
         phuHuynh: this.fb.group({
-          hoTenCha: [this.account.phuHuynh.hoTenCha],
-          hoTenMe: [this.account.phuHuynh.hoTenMe],
-          sdtCha: [this.account.phuHuynh.sdtCha],
-          sdtMe: [this.account.phuHuynh.sdtMe],
-          emailCha: [this.account.phuHuynh.emailCha],
-          emailMe: [this.account.phuHuynh.emailMe],
+          hoTenCha: [this.account.phuHuynh?.hoTenCha],
+          hoTenMe: [this.account.phuHuynh?.hoTenMe],
+          sdtCha: [this.account.phuHuynh?.sdtCha],
+          sdtMe: [this.account.phuHuynh?.sdtMe],
+          emailCha: [this.account.phuHuynh?.emailCha],
+          emailMe: [this.account.phuHuynh?.emailMe],
         }),
         giaoVien: this.fb.group({
-          hoTen: [this.account.giaoVien.hoTen],
-          gioiTinh: [this.account.giaoVien.gioiTinh],
-          soDienThoai: [this.account.giaoVien.soDienThoai],
-          diaChi: [this.account.giaoVien.diaChi],
-          anh: [this.account.giaoVien.anh],
-          chuyenMon: [this.account.giaoVien.chuyenMon],
-          email: [this.account.giaoVien.email],
+          hoTen: [this.account.giaoVien?.hoTen],
+          gioiTinh: [this.account.giaoVien?.gioiTinh],
+          soDienThoai: [this.account.giaoVien?.soDienThoai],
+          diaChi: [this.account.giaoVien?.diaChi],
+          anh: [this.account.giaoVien?.anh],
+          chuyenMon: [this.account.giaoVien?.chuyenMon],
+          email: [this.account.giaoVien?.email],
         }),
       });
     }

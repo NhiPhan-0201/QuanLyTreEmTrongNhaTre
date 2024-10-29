@@ -9,8 +9,8 @@ import { StudentManagementComponent } from '../admin/admin-management-page/stude
 export const routes: Routes = [
     { path: 'admin/manageCategory', component: FeedbackCategoryComponent },
     { path: 'admin/feedback', component: FeedbackComponent },
-    { path: 'admin/schoolFee', component: SchoolFeeComponent }
-    
+    { path: 'admin/schoolFee', component: SchoolFeeComponent },
+
     {
         path: 'admin/manage', component: AdminManagementPageComponent, children: [
             { path: '', redirectTo: 'accounts', pathMatch: 'full' },

@@ -25,13 +25,13 @@
             <ng-container *ngIf="!isLoading; else loadingPhuHuynhTemplate">
                 <tr *ngFor="let user of phuHuynhAccounts">
                     <td data-label="Tên tài khoản">{{ user.username }}</td>
-                    <td data-label="Họ tên Cha">{{ user.phuHuynh.hoTenCha }}</td>
-                    <td data-label="Họ tên mẹ">{{ user.phuHuynh.hoTenMe }}</td>
-                    <td data-label="Số ĐT Cha">{{ user.phuHuynh.sdtCha }}</td>
-                    <td data-label="Số ĐT Mẹ">{{ user.phuHuynh.sdtMe }}</td>
-                    <td data-label="Email Cha">{{ user.phuHuynh.emailCha }}</td>
-                    <td data-label="Email Mẹ">{{ user.phuHuynh.emailMe }}</td>
-                    <td data-label="Địa chỉ">{{ user.phuHuynh.diaChi }}</td>
+                    <td data-label="Họ tên Cha">{{ user.phuHuynh?.hoTenCha }}</td>
+                    <td data-label="Họ tên mẹ">{{ user.phuHuynh?.hoTenMe }}</td>
+                    <td data-label="Số ĐT Cha">{{ user.phuHuynh?.sdtCha }}</td>
+                    <td data-label="Số ĐT Mẹ">{{ user.phuHuynh?.sdtMe }}</td>
+                    <td data-label="Email Cha">{{ user.phuHuynh?.emailCha }}</td>
+                    <td data-label="Email Mẹ">{{ user.phuHuynh?.emailMe }}</td>
+                    <td data-label="Địa chỉ">{{ user.phuHuynh?.diaChi }}</td>
                     <td data-label="Hành động">
                         <button (click)="handleOpenUpdateAccountForm(user)">Edit</button>
                         <span>|</span>
@@ -67,15 +67,15 @@
             <ng-container *ngIf="!isLoading; else loadingGiaoVienTemplate">
                 <tr *ngFor="let user of giaoVienAccounts">
                     <td data-label="Tên tài khoản">{{ user.username }}</td>
-                    <td data-label="Họ và tên">{{ user.giaoVien.hoTen }}</td>
-                    <td data-label="Giới tính">{{ user.giaoVien.gioiTinh }}</td>
-                    <td data-label="Số điện thoại">{{ user.giaoVien.soDienThoai }}</td>
-                    <td data-label="Địa chỉ">{{ user.giaoVien.diaChi }}</td>
-                    <td data-label="Chuyên môn">{{ user.giaoVien.chuyenMon }}</td>
-                    <td data-label="Email">{{ user.giaoVien.email }}</td>
+                    <td data-label="Họ và tên">{{ user.giaoVien?.hoTen }}</td>
+                    <td data-label="Giới tính">{{ user.giaoVien?.gioiTinh }}</td>
+                    <td data-label="Số điện thoại">{{ user.giaoVien?.soDienThoai }}</td>
+                    <td data-label="Địa chỉ">{{ user.giaoVien?.diaChi }}</td>
+                    <td data-label="Chuyên môn">{{ user.giaoVien?.chuyenMon }}</td>
+                    <td data-label="Email">{{ user.giaoVien?.email }}</td>
                     <td data-label="Ảnh">
                         <div class="image-container">
-                            <img class="anh-giao-vien" [src]="user.giaoVien.anh" alt="avatar" />
+                            <img class="anh-giao-vien" [src]="user.giaoVien?.anh" alt="avatar" />
                         </div>
                     </td>
                     <td data-label="Hành động">

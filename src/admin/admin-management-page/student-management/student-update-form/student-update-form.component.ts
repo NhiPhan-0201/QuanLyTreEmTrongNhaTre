@@ -21,7 +21,7 @@ export class StudentUpdateFormComponent implements OnChanges {
   anhHocSinhUploaded: File | null = null;
   anhHocSinhFileName: string = '';
 
-  @Input() student!: ThongTinTre;
+  @Input() student!: ThongTinTre | null;
   @Output() closeForm: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateStudent: EventEmitter<ThongTinTre> = new EventEmitter<ThongTinTre>();
 
@@ -38,7 +38,8 @@ export class StudentUpdateFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['student'] && changes['student'].currentValue) {
-      this.updateStudentForm.patchValue(this.student);
+      if (this.student)
+        this.updateStudentForm.patchValue(this.student);
     }
   }
 

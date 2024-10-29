@@ -57,6 +57,7 @@ export class StudentAddNewFormComponent {
 
   save() {
     const newStudent: ThongTinTre = {
+      id: -1,
       hoTen: this.newStudentForm.value.hoTen,
       gioiTinh: this.newStudentForm.value.gioiTinh,
       ngaySinh: this.newStudentForm.value.ngaySinh,

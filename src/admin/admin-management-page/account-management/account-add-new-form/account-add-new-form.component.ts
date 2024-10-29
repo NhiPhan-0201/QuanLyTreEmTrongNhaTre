@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Account } from '../../../../models/account';
+import { Account } from '../../../../models/Account';
 import { AccountRole, AccountStatus, Gender } from '../../../../constants/enums';
 
 @Component({
