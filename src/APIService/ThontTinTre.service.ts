@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CRUDService } from './CRUD.service.interface';
 import { ThongTinTre } from '../models/ThongTinTre';
+import { ApiResponse } from '../models/ApiResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,32 +20,23 @@ export class ThongTinTreService implements CRUDService<ThongTinTre> {
     };
   }
 
-  add(thongTinTre: ThongTinTre): Observable<ThongTinTre> {
-    return this.http.post<ThongTinTre>(`${this.apiUrl}/create-child-information`, thongTinTre, {
-      headers: this.getHeaders()
-    });
-  }
-  getAll(): Observable<ThongTinTre[]> {
-    return this.http.get<ThongTinTre[]>(this.apiUrl + '/getAll-children', {
-      headers: this.getHeaders()
-    });
+  getAll(): Observable<ApiResponse<ThongTinTre[]>> {
+    return this.http.get<ApiResponse<ThongTinTre[]>>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  get(id: number): Observable<ThongTinTre> {
-    return this.http.get<ThongTinTre>(`${this.apiUrl}/children/${id}`, {
-      headers: this.getHeaders()
-    });
+  get(id: number): Observable<ApiResponse<ThongTinTre>> {
+    return this.http.get<ApiResponse<ThongTinTre>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
-  update(thongTinTre: ThongTinTre): Observable<ThongTinTre> {
-    return this.http.put<ThongTinTre>(`${this.apiUrl}/children/${thongTinTre.id}`, thongTinTre, {
-      headers: this.getHeaders()
-    });
+  add(t: ThongTinTre): Observable<ApiResponse<ThongTinTre>> {
+    return this.http.post<ApiResponse<ThongTinTre>>(this.apiUrl, t, { headers: this.getHeaders() });
   }
 
-  delete(id: number): Observable<ThongTinTre> {
-    return this.http.delete<ThongTinTre>(`${this.apiUrl}/children/${id}`, {
-      headers: this.getHeaders()
-    });
+  update(t: ThongTinTre): Observable<ApiResponse<ThongTinTre>> {
+    return this.http.put<ApiResponse<ThongTinTre>>(this.apiUrl, t, { headers: this.getHeaders() });
+  }
+
+  delete(id: number): Observable<ApiResponse<ThongTinTre>> {
+    return this.http.delete<ApiResponse<ThongTinTre>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 }

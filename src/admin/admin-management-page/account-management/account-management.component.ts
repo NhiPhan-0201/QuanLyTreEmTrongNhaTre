@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AccountUpdateFormComponent } from './account-update-form/account-update-form.component';
 import { AccountAddNewFormComponent } from './account-add-new-form/account-add-new-form.component';
 import { AccountDeleteConfirmationDialogComponent } from './account-delete-confirmation-dialog/account-delete-confirmation-dialog.component';
 import { Account } from '../../../models/Account';
 import { AccountService } from '../../../APIService/account.service';
+import { UploadService } from '../../../APIService/upload.service';
+import { switchMap } from 'rxjs';
+import { AccountRole, Gender } from '../../../constants/enums';
 
 @Component({
   selector: 'app-account-management',
@@ -34,7 +37,7 @@ export class AccountManagementComponent implements OnInit {
   currentPhuHuynhAccountsPage: number = 1;
   totalPhuHuynhAccountsPage!: number;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private uploadService: UploadService) {
   }
 
   ngOnInit(): void {
@@ -42,45 +45,15 @@ export class AccountManagementComponent implements OnInit {
   }
 
   loadAccounts() {
-    // this.accountService.getAll().subscribe({
-    //   next: (data) => {
-    //     this.accounts = data || [];
-    //   },
-    //   error: (error) => {
-    //     console.error('Error fetching accounts:', error);
-    //   }
-    // });
-    this.accounts = [
-    ]
-    for (let i = 0; i < 30; i++) {
-      this.accounts.push({
-        id: i + 1,
-        username: 'quoc123' + (i + 1),
-        password: '123',
-        role: i % 2 === 0 ? 'PhuHuynh' : 'GiaoVien',
-        status: 'Enabled',
-        giaoVien: {
-          id: 1,
-          hoTen: '',
-          gioiTinh: '',
-          soDienThoai: '',
-          email: '',
-          diaChi: '',
-          anh: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0wfMn21lSychqXUKvWQrfOZ-sO-CdRWuvEw&s',
-          chuyenMon: ''
-        },
-        phuHuynh: {
-          id: 1,
-          hoTenCha: '',
-          hoTenMe: '',
-          sdtCha: '',
-          sdtMe: '',
-          emailCha: '',
-          emailMe: '',
-          diaChi: ''
-        }
-      })
-    }
+    this.isLoading = true;
+    this.accountService.getAll().subscribe({
+      next: (res) => {
+        this.accounts = res.data;
+      },
+      error: (error) => {
+        console.error('Error fetching accounts:', error);
+      }
+    });
   }
 
   onRefresh() {
@@ -143,17 +116,26 @@ export class AccountManagementComponent implements OnInit {
     this.selectedAccount = { ...account };
     this.openUpdateAccountForm = true;
   }
-  handleUpdateAccount(updatedAccount: Account) {
-    this.accountService.update(updatedAccount).subscribe({
-      next: (data) => {
-        this.accounts = this.accounts.map(account => account.id === data.id ? data : account);
+  handleUpdateAccount({ updatedAccount, anh }: { updatedAccount: Account, anh: File | null }) {
+    let upload$ = updatedAccount.role === 'GiaoVien' && anh
+      ? this.uploadService.uploadImage(anh).pipe(
+        switchMap((res) => {
+          updatedAccount.giaoVien!.anh = res.DT;
+          return this.accountService.update(updatedAccount);
+        })
+      )
+      : this.accountService.update(updatedAccount);
+
+    upload$.subscribe({
+      next: (res) => {
+        this.accounts = this.accounts.map(account => account.id === res.data.id ? res.data : account);
+        this.onSearch();
+        this.closeForm();
       },
       error: (error) => {
         console.error('Error updating account:', error);
       }
     });
-
-    this.openUpdateAccountForm = false;
   }
 
   handleOpenDeleteAccountConfirmation(account: Account) {
@@ -162,8 +144,8 @@ export class AccountManagementComponent implements OnInit {
   }
   handleDeleteAccount() {
     this.accountService.delete(this.selectedAccount.id).subscribe({
-      next: (data) => {
-        this.accounts = this.accounts.filter(account => account.id !== data.id);
+      next: (_) => {
+        this.accounts = this.accounts.filter(account => account.id !== this.selectedAccount.id);
       },
       error: (error) => {
         console.error('Error deleting account:', error);
@@ -175,17 +157,26 @@ export class AccountManagementComponent implements OnInit {
   handleOpenAddAccountForm() {
     this.openAddAccountForm = true;
   }
-  handleSaveNewAccount(newAccount: Account) {
-    this.accountService.add(newAccount).subscribe({
-      next: (data) => {
-        this.accounts = [...this.accounts, data];
+  handleSaveNewAccount({ newAccount, anh }: { newAccount: Account, anh: File | null }) {
+    let upload$ = newAccount.role === 'GiaoVien' && anh
+      ? this.uploadService.uploadImage(anh).pipe(
+        switchMap((res) => {
+          newAccount.giaoVien!.anh = res.DT;
+          return this.accountService.add(newAccount);
+        })
+      )
+      : this.accountService.add(newAccount);
+
+    upload$.subscribe({
+      next: (res) => {
+        this.accounts.push(res.data);
+        this.onSearch();
+        this.closeForm();
       },
       error: (error) => {
-        console.error('Error adding new account:', error);
+        console.error('Error saving new account:', error);
       }
     });
-
-    this.openAddAccountForm = false;
   }
 
   closeForm() {
@@ -193,4 +184,60 @@ export class AccountManagementComponent implements OnInit {
     this.openAddAccountForm = false;
     this.openDeleteConfirmationDialog = false;
   }
+}
+
+export function validateData(formGroup: FormGroup) {
+  const errors: any = {};
+  const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+  const phoneNumberPattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+
+  if (!formGroup.get('username')?.value) {
+    errors.username = 'Tên đăng nhập không được để trống';
+  }
+  if (!formGroup.get('password')?.value && !formGroup.get('id')?.value) {
+    errors.password = 'Mật khẩu không được để trống';
+  }
+
+  if (formGroup.get('password')?.value !== formGroup.get('confirmPassword')?.value) {
+    errors.confirmPassword = 'Mật khẩu không khớp';
+  }
+
+  switch (formGroup.get('role')?.value) {
+    case AccountRole.GiaoVien:
+      if (!formGroup.get('giaoVien.hoTen')?.value) {
+        errors.hoTen = 'Họ tên không được để trống';
+      }
+      if (!formGroup.get('giaoVien.gioiTinh')?.value) {
+        errors.gioiTinh = 'Giới tính không được để trống';
+      }
+      if (!formGroup.get('giaoVien.soDienThoai')?.value) {
+        errors.soDienThoai = 'Số điện thoại không được để trống';
+      }
+      if (!formGroup.get('giaoVien.email')?.value) {
+        errors.email = 'Email không được để trống';
+      } else if (!emailPattern.test(formGroup.get('giaoVien.email')?.value)) {
+        errors.email = 'Email không hợp lệ';
+      }
+      break;
+    case AccountRole.PhuHuynh:
+      if (formGroup.get('phuHuynh.sdtCha')?.value && phoneNumberPattern.test(formGroup.get('phuHuynh.sdtCha')?.value)) {
+        errors.sdtCha = 'Số điện thoại không hợp lệ';
+      }
+      if (formGroup.get('phuHuynh.sdtMe')?.value && phoneNumberPattern.test(formGroup.get('phuHuynh.sdtMe')?.value)) {
+        errors.sdtMe = 'Số điện thoại không hợp lệ';
+      }
+      if (formGroup.get('phuHuynh.emailCha')?.value && !emailPattern.test(formGroup.get('phuHuynh.emailCha')?.value)) {
+        errors.emailCha = 'Email không hợp lệ';
+      }
+      if (formGroup.get('phuHuynh.emailMe')?.value && !emailPattern.test(formGroup.get('phuHuynh.emailMe')?.value)) {
+        errors.emailMe = 'Email không hợp lệ';
+      }
+      if (!formGroup.get('phuHuynh.diaChi')?.value) {
+        errors.diaChi = 'Địa chỉ không được để trống';
+      }
+      break;
+    default:
+      break;
+  }
+  return errors;
 }

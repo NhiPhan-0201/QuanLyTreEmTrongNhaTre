@@ -1,3 +1,11 @@
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 .account-add-new-form {
     background-color: white;
     padding: 20px;
