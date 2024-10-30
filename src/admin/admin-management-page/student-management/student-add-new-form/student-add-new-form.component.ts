@@ -17,11 +17,11 @@ export class StudentAddNewFormComponent {
 
   newStudentForm!: FormGroup;
   anhHocSinhPreview: string | ArrayBuffer | null = null;
-  anhHocSinhUploaded: File | null = null;
+  anhHocSinhUploaded!: File | null;
   anhHocSinhFileName: string = '';
 
   @Output() closeForm: EventEmitter<void> = new EventEmitter<void>();
-  @Output() saveStudent: EventEmitter<ThongTinTre> = new EventEmitter<ThongTinTre>();
+  @Output() saveStudent: EventEmitter<{ student: ThongTinTre; anh: File | null }> = new EventEmitter<{ student: ThongTinTre; anh: File | null }>();
 
   constructor(private fb: FormBuilder) {
     this.newStudentForm = this.fb.group({
@@ -64,7 +64,7 @@ export class StudentAddNewFormComponent {
       anh: this.anhHocSinhFileName,
     };
 
-    this.saveStudent.emit(newStudent);
+    this.saveStudent.emit({ student: newStudent, anh: this.anhHocSinhUploaded });
   }
 
   close() {

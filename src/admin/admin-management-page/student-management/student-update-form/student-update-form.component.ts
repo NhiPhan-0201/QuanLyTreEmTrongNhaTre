@@ -23,7 +23,7 @@ export class StudentUpdateFormComponent implements OnChanges {
 
   @Input() student!: ThongTinTre | null;
   @Output() closeForm: EventEmitter<void> = new EventEmitter<void>();
-  @Output() updateStudent: EventEmitter<ThongTinTre> = new EventEmitter<ThongTinTre>();
+  @Output() updateStudent: EventEmitter<{ student: ThongTinTre; anh: File | null }> = new EventEmitter<{ student: ThongTinTre; anh: File | null }>();
 
   constructor(private fb: FormBuilder) {
     this.updateStudentForm = this.fb.group({
@@ -61,7 +61,7 @@ export class StudentUpdateFormComponent implements OnChanges {
   }
 
   cancelUploadAnh() {
-    this.anhHocSinhUploaded = null;
+    this.anhHocSinhPreview = null;
     this.anhHocSinhPreview = null;
     this.anhHocSinhFileName = '';
   }
@@ -75,7 +75,7 @@ export class StudentUpdateFormComponent implements OnChanges {
       anh: this.updateStudentForm.value.anh,
     };
 
-    this.updateStudent.emit(updatedStudent);
+    this.updateStudent.emit({ student: updatedStudent, anh: this.anhHocSinhUploaded });
   }
 
   close() {
