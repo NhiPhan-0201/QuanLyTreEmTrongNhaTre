@@ -36,7 +36,7 @@
   z-index: 1000;
 }
 
-.user-management-panel {
+.student-management-panel {
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -118,6 +118,11 @@ h2 {
 .student-management-table td {
   background-color: #fdfdfd;
   color: #333;
+}
+
+.student-management-table img {
+  width: 100px;
+  height: 100px;
 }
 
 .student-management-table tr:nth-child(even) {

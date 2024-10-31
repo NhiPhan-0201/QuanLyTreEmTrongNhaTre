@@ -1,3 +1,5 @@
+import { Account } from "./Account";
+import { QuanLiLop } from "./QuanLiLop";
 import { ThongTinPhuHuynh } from "./ThongTinPhuHuynh";
 
 export interface ThongTinTre {
@@ -7,5 +9,8 @@ export interface ThongTinTre {
   ngaySinh: string;
   anh: string;
 
-  thongTinPhuHuynh?: ThongTinPhuHuynh;
+  classId: number;
+  quanLiLop?: QuanLiLop;
+
+  thongTinPhuHuynh?: Account | ThongTinPhuHuynh;
 }

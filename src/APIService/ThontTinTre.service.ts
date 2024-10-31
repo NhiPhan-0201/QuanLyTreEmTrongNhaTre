@@ -9,7 +9,7 @@ import { ApiResponse } from '../models/ApiResponse.interface';
   providedIn: 'root'
 })
 export class ThongTinTreService implements CRUDService<ThongTinTre> {
-  private apiUrl = 'http://localhost:8080/api/v1/admin';
+  private apiUrl = 'http://localhost:8080/api/v1/admin/children';
   constructor(private http: HttpClient) { }
 
   private getHeaders() {
@@ -33,10 +33,10 @@ export class ThongTinTreService implements CRUDService<ThongTinTre> {
   }
 
   update(t: ThongTinTre): Observable<ApiResponse<ThongTinTre>> {
-    return this.http.put<ApiResponse<ThongTinTre>>(this.apiUrl, t, { headers: this.getHeaders() });
+    return this.http.put<ApiResponse<ThongTinTre>>(`${this.apiUrl}/${t.id}`, t, { headers: this.getHeaders() });
   }
 
-  delete(id: number): Observable<ApiResponse<ThongTinTre>> {
-    return this.http.delete<ApiResponse<ThongTinTre>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  delete(id: number): Observable<ApiResponse<{ DT: ThongTinTre | null, EM: string }>> {
+    return this.http.delete<ApiResponse<{ DT: ThongTinTre | null, EM: string }>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 }

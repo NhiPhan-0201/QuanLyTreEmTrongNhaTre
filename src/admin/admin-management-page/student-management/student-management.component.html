@@ -1,4 +1,4 @@
-<div class="user-management-panel">
+<div class="student-management-panel">
   <h2>Quản lý thông tin trẻ</h2>
   <div class="search-bar">
     <input type="text" placeholder="Tìm kiếm theo tên..." (input)="onSearchStudent($event)" />
@@ -7,13 +7,13 @@
     </div>
   </div>
 
-  <table class="account-management-table phu-huynh-table">
+  <table class="student-management-table">
     <thead>
       <tr>
         <th>Họ và tên</th>
         <th>Ngày sinh</th>
         <th>Giới tính</th>
-        <!-- <th>Lớp</th> -->
+        <th>Lớp</th>
         <th>Ảnh</th>
         <th>Hành động</th>
       </tr>
@@ -24,7 +24,9 @@
           <td data-label="Họ và tên">{{ student.hoTen }}</td>
           <td data-label="Ngày sinh">{{ student.ngaySinh }}</td>
           <td data-label="Giới tính">{{ student.gioiTinh }}</td>
-          <!-- <td data-label="Lớp">{{ student.lop }}</td> -->
+          <td data-label="Lớp">
+            {{ student.quanLiLop?.tenLop || 'Chưa có lớp' }}
+          </td>
           <td data-label="Ảnh">
             <div class="image-container">
               <img class="anh-hoc-sinh" [src]="student.anh" alt="avatar" />
@@ -45,12 +47,13 @@
   </div>
 
   <div *ngIf="openAddStudentForm" class="overlay">
-    <app-student-add-new-form (closeForm)="closeForm()" (saveStudent)="handleSaveNewStudent($event)" />
+    <app-student-add-new-form (closeForm)="closeForm()" (saveStudent)="handleSaveNewStudent($event)" [classes]="classes"
+      [parents]="parents" />
   </div>
 
   <div *ngIf="openUpdateStudentForm" class="overlay">
     <app-student-update-form [student]="selectedStudent" (closeForm)="closeForm()"
-      (updateStudent)="handleUpdateStudent($event)" />
+      (updateStudent)="handleUpdateStudent($event)" [classes]="classes" [parents]="parents" />
   </div>
 
   <div *ngIf="openDeleteConfirmationDialog" class="overlay">
@@ -62,7 +65,7 @@
 <!-- Loading Template -->
 <ng-template #loadingHocSinhTemplate>
   <tr>
-    <td colspan="5">
+    <td colspan="6">
       <div class="loading-container">
         <div class="loading"></div>
       </div>

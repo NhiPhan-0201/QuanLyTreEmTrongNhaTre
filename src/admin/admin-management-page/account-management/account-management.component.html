@@ -1,12 +1,11 @@
 <div class="account-management-panel">
-    <h2>Account Management</h2>
     <div class="search-bar">
         <input type="text" placeholder="Search user..." (input)="onSearch($event)" />
         <div class="actions">
             <button (click)="handleOpenAddAccountForm()">Add New Account</button>
         </div>
     </div>
-
+    <h2>Tài khoản phụ huynh</h2>
     <table class="account-management-table phu-huynh-table">
         <thead>
             <tr>
@@ -48,7 +47,7 @@
         <button class="next" [disabled]="currentPhuHuynhAccountsPage >= totalPhuHuynhAccountsPage"
             (click)="nextPhuHuynhAccountsPage()">Next</button>
     </div>
-
+    <h2>Tài khoản giáo viên</h2>
     <table class="account-management-table giao-vien-table">
         <thead>
             <tr>

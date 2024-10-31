@@ -8,8 +8,8 @@ import { ApiResponse } from '../models/ApiResponse.interface';
 @Injectable({
     providedIn: 'root'
 })
-export class AccountService implements CRUDService<Account> {
-    private apiUrl = 'http://localhost:8080/api/v1/account';
+export class AccountService {
+    private apiUrl = 'http://localhost:8080/api/v1/admin/account';
     constructor(private http: HttpClient) { }
 
     private getHeaders() {
@@ -20,6 +20,13 @@ export class AccountService implements CRUDService<Account> {
         };
     }
 
+    getParents(): Observable<ApiResponse<Account[]>> {
+        return this.http.get<ApiResponse<Account[]>>(`${this.apiUrl}/parent`, { headers: this.getHeaders() });
+    }
+
+    getTeachers(): Observable<ApiResponse<Account[]>> {
+        return this.http.get<ApiResponse<Account[]>>(`${this.apiUrl}/teacher`, { headers: this.getHeaders() });
+    }
     getAll(): Observable<ApiResponse<Account[]>> {
         return this.http.get<ApiResponse<Account[]>>(this.apiUrl, { headers: this.getHeaders() });
     }
@@ -33,10 +40,10 @@ export class AccountService implements CRUDService<Account> {
     }
 
     update(account: Account): Observable<ApiResponse<Account>> {
-        return this.http.put<ApiResponse<Account>>(this.apiUrl, account, { headers: this.getHeaders() });
+        return this.http.put<ApiResponse<Account>>(`${this.apiUrl}/${account.id}`, account, { headers: this.getHeaders() });
     }
 
-    delete(id: number): Observable<ApiResponse<Account>> {
-        return this.http.delete<ApiResponse<Account>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    delete(id: number): Observable<ApiResponse<{ DT: Account | null, EM: string }>> {
+        return this.http.delete<ApiResponse<{ DT: Account | null, EM: string }>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
     }
 }

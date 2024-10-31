@@ -5,7 +5,7 @@ import { AccountUpdateFormComponent } from './account-update-form/account-update
 import { AccountAddNewFormComponent } from './account-add-new-form/account-add-new-form.component';
 import { AccountDeleteConfirmationDialogComponent } from './account-delete-confirmation-dialog/account-delete-confirmation-dialog.component';
 import { Account } from '../../../models/Account';
-import { AccountService } from '../../../APIService/account.service';
+import { AccountService } from '../../../APIService/Account.service';
 import { UploadService } from '../../../APIService/upload.service';
 import { switchMap } from 'rxjs';
 import { AccountRole, Gender } from '../../../constants/enums';
@@ -46,11 +46,19 @@ export class AccountManagementComponent implements OnInit {
 
   loadAccounts() {
     this.isLoading = true;
-    this.accountService.getAll().subscribe({
+    this.accountService.getParents().subscribe({
       next: (res) => {
-        this.accounts = res.data;
-        this.isLoading = false;
-        this.onSearch(); // Gọi tìm kiếm sau khi dữ liệu đã tải
+        this.accounts = this.accounts.concat(res.data);
+        this.accountService.getTeachers().subscribe({
+          next: (res) => {
+            this.accounts = this.accounts.concat(res.data);
+            this.isLoading = false;
+            this.onSearch();
+          },
+          error: (error) => {
+            this.isLoading = false;
+          }
+        });
       },
       error: (error) => {
         console.error('Lỗi khi tải accounts:', error);
