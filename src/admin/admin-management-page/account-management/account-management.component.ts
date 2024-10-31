@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AccountUpdateFormComponent } from './account-update-form/account-update-form.component';
 import { AccountAddNewFormComponent } from './account-add-new-form/account-add-new-form.component';
@@ -41,7 +41,7 @@ export class AccountManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onRefresh();
+    this.loadAccounts();
   }
 
   loadAccounts() {
@@ -49,21 +49,47 @@ export class AccountManagementComponent implements OnInit {
     this.accountService.getAll().subscribe({
       next: (res) => {
         this.accounts = res.data;
+        this.isLoading = false;
+        this.onSearch(); // Gọi tìm kiếm sau khi dữ liệu đã tải
       },
       error: (error) => {
-        console.error('Error fetching accounts:', error);
+        console.error('Lỗi khi tải accounts:', error);
+        this.accounts = this.generateMockAccounts(); // Sử dụng dữ liệu giả lập khi xảy ra lỗi
+        this.isLoading = false;
+        this.onSearch(); // Gọi tìm kiếm trên dữ liệu giả lập
       }
     });
   }
 
-  onRefresh() {
-    this.loadAccounts();
-    this.onSearch();
+  // Hàm tạo dữ liệu giả lập trong trường hợp lỗi
+  private generateMockAccounts() {
+    const mockAccounts = [];
+    for (let i = 0; i < 10; i++) {
+      mockAccounts.push({
+        id: i + 1,
+        username: 'admin' + i,
+        password: "quoc123",
+        role: AccountRole.GiaoVien,
+        status: 'Enabled',
+        giaoVien: {
+          id: i + 1,
+          hoTen: 'Nguyễn Văn A',
+          gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
+          soDienThoai: '0987654321',
+          email: 'admin' + i + '@gmail.com',
+          anh: 'https://cdn.openart.ai/published/cMIZlKZ7jBHCVg4nP3Cf/_oUjeluh_Fm8c_1024.webp',
+        }
+      });
+    }
+    return mockAccounts;
   }
+
 
   onSearch(event?: Event) {
     if (event) {
       this.searchTerm = (event.target as HTMLInputElement).value;
+    } else {
+      this.searchTerm = '';
     }
 
     this.isLoading = true;
@@ -116,24 +142,29 @@ export class AccountManagementComponent implements OnInit {
     this.selectedAccount = { ...account };
     this.openUpdateAccountForm = true;
   }
-  handleUpdateAccount({ updatedAccount, anh }: { updatedAccount: Account, anh: File | null }) {
-    let upload$ = updatedAccount.role === 'GiaoVien' && anh
-      ? this.uploadService.uploadImage(anh).pipe(
+  handleUpdateAccount({ updatedAccount, anh: { file, oldFileChanged } }: { updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }) {
+    // Kiểm tra xem có cần tải lên ảnh không
+    let upload$;
+    if (updatedAccount.role === 'GiaoVien' && oldFileChanged && file) {
+      upload$ = this.uploadService.uploadImage(file).pipe(
         switchMap((res) => {
           updatedAccount.giaoVien!.anh = res.DT;
           return this.accountService.update(updatedAccount);
-        })
-      )
-      : this.accountService.update(updatedAccount);
+        }))
+    }
+    else {
+      upload$ = this.accountService.update(updatedAccount);
+    }
 
     upload$.subscribe({
       next: (res) => {
+        // Cập nhật danh sách tài khoản trong component
         this.accounts = this.accounts.map(account => account.id === res.data.id ? res.data : account);
-        this.onSearch();
-        this.closeForm();
+        this.onSearch(); // Gọi hàm tìm kiếm để cập nhật danh sách
+        this.closeForm(); // Đóng form sau khi hoàn tất
       },
       error: (error) => {
-        console.error('Error updating account:', error);
+        console.error('Error updating account:', error); // Log lỗi nếu có
       }
     });
   }

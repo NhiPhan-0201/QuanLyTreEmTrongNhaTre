@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Account } from '../../../../models/Account';
 import { AccountRole, AccountStatus, Gender } from '../../../../constants/enums';
 import { validateData } from '../account-management.component';
+import { convertUrlToFile } from '../../../../utils/fileUtils';
 
 @Component({
   selector: 'app-account-update-form',
@@ -28,13 +29,14 @@ export class AccountUpdateFormComponent implements OnChanges {
 
   anhGiaoVienPreview: string | ArrayBuffer | null = null;
   anhGiaoVienUploaded: File | null = null;
-  anhGiaoVienFileName: string | null = null;
+  oldFileChanged: boolean = false;
+  oldFileUrl!: string;
 
   errors: any = {};
 
   @Input() account!: Account;
   @Output() closeForm: EventEmitter<void> = new EventEmitter<void>();
-  @Output() saveAccount: EventEmitter<{ updatedAccount: Account, anh: File | null }> = new EventEmitter<{ updatedAccount: Account, anh: File | null }>();
+  @Output() saveAccount: EventEmitter<{ updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }> = new EventEmitter<{ updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }>();
 
   constructor(private fb: FormBuilder) {
   }
@@ -67,17 +69,40 @@ export class AccountUpdateFormComponent implements OnChanges {
           email: [this.account.giaoVien?.email],
         }),
       });
-      this.updateAccountForm.valueChanges.subscribe(() => {
-        this.errors = {};
-      });
+
+      this.oldFileUrl = this.account.giaoVien?.anh || '';
+      this.anhGiaoVienPreview = this.oldFileUrl;
+
+      this.subscribeToFormControls(this.updateAccountForm);
     }
+  }
+
+  private subscribeToFormControls(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      const errorKey = key
+
+      if (control) {
+        if (control instanceof FormGroup) {
+          this.subscribeToFormControls(control);
+        } else {
+          this.subscribeToValueChanges(control);
+        }
+      }
+    });
+  }
+
+  private subscribeToValueChanges(control: AbstractControl): void {
+    control.valueChanges.subscribe(() => {
+      this.errors = validateData(this.updateAccountForm);
+    });
   }
 
   onImagePicked(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files.length > 0) {
       this.anhGiaoVienUploaded = input.files[0];
-      this.anhGiaoVienFileName = this.anhGiaoVienUploaded.name;
+      this.oldFileChanged = true;
       let reader = new FileReader();
 
       reader.onload = (e) => {
@@ -90,15 +115,22 @@ export class AccountUpdateFormComponent implements OnChanges {
   }
 
   cancelUploadAnh() {
-    this.anhGiaoVienPreview = null;
-    this.anhGiaoVienUploaded = null;
-    this.anhGiaoVienFileName = null;
+    this.anhGiaoVienPreview = this.oldFileUrl;
+    if (this.oldFileUrl) convertUrlToFile(this.oldFileUrl, Date.now() + '.jpg', 'image/jpeg')
+      .then((file) => {
+        this.anhGiaoVienUploaded = file;
+      })
+      .catch(error => console.error('Lỗi:', error));
+    else this.anhGiaoVienUploaded = null;
+    this.oldFileChanged = false;
+    this.updateAccountForm.get('giaoVien.anh')?.setValue(this.oldFileUrl);
   }
 
   deleteAnh() {
     this.anhGiaoVienPreview = null;
     this.anhGiaoVienUploaded = null;
-    this.anhGiaoVienFileName = null;
+    this.oldFileChanged = true;
+    this.updateAccountForm.get('giaoVien.anh')?.setValue('');
   }
 
   save() {
@@ -106,7 +138,7 @@ export class AccountUpdateFormComponent implements OnChanges {
     this.errors = validateData(this.updateAccountForm);
 
     if (Object.keys(this.errors).length === 0) {
-      this.saveAccount.emit({ updatedAccount: this.updateAccountForm.value, anh: this.anhGiaoVienUploaded });
+      this.saveAccount.emit({ updatedAccount: this.updateAccountForm.value, anh: { file: this.anhGiaoVienUploaded, oldFileChanged: this.oldFileChanged } });
     }
   }
 
@@ -114,4 +146,7 @@ export class AccountUpdateFormComponent implements OnChanges {
     this.closeForm.emit();
   }
 
+  getKeys(obj: any): string[] {
+    return Object.keys(obj);
+  }
 }

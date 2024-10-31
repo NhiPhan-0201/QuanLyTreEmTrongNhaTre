@@ -4,24 +4,17 @@
         <div class="form-row">
             <div class="thong-tin-account form-col">
                 <h3>Account Information</h3>
-
                 <label for="username">Username:</label>
-                <input type="text" id="username" formControlName="username">
-                <h4 class="error-message" *ngIf="errors?.username">
-                    {{errors?.username}}
-                </h4>
+                <input type="text" id="username" formControlName="username" />
+                <h4 class="error-message" *ngIf="errors?.username">{{ errors?.username }}</h4>
 
                 <label for="password">Mật khẩu:</label>
-                <input type="password" id="password" formControlName="password">
-                <h4 class="error-message" *ngIf="errors?.password">
-                    {{errors?.password}}
-                </h4>
+                <input type="password" id="password" formControlName="password" />
+                <h4 class="error-message" *ngIf="errors?.password">{{ errors?.password }}</h4>
 
                 <label for="confirmPassword">Nhập lại mật khẩu:</label>
-                <input type="password" id="confirmPassword" formControlName="confirmPassword">
-                <h4 class="error-message" *ngIf="errors?.confirmPassword">
-                    {{errors?.confirmPassword}}
-                </h4>
+                <input type="password" id="confirmPassword" formControlName="confirmPassword" />
+                <h4 class="error-message" *ngIf="errors?.confirmPassword">{{ errors?.confirmPassword }}</h4>
 
                 <label for="status">Trạng thái:</label>
                 <select id="status" class="status" formControlName="status">
@@ -43,105 +36,78 @@
             <div class="thong-tin-phu-huynh form-col" formGroupName="phuHuynh"
                 *ngIf="updateAccountForm.value.role === PARENT_ROLE">
                 <h3>Parent Information</h3>
-
                 <label for="hoTenCha">Họ tên cha:</label>
-                <input type="text" id="hoTenCha" formControlName="hoTenCha">
-                <h4 class="error-message" *ngIf="errors?.hoTenCha">
-                    {{errors?.hoTenCha}}
-                </h4>
+                <input type="text" id="hoTenCha" formControlName="hoTenCha" />
+                <h4 class="error-message" *ngIf="errors?.hoTenCha">{{ errors?.hoTenCha }}</h4>
 
                 <label for="hoTenMe">Họ tên mẹ:</label>
-                <input type="text" id="hoTenMe" formControlName="hoTenMe">
-                <h4 class="error-message" *ngIf="errors?.hoTenMe">
-                    {{errors?.hoTenMe}}
-                </h4>
+                <input type="text" id="hoTenMe" formControlName="hoTenMe" />
+                <h4 class="error-message" *ngIf="errors?.hoTenMe">{{ errors?.hoTenMe }}</h4>
 
                 <label for="sdtCha">Số điện thoại cha:</label>
-                <input type="text" id="sdtCha" formControlName="sdtCha">
-                <h4 class="error-message" *ngIf="errors?.sdtCha">
-                    {{errors?.sdtCha}}
-                </h4>
+                <input type="text" id="sdtCha" formControlName="sdtCha" />
+                <h4 class="error-message" *ngIf="errors?.sdtCha">{{ errors?.sdtCha }}</h4>
 
                 <label for="sdtMe">Số điện thoại mẹ:</label>
-                <input type="text" id="sdtMe" formControlName="sdtMe">
-                <h4 class="error-message" *ngIf="errors?.sdtMe">
-                    {{errors?.sdtMe}}
-                </h4>
+                <input type="text" id="sdtMe" formControlName="sdtMe" />
+                <h4 class="error-message" *ngIf="errors?.sdtMe">{{ errors?.sdtMe }}</h4>
 
                 <label for="emailCha">Email cha:</label>
-                <input type="text" id="emailCha" formControlName="emailCha">
-                <h4 class="error-message" *ngIf="errors?.emailCha">
-                    {{errors?.emailCha}}
-                </h4>
+                <input type="text" id="emailCha" formControlName="emailCha" />
+                <h4 class="error-message" *ngIf="errors?.emailCha">{{ errors?.emailCha }}</h4>
 
                 <label for="emailMe">Email mẹ:</label>
-                <input type="text" id="emailMe" formControlName="emailMe">
-                <h4 class="error-message" *ngIf="errors?.emailMe">
-                    {{errors?.emailMe}}
-                </h4>
+                <input type="text" id="emailMe" formControlName="emailMe" />
+                <h4 class="error-message" *ngIf="errors?.emailMe">{{ errors?.emailMe }}</h4>
 
                 <label for="diaChi">Địa chỉ:</label>
-                <input type="text" id="diaChi" formControlName="diaChi">
-                <h4 class="error-message" *ngIf="errors?.diaChi">
-                    {{errors?.diaChi}}
-                </h4>
+                <input type="text" id="diaChi" formControlName="diaChi" />
+                <h4 class="error-message" *ngIf="errors?.diaChi">{{ errors?.diaChi }}</h4>
             </div>
 
             <div class="thong-tin-giao-vien form-col" formGroupName="giaoVien"
                 *ngIf="updateAccountForm.value.role === TEACHER_ROLE">
                 <h3>Teacher Information</h3>
-
                 <label for="hoTen">Họ tên:</label>
-                <input type="text" id="hoTen" formControlName="hoTen">
-                <h4 class="error-message" *ngIf="errors?.hoTen">
-                    {{errors?.hoTen}}
-                </h4>
+                <input type="text" id="hoTen" formControlName="hoTen" />
+                <h4 class="error-message" *ngIf="errors?.hoTen">{{ errors?.hoTen }}</h4>
 
                 <label for="gioiTinh">Giới tính:</label>
                 <select id="gioiTinh" class="gioiTinh" formControlName="gioiTinh">
                     <option [value]="MALE_GENDER">Nam</option>
                     <option [value]="FEMALE_GENDER">Nữ</option>
                 </select>
-                <h4 class="error-message" *ngIf="errors?.gioiTinh">
-                    {{errors?.gioiTinh}}
-                </h4>
+                <h4 class="error-message" *ngIf="errors?.gioiTinh">{{ errors?.gioiTinh }}</h4>
 
                 <label for="soDienThoai">Số điện thoại:</label>
-                <input type="text" id="soDienThoai" formControlName="soDienThoai">
-                <h4 class="error-message" *ngIf="errors?.soDienThoai">
-                    {{errors?.soDienThoai}}
-                </h4>
+                <input type="text" id="soDienThoai" formControlName="soDienThoai" />
+                <h4 class="error-message" *ngIf="errors?.soDienThoai">{{ errors?.soDienThoai }}</h4>
 
                 <label for="diaChi">Địa chỉ:</label>
-                <input type="text" id="diaChi" formControlName="diaChi">
-                <h4 class="error-message" *ngIf="errors?.diaChi">
-                    {{errors?.diaChi}}
-                </h4>
+                <input type="text" id="diaChi" formControlName="diaChi" />
+                <h4 class="error-message" *ngIf="errors?.diaChi">{{ errors?.diaChi }}</h4>
 
                 <label for="anh">Ảnh:</label>
-                <input id="anh" type="file" #filePicker (change)="onImagePicked($event)">
-                <div style="display: flex; margin-bottom: 10px;" *ngIf="anhGiaoVienUploaded">
-                    <button class="cancel-upload-anh-btn" (click)="cancelUploadAnh()">
-                        <span>Không upload ảnh nữa</span>
+                <input id="anh" type="file" #filePicker (change)="onImagePicked($event)" accept=".jpg, .jpeg, .png" />
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <button class="cancel-upload-anh-btn" (click)="cancelUploadAnh()" *ngIf="oldFileChanged">Reset
                     </button>
+                    <button class="delete-anh-btn" (click)="deleteAnh()" *ngIf="!oldFileChanged && oldFileUrl !==''">Xóa
+                        ảnh</button>
                 </div>
 
                 <label for="chuyenMon">Chuyên môn:</label>
-                <input type="text" id="chuyenMon" formControlName="chuyenMon">
-                <h4 class="error-message" *ngIf="errors?.chuyenMon">
-                    {{errors?.chuyenMon}}
-                </h4>
+                <input type="text" id="chuyenMon" formControlName="chuyenMon" />
+                <h4 class="error-message" *ngIf="errors?.chuyenMon">{{ errors?.chuyenMon }}</h4>
 
                 <label for="email">Email:</label>
-                <input type="text" id="email" formControlName="email">
-                <h4 class="error-message" *ngIf="errors?.email">
-                    {{errors?.email}}
-                </h4>
+                <input type="text" id="email" formControlName="email" />
+                <h4 class="error-message" *ngIf="errors?.email">{{ errors?.email }}</h4>
             </div>
         </div>
 
         <div class="form-actions">
-            <button class="confirm-button" (click)="save()" [disabled]="updateAccountForm.invalid">Lưu</button>
+            <button class="confirm-button" (click)="save()" [disabled]="getKeys(errors).length !== 0">Lưu</button>
             <button class="cancel-button" (click)="close()">Hủy</button>
         </div>
     </form>

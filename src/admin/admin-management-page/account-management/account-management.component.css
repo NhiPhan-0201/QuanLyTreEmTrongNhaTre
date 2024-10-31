@@ -36,7 +36,7 @@
     z-index: 1000;
 }
 
-.user-management-panel {
+.account-management-panel {
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -117,6 +117,11 @@ h2 {
 .account-management-table td {
     background-color: #fdfdfd;
     color: #333;
+}
+
+.account-management-table .anh-giao-vien {
+    width: 100px;
+    height: auto;
 }
 
 .account-management-table tr:nth-child(even) {

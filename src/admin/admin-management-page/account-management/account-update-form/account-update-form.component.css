@@ -6,15 +6,18 @@
     font-weight: bold;
 }
 
-.error-message {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+.account-update-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    width: 600px;
+    height: auto;
+    max-height: 700px;
+    overflow-y: auto;
 }
-
-.error-message.visible {
-    opacity: 1;
-}
-
 
 .account-update-form form {
     display: flex;

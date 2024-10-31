@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Account } from '../../../../models/Account';
 import { AccountRole, AccountStatus, Gender } from '../../../../constants/enums';
 import { validateData } from '../account-management.component';
@@ -63,8 +63,45 @@ export class AccountAddNewFormComponent {
     this.newAccountForm.get('role')?.valueChanges.subscribe((role) => {
       this.errors = {};
     });
+    this.subscribeToFormControls(this.newAccountForm);
   }
 
+  subscribeToFormControls(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      const errorKey = key
+
+      if (control) {
+        if (control instanceof FormGroup) {
+          this.subscribeToFormControls(control);
+        } else {
+          if (key === 'password') {
+            control.valueChanges.subscribe(() => {
+              this.errors = validateData(this.newAccountForm);
+              if (this.newAccountForm.get('password')?.value === '') {
+                this.errors = { ...this.errors, password: 'Mật khẩu không được để trống' };
+              } else {
+                this.errors = { ...this.errors, password: '' };
+              }
+              if (this.newAccountForm.get('password')?.value.length < 6) {
+                this.errors = { ...this.errors, password: 'Mật khẩu phải có ít nhất 6 ký tự' };
+              } else {
+                this.errors = { ...this.errors, password: '' };
+              }
+            });
+          } else {
+            this.subscribeToValueChanges(control);
+          }
+        }
+      }
+    });
+  }
+
+  private subscribeToValueChanges(control: AbstractControl): void {
+    control.valueChanges.subscribe(() => {
+      this.errors = validateData(this.newAccountForm);
+    });
+  }
   onImagePicked(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files.length > 0) {
@@ -98,5 +135,8 @@ export class AccountAddNewFormComponent {
 
   close() {
     this.closeForm.emit();
+  }
+  getKeys(obj: any): string[] {
+    return Object.keys(obj);
   }
 }

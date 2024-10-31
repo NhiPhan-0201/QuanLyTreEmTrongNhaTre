@@ -119,12 +119,11 @@
                 </h4>
 
                 <label for="anh">Ảnh:</label>
-                <input id="anh" type="file" #filePicker (change)="onImagePicked($event)">
+                <input id="anh" type="file" #filePicker (change)="onImagePicked($event)" accept=".jpg, .jpeg, .png" />
                 <div style="display: flex; margin-bottom: 10px;" *ngIf="anhGiaoVienUploaded">
-                    <button class="cancel-upload-anh-btn" (click)="cancelUploadAnh()">
-                        <span>Không upload ảnh nữa</span>
-                    </button>
+                    <button class="cancel-upload-anh-btn" (click)="cancelUploadAnh()">Hủy upload ảnh </button>
                 </div>
+
 
                 <label for="chuyenMon">Chuyên môn:</label>
                 <input type="text" id="chuyenMon" formControlName="chuyenMon">
@@ -141,7 +140,7 @@
         </div>
 
         <div class="form-actions">
-            <button class="confirm-button" (click)="save()">Lưu</button>
+            <button class="confirm-button" (click)="save()" [disabled]="getKeys(errors).length !== 0">Lưu</button>
             <button class=" cancel-button" (click)="close()">Hủy</button>
         </div>
     </form>

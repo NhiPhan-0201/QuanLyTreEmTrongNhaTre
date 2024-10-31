@@ -10,5 +10,5 @@ export interface CRUDService<Type> {
 
     update(t: Type): Observable<ApiResponse<Type>>;
 
-    delete(id: number): Observable<ApiResponse<Type>>;
+    delete(id: number): Observable<ApiResponse<{ DT: Type | null, EM: string }>>;
 }
