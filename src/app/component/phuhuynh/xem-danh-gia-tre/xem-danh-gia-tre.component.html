@@ -1,1 +1,15 @@
 <p>xem-danh-gia-tre works!</p>
+<div class="container">
+  <div class="content">
+    <div class="review-section">
+      <h2>Đánh giá của bé {{ studentName }}</h2>
+      <div class="reviews">
+        <div class="review-card" *ngFor="let review of teacherReviews">
+          <h3>Giáo viên nhận xét: </h3>
+          <p>{{ review.danh_gia }}</p>
+          <strong>Điểm số: {{ review.diem_so }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
