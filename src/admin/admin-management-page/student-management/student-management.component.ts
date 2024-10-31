@@ -1,19 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ThongTinTre } from '../../../models/ThongTinTre';
 import { StudentAddNewFormComponent } from './student-add-new-form/student-add-new-form.component';
 import { StudentUpdateFormComponent } from './student-update-form/student-update-form.component';
 import { StudentDeleteConfirmationDialogComponent } from './student-delete-confirmation-dialog/student-delete-confirmation-dialog.component';
-import { ThongTinTreService } from '../../../APIService/ThontTinTre.service';
-import { UploadService } from '../../../APIService/upload.service';
+import { UploadService } from '../../../APIService/Upload.service';
 import { switchMap } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { QuanLiLopService } from '../../../APIService/QuanLiLop.service';
-import { QuanLiLop } from '../../../models/QuanLiLop';
-import { error } from 'node:console';
-import { AccountService } from '../../../APIService/Account.service';
-import { Account } from '../../../models/Account';
+import { ThongTinTre, QuanLiLop, Account } from '../../../models';
 import { AccountRole, AccountStatus, Gender } from '../../../constants/enums';
+import { QuanLiLopService, AccountService, ThongTinTreService } from '../../../APIService';
 
 @Component({
   selector: 'app-student-management',
@@ -49,7 +44,7 @@ export class StudentManagementComponent implements OnInit {
     this.isLoading = true;
     this.quanLiLopService.getAll().subscribe({
       next: (res) => {
-        this.classes = res.data
+        this.classes = res
         this.loadParents();
       },
       error: (error) => {
@@ -62,7 +57,7 @@ export class StudentManagementComponent implements OnInit {
   loadParents() {
     this.accountService.getParents().subscribe({
       next: (res) => {
-        this.parents = res.data;
+        this.parents = res;
         this.loadStudents();
       },
       error: (error) => {
@@ -75,7 +70,7 @@ export class StudentManagementComponent implements OnInit {
   loadStudents() {
     this.thongTinTreService.getAll().subscribe({
       next: (res) => {
-        this.students = res.data;
+        this.students = res;
         this.students.map((s) => {
           s.quanLiLop = this.classes.find((c) => c.id = s.classId);
           return s;
@@ -185,15 +180,15 @@ export class StudentManagementComponent implements OnInit {
   handleSaveNewStudent({ student, anh }: { student: ThongTinTre; anh?: File | null }) {
     let upload$ = anh
       ? this.uploadService.uploadImage(anh).pipe(
-        switchMap((data) => {
-          student.anh = data.DT;
+        switchMap((res) => {
+          student.anh = res;
           return this.thongTinTreService.add(student);
         })
       )
       : this.thongTinTreService.add(student);
 
-    upload$.subscribe((data) => {
-      this.students.push(data.data);
+    upload$.subscribe((res) => {
+      this.students.push(res);
       this.onSearchStudent();
       this.closeForm();
     });
@@ -203,16 +198,16 @@ export class StudentManagementComponent implements OnInit {
     console.log(student)
     const upload$ = file && oldFileChanged
       ? this.uploadService.uploadImage(file).pipe(
-        switchMap((data) => {
-          student.anh = data.DT;
+        switchMap((res) => {
+          student.anh = res;
           return this.thongTinTreService.update(student);
         })
       )
       : this.thongTinTreService.update(student);
 
     upload$.subscribe((res) => {
-      const index = this.students.findIndex(s => s.id === res.data.id);
-      this.students[index] = res.data;
+      const index = this.students.findIndex(s => s.id === res.id);
+      this.students[index] = res;
       this.onSearchStudent();
       this.closeForm();
     });

@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AccountUpdateFormComponent } from './account-update-form/account-update-form.component';
 import { AccountAddNewFormComponent } from './account-add-new-form/account-add-new-form.component';
 import { AccountDeleteConfirmationDialogComponent } from './account-delete-confirmation-dialog/account-delete-confirmation-dialog.component';
-import { Account } from '../../../models/Account';
-import { AccountService } from '../../../APIService/Account.service';
-import { UploadService } from '../../../APIService/upload.service';
+import { Account } from '../../../models';
+import { AccountService, UploadService } from '../../../APIService';
 import { switchMap } from 'rxjs';
 import { AccountRole, Gender } from '../../../constants/enums';
 
@@ -46,19 +45,11 @@ export class AccountManagementComponent implements OnInit {
 
   loadAccounts() {
     this.isLoading = true;
-    this.accountService.getParents().subscribe({
+    this.accountService.getAll().subscribe({
       next: (res) => {
-        this.accounts = this.accounts.concat(res.data);
-        this.accountService.getTeachers().subscribe({
-          next: (res) => {
-            this.accounts = this.accounts.concat(res.data);
-            this.isLoading = false;
-            this.onSearch();
-          },
-          error: (error) => {
-            this.isLoading = false;
-          }
-        });
+        this.accounts = res;
+        this.isLoading = false;
+        this.onSearch();
       },
       error: (error) => {
         console.error('Lỗi khi tải accounts:', error);
@@ -156,7 +147,7 @@ export class AccountManagementComponent implements OnInit {
     if (updatedAccount.role === 'GiaoVien' && oldFileChanged && file) {
       upload$ = this.uploadService.uploadImage(file).pipe(
         switchMap((res) => {
-          updatedAccount.giaoVien!.anh = res.DT;
+          updatedAccount.giaoVien!.anh = res;
           return this.accountService.update(updatedAccount);
         }))
     }
@@ -167,7 +158,7 @@ export class AccountManagementComponent implements OnInit {
     upload$.subscribe({
       next: (res) => {
         // Cập nhật danh sách tài khoản trong component
-        this.accounts = this.accounts.map(account => account.id === res.data.id ? res.data : account);
+        this.accounts = this.accounts.map(account => account.id === res.id ? res : account);
         this.onSearch(); // Gọi hàm tìm kiếm để cập nhật danh sách
         this.closeForm(); // Đóng form sau khi hoàn tất
       },
@@ -200,7 +191,7 @@ export class AccountManagementComponent implements OnInit {
     let upload$ = newAccount.role === 'GiaoVien' && anh
       ? this.uploadService.uploadImage(anh).pipe(
         switchMap((res) => {
-          newAccount.giaoVien!.anh = res.DT;
+          newAccount.giaoVien!.anh = res;
           return this.accountService.add(newAccount);
         })
       )
@@ -208,7 +199,7 @@ export class AccountManagementComponent implements OnInit {
 
     upload$.subscribe({
       next: (res) => {
-        this.accounts.push(res.data);
+        this.accounts.push(res);
         this.onSearch();
         this.closeForm();
       },
