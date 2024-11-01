@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SchoolFeeService } from '../../APIService/school-fee.service';
+import { HocPhi } from '../../models/HocPhi';
+import { NhomLop } from '../../models/NhomLop';
 
 @Component({
   selector: 'app-school-fee',
@@ -15,20 +17,20 @@ import { SchoolFeeService } from '../../APIService/school-fee.service';
   styleUrls: ['./school-fee.component.css']
 })
 export class SchoolFeeComponent implements OnInit {
-  schoolFees: any[] = [];
-  filteredFees: any[] = [];
+  schoolFees: HocPhi[] = [];
+  filteredFees: HocPhi[] = [];
   schoolFeeForm: FormGroup;
-  editingFee: any | null = null;
+  editingFee: HocPhi | null = null;
   showPopup: boolean = false;
-  classes: any[] = [];  // Mảng lưu trữ danh sách nhóm lớp
-  years: number[] = [];  // Mảng năm
-  months: number[] = []; // Mảng tháng
+  classes: NhomLop[] = [];
+  years: number[] = [];
+  months: number[] = [];
 
   selectedClass: string;
   selectedYear: number;
   selectedMonth: number;
 
-  paginatedFees: any[] = [];
+  paginatedFees: HocPhi[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 0;
@@ -60,20 +62,20 @@ export class SchoolFeeComponent implements OnInit {
   loadSchoolFees(): void {
     this.schoolFeeService.getSchoolFees().subscribe({
       next: (data) => {
-        this.schoolFees = data.DT || [];
+        this.schoolFees = data || [];
         this.filteredFees = this.schoolFees;
         this.applyFilters();
       },
-      error: (error) => error.alert('Lỗi khi tải danh sách học phí:' + error.EM)
+      error: (error) => alert('Lỗi khi tải danh sách học phí:' + error.EM)
     });
   }
 
   loadClasses(): void {
     this.schoolFeeService.getClasses().subscribe({
       next: (data) => {
-        this.classes = data.DT || [];
+        this.classes = data || [];
       },
-      error: (error) => error.alert('Lỗi khi tải danh sách nhóm lớp:' + error.EM)
+      error: (error) => alert('Lỗi khi tải danh sách nhóm lớp:' + error.EM)
     });
   }
 
@@ -119,7 +121,6 @@ export class SchoolFeeComponent implements OnInit {
     }
   }
 
-
   openPopup(): void {
     this.resetForm();
     this.showPopup = true;
@@ -132,7 +133,7 @@ export class SchoolFeeComponent implements OnInit {
   saveSchoolFee(): void {
     if (this.schoolFeeForm.invalid) return;
 
-    const schoolFee: any = this.schoolFeeForm.value;
+    const schoolFee: HocPhi = this.schoolFeeForm.value;
 
     if (this.editingFee) {
       this.schoolFeeService.updateSchoolFee(this.editingFee.id, schoolFee).subscribe({
@@ -140,7 +141,7 @@ export class SchoolFeeComponent implements OnInit {
           this.loadSchoolFees();
           this.closePopup();
         },
-        error: (error) => alert('Lỗi khi cập nhật học phí:' + error.EM)
+        error: (error) => alert('Lỗi khi cập nhật học phí:' + error)
       });
     } else {
       this.schoolFeeService.addSchoolFee(schoolFee).subscribe({
@@ -149,7 +150,7 @@ export class SchoolFeeComponent implements OnInit {
           this.closePopup();
         },
         error: (error) => {
-          alert('Lỗi khi thêm học phí:' + error.EM)
+          alert('Lỗi khi thêm học phí:' + error.message)
         }
       });
     }
@@ -157,12 +158,20 @@ export class SchoolFeeComponent implements OnInit {
 
   deleteSchoolFee(id: number): void {
     this.schoolFeeService.deleteSchoolFee(id).subscribe({
-      next: () => this.loadSchoolFees(),
-      error: (error) => alert('Lỗi khi xóa học phí:' + error.EM)
+      next: (message) => {
+        if (message) {
+          alert(message);
+        }
+        this.loadSchoolFees()
+      },
+      error: (error) => {
+        alert('Lỗi khi xóa học phí: ' + (error.error || error.message));
+        console.error(JSON.stringify(error));
+      }
     });
   }
 
-  editSchoolFee(fee: any): void {
+  editSchoolFee(fee: HocPhi): void {
     this.editingFee = fee;
     this.schoolFeeForm.patchValue(fee);
     this.showPopup = true;

@@ -13,3 +13,14 @@ export interface YKienPhuHuynh {
   tieuDe: string;
   hinhAnh: string;
 }
+
+export interface YKienPhuHuynhAdmin {
+  id: number;
+
+  account: Account;
+  theLoai: TheLoaiYKien;
+
+  noiDung: string;
+  tieuDe: string;
+  hinhAnh: string;
+}

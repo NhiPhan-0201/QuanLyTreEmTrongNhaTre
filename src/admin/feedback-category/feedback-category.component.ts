@@ -1,7 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackCategoryService } from '../../APIService/feedback-category.service';
-import { CommonModule } from '@angular/common';
+import { TheLoaiYKien } from '../../models/TheLoaiYKien';
 
 @Component({
   selector: 'app-feedback-category',
@@ -13,13 +14,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './feedback-category.component.html',
   styleUrls: ['./feedback-category.component.css']
 })
+
 export class FeedbackCategoryComponent implements OnInit {
   categoryForm: FormGroup;
-  categories: any[] = [];
+  categories: TheLoaiYKien[] = [];
   categoryToDelete: number | null = null;
-  categoryToEdit: any | null = null;
+  categoryToEdit: TheLoaiYKien | null = null;
   showPopup: boolean = false;
-  showFormPopup: boolean = false; // Biến kiểm soát hiển thị popup form
+  showFormPopup: boolean = false;
   isEditMode: boolean = false;
 
   constructor(
@@ -38,7 +40,7 @@ export class FeedbackCategoryComponent implements OnInit {
   loadCategories() {
     this.feedbackCategoryService.getCategories().subscribe({
       next: (data) => {
-        this.categories = data.DT || [];
+        this.categories = data || [];
       },
       error: (error) => {
         console.error('Error fetching categories:', error);
@@ -48,16 +50,13 @@ export class FeedbackCategoryComponent implements OnInit {
 
   onSubmit() {
     if (this.categoryForm.valid) {
-      const newCategory = this.categoryForm.value;
+      const newCategory: TheLoaiYKien = this.categoryForm.value;
 
       if (this.isEditMode && this.categoryToEdit) {
         this.feedbackCategoryService.updateCategory(this.categoryToEdit.id, newCategory).subscribe({
           next: () => {
             this.loadCategories();
-            this.categoryForm.reset();
-            this.categoryToEdit = null;
-            this.isEditMode = false;
-            this.showFormPopup = false; // Ẩn popup sau khi cập nhật
+            this.resetForm();
           },
           error: (error) => {
             console.error('Error updating category:', error);
@@ -67,8 +66,7 @@ export class FeedbackCategoryComponent implements OnInit {
         this.feedbackCategoryService.addCategory(newCategory).subscribe({
           next: () => {
             this.loadCategories();
-            this.categoryForm.reset();
-            this.showFormPopup = false; // Ẩn popup sau khi thêm
+            this.resetForm();
           },
           error: (error) => {
             console.error('Error adding category:', error);
@@ -78,13 +76,13 @@ export class FeedbackCategoryComponent implements OnInit {
     }
   }
 
-  openEditCategory(category: any) {
+  openEditCategory(category: TheLoaiYKien) {
     this.categoryToEdit = category;
     this.categoryForm.patchValue({
       tenTheLoai: category.tenTheLoai
     });
     this.isEditMode = true;
-    this.showFormPopup = true; // Hiện popup khi sửa
+    this.showFormPopup = true;
   }
 
   openDeletePopup(categoryId: number) {
@@ -97,8 +95,7 @@ export class FeedbackCategoryComponent implements OnInit {
       this.feedbackCategoryService.deleteCategory(this.categoryToDelete).subscribe({
         next: () => {
           this.loadCategories();
-          this.categoryToDelete = null;
-          this.showPopup = false;
+          this.cancelDelete();
         },
         error: (error) => {
           console.error('Error deleting category:', error);
@@ -112,15 +109,20 @@ export class FeedbackCategoryComponent implements OnInit {
     this.categoryToDelete = null;
   }
 
-  // Phương thức mở form thêm mới
   openAddCategory() {
-    this.categoryForm.reset();
+    this.resetForm();
     this.isEditMode = false;
-    this.showFormPopup = true; // Hiện popup khi thêm mới
+    this.showFormPopup = true;
   }
 
   closeForm() {
-    this.showFormPopup = false; // Ẩn popup
-    this.categoryToEdit = null; // Đặt lại ID
+    this.resetForm();
+    this.showFormPopup = false;
+  }
+
+  private resetForm() {
+    this.categoryForm.reset();
+    this.categoryToEdit = null;
+    this.isEditMode = false;
   }
 }

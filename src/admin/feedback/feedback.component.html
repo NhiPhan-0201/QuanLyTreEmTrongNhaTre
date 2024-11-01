@@ -10,7 +10,7 @@
     <h2>Danh sách phản hồi</h2>
     <ul>
         <li *ngFor="let feedback of feedbacks" (click)="openFeedbackDetails(feedback)">
-            <p><strong>Tên phụ huynh:</strong> {{ feedback.account.username }}</p>
+            <p><strong>Tên phụ huynh:</strong> {{ feedback.account.username}}</p>
             <p><strong>Thể loại:</strong> {{ feedback.theLoai.tenTheLoai }}</p>
             <p><strong>Tiêu đề:</strong> {{ feedback.tieuDe }}</p>
         </li>

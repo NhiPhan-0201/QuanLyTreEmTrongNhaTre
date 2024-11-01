@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angul
 import { FeedbackService } from '../../APIService/feedback.service';
 import { FeedbackCategoryService } from '../../APIService/feedback-category.service';
 
+import { YKienPhuHuynhAdmin } from '../../models/YKienPhuHuynh';
+import { TheLoaiYKien } from '../../models/TheLoaiYKien';
+
 @Component({
   selector: 'app-feedback',
   standalone: true,
@@ -14,12 +17,11 @@ import { FeedbackCategoryService } from '../../APIService/feedback-category.serv
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
-
 export class FeedbackComponent implements OnInit {
-  feedbacks: any[] = [];
-  categories: any[] = [];
+  feedbacks: YKienPhuHuynhAdmin[] = [];
+  categories: TheLoaiYKien[] = [];
   feedbackForm: FormGroup;
-  selectedFeedback: any = null;
+  selectedFeedback: YKienPhuHuynhAdmin | null = null;
 
   constructor(
     private feedbackService: FeedbackService,
@@ -37,39 +39,38 @@ export class FeedbackComponent implements OnInit {
     this.loadFeedbacks();
   }
 
-  // Lấy danh sách thể loại từ FeedbackCategoryService
+  // Lấy danh sách thể loại
   loadCategories(): void {
-    this.feedbackCategoryService.getCategories().subscribe(
-      (data) => {
-        this.categories = data.DT;
+    this.feedbackCategoryService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching categories:', error);
       }
-    );
+    });
   }
 
-  // Lấy danh sách phản hồi từ FeedbackService
+  // Lấy danh sách ý kiến
   loadFeedbacks(): void {
     const page = this.pageControl.value;
     const theLoaiId = this.theLoaiIdControl.value;
 
-    this.feedbackService.getFeedbackByAdmin(page, theLoaiId).subscribe(
-      (data) => {
-        this.feedbacks = data.DT.yKienPhuHuynhs;
+    this.feedbackService.getFeedbackByAdmin(page, theLoaiId).subscribe({
+      next: (data) => {
+        this.feedbacks = data.yKienPhuHuynhs;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching feedbacks:', error);
       }
-    );
+    });
   }
 
-  // Khi thay đổi thể loại hoặc trang, tải lại phản hồi
   onFilterChange(): void {
     this.loadFeedbacks();
   }
 
-  openFeedbackDetails(feedback: any): void {
+  openFeedbackDetails(feedback: YKienPhuHuynhAdmin): void {
     this.selectedFeedback = feedback;
   }
 
