@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="class-list">
+    <h2 class="title">Danh sách lớp học</h2>
+    <div class="class-grid">
+      <div *ngFor="let class of classes" class="class-card">
+        <h3>{{ class.tenLop }}</h3>
+        <p><strong>Giáo viên:</strong> {{ class.tenGiaoVien }}</p>
+        <p><strong>Phòng:</strong> {{ class.tenPhong }}</p>
+        <p><strong>Vị trí:</strong> {{ class.viTri }}</p>
+      </div>
+    </div>
+  </div>
+</div>
