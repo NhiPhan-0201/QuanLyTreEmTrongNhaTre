@@ -24,32 +24,32 @@ export class QuanLiLopService implements CRUDService<QuanLiLop> {
   }
 
 
-  getAll(): Observable<QuanLiLop[]> {
-    return this.http.get<QuanLiLop[]>(this.apiUrl, {
+  getAll(): Observable<ApiResponse<QuanLiLop[]>> {
+    return this.http.get<ApiResponse<QuanLiLop[]>>(this.apiUrl, {
       headers: this.getHeaders()
     });
   }
 
-  get(id: number): Observable<QuanLiLop> {
-    return this.http.get<QuanLiLop>(this.apiUrl + `/${id}`, {
+  get(id: number): Observable<ApiResponse<QuanLiLop>> {
+    return this.http.get<ApiResponse<QuanLiLop>>(this.apiUrl + `/${id}`, {
       headers: this.getHeaders()
     });
   }
 
-  add(item: QuanLiLop): Observable<QuanLiLop> {
-    return this.http.post<QuanLiLop>(this.apiUrl, item, {
+  add(item: QuanLiLop): Observable<ApiResponse<QuanLiLop>> {
+    return this.http.post<ApiResponse<QuanLiLop>>(this.apiUrl, item, {
       headers: this.getHeaders()
     });
   }
 
-  update(item: QuanLiLop): Observable<QuanLiLop> {
-    return this.http.put<QuanLiLop>(this.apiUrl, item, {
+  update(item: QuanLiLop): Observable<ApiResponse<QuanLiLop>> {
+    return this.http.put<ApiResponse<QuanLiLop>>(this.apiUrl, item, {
       headers: this.getHeaders()
     });
   }
 
-  delete(id: number): Observable<string> {
-    return this.http.delete<string>(this.apiUrl + `/${id}`, {
+  delete(id: number): Observable<ApiResponse<string | null>> {
+    return this.http.delete<ApiResponse<string | null>>(this.apiUrl + `/${id}`, {
       headers: this.getHeaders()
     });
   }
