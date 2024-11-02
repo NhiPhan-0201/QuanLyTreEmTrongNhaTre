@@ -1,0 +1,37 @@
+<div class="notification-container">
+  <div class="header">
+    <h2>Thông báo</h2>
+    <button class="send-btn">Gửi thông báo mới</button>
+  </div>
+  
+  <div class="main-content">
+    <div class="sidebar">
+      <ul>
+        <li class="active">Tất cả thông báo đã gửi</li>
+        <li>Nháp</li>
+        <li (click)="toggleClassList()">Danh sách Lớp</li>
+      </ul>
+    </div>
+    
+    <div class="notification-list">
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm..." />
+        <button class="search-btn"><i class="fa fa-search"></i></button>
+      </div>
+      
+      <ul>
+        <li *ngFor="let notification of notifications">
+          <input type="checkbox" />
+          <span>Đến: (tên phụ huynh) ({{ notification.tieuDe }})</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="classListVisible" class="class-list">
+    <h3>Danh sách lớp:</h3>
+    <ul>
+      <li *ngFor="let class of classes">{{ class.name }}</li>
+    </ul>
+  </div>
+</div>
