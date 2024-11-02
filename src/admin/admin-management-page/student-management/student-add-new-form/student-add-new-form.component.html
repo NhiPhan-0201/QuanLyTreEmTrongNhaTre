@@ -21,7 +21,7 @@
         <p *ngIf="errors.ngaySinh" class="error-message">{{errors.ngaySinh}}</p>
 
         <label for="anh">Ảnh:</label>
-        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)">
+        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)" accept=".jpg, .jpeg, .png" />
         <p *ngIf="errors.anh" class="error-message">{{errors.anh}}</p>
 
         <label for="classId">Lớp:</label>

@@ -41,6 +41,13 @@ form .form-row {
   width: 40dvw;
 }
 
+.student-add-new-form .form-col img {
+  height: 200px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
 .student-add-new-form .search-results {
   display: flex;
   flex-direction: column;

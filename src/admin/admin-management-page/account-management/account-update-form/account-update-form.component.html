@@ -22,13 +22,6 @@
                     <option [value]="DISABLED_STATUS">Không còn sử dụng</option>
                 </select>
 
-                <label for="role">Vai trò:</label>
-                <select id="role" class="role" formControlName="role">
-                    <option [value]="ADMIN_ROLE">Admin</option>
-                    <option [value]="PARENT_ROLE">Phụ huynh</option>
-                    <option [value]="TEACHER_ROLE">Giáo viên</option>
-                </select>
-
                 <img [src]="anhGiaoVienPreview"
                     *ngIf="anhGiaoVienPreview && updateAccountForm.value.role === TEACHER_ROLE" />
             </div>

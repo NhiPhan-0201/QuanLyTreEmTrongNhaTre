@@ -45,11 +45,23 @@ export class AccountManagementComponent implements OnInit {
 
   loadAccounts() {
     this.isLoading = true;
-    this.accountService.getAll().subscribe({
+    this.accounts = [];
+    this.accountService.getParents().subscribe({
       next: (res) => {
-        this.accounts = res;
-        this.isLoading = false;
-        this.onSearch();
+        this.accounts = this.accounts.concat(res.data);
+        this.accountService.getTeachers().subscribe({
+          next: (res) => {
+            this.accounts = this.accounts.concat(res.data);
+            this.onSearch();
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.error('Lỗi khi tải accounts:', error);
+            this.accounts = this.generateMockAccounts();
+            this.isLoading = false;
+            this.onSearch();
+          }
+        });
       },
       error: (error) => {
         console.error('Lỗi khi tải accounts:', error);
@@ -148,7 +160,7 @@ export class AccountManagementComponent implements OnInit {
     if (updatedAccount.role === 'GiaoVien' && oldFileChanged && file) {
       upload$ = this.uploadService.uploadImage(file).pipe(
         switchMap((res) => {
-          updatedAccount.giaoVien!.anh = res;
+          updatedAccount.giaoVien!.anh = res.data;
           return this.accountService.update(updatedAccount);
         }))
     }
@@ -158,7 +170,7 @@ export class AccountManagementComponent implements OnInit {
 
     upload$.subscribe({
       next: (res) => {
-        this.accounts = this.accounts.map(account => account.id === res.id ? res : account);
+        this.accounts = this.accounts.map(account => account.id === res.data.id ? res.data : account);
         this.onSearch();
         this.closeForm();
       },
@@ -191,7 +203,7 @@ export class AccountManagementComponent implements OnInit {
     let upload$ = newAccount.role === 'GiaoVien' && anh
       ? this.uploadService.uploadImage(anh).pipe(
         switchMap((res) => {
-          newAccount.giaoVien!.anh = res;
+          newAccount.giaoVien!.anh = res.data;
           return this.accountService.add(newAccount);
         })
       )
@@ -199,7 +211,7 @@ export class AccountManagementComponent implements OnInit {
 
     upload$.subscribe({
       next: (res) => {
-        this.accounts.push(res);
+        this.accounts.push(res.data);
         this.onSearch();
         this.closeForm();
       },

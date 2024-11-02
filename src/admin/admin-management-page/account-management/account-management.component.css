@@ -210,9 +210,8 @@ h2 {
     }
 
     .image-container {
-        width: 100px;
-        height: auto;
-        margin: auto;
+      max-width: 100%;
+      height: auto;
     }
 
     .page-navigator {

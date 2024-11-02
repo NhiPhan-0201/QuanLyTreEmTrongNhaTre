@@ -18,14 +18,14 @@
         <input type="date" id="ngaySinh" formControlName="ngaySinh">
 
         <label for="anh">Ảnh:</label>
-        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)">
+        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)" accept=".jpg, .jpeg, .png">
         <div style="display: flex; margin-bottom: 10px;" *ngIf="oldFileChanged">
           <button class="cancel-upload-anh-btn" (click)="cancelUploadAnh()"> Reset </button>
         </div>
 
         <label for="classId">Lớp:</label>
         <select id="classId" formControlName="classId">
-          <option *ngFor="let classes of classes" [value]="classes.id">{{classes.tenLop}}</option>
+          <option *ngFor="let class of classes" [value]="+class.id">{{class.tenLop}}</option>
         </select>
 
       </div>

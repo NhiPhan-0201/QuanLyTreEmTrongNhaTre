@@ -22,7 +22,7 @@
       <ng-container *ngIf="!isLoading; else loadingHocSinhTemplate">
         <tr *ngFor="let student of filteredStudents.slice((currentPage-1)*5, currentPage*5)">
           <td data-label="Họ và tên">{{ student.hoTen }}</td>
-          <td data-label="Ngày sinh">{{ student.ngaySinh }}</td>
+          <td data-label="Ngày sinh">{{ student.ngaySinh}}</td>
           <td data-label="Giới tính">{{ student.gioiTinh }}</td>
           <td data-label="Lớp">
             {{ student.quanLiLop?.tenLop || 'Chưa có lớp' }}

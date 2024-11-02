@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ThongTinTre } from '../../../../models/ThongTinTre';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Gender } from '../../../../constants/enums';
 import { convertUrlToFile } from '../../../../utils/fileUtils';
@@ -34,12 +34,12 @@ export class StudentUpdateFormComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.updateStudentForm = this.fb.group({
-      id: [''],
-      hoTen: [''],
-      gioiTinh: [''],
-      ngaySinh: [''],
-      classId: [''],
-      anh: [''],
+      id: ['', Validators.required],
+      hoTen: ['', Validators.required],
+      gioiTinh: ['', Validators.required],
+      ngaySinh: ['', Validators.required],
+      classId: [-1, Validators.required],
+      anh: ['', Validators.required],
     });
   }
 
@@ -47,7 +47,7 @@ export class StudentUpdateFormComponent implements OnChanges {
     const studentChange = changes['student'];
 
     if (studentChange && studentChange.currentValue && this.student) {
-      this.updateStudentForm.patchValue(this.student);
+      this.updateStudentForm.patchValue({...this.student, classId: this.student.classId || -1});
 
       this.oldFileUrl = this.student.anh || '';
       this.anhHocSinhPreview = this.oldFileUrl === '' ? null : this.oldFileUrl;
@@ -81,6 +81,7 @@ export class StudentUpdateFormComponent implements OnChanges {
   }
 
   save() {
+    console.log(this.updateStudentForm.value);
     this.updateStudent.emit({ student: this.updateStudentForm.value, anh: { file: this.anhHocSinhUploaded, oldFileChanged: this.oldFileChanged } });
   }
 

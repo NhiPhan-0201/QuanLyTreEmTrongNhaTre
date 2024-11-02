@@ -58,7 +58,7 @@ export class StudentAddNewFormComponent {
 
   private subscribeToValueChanges(control: AbstractControl): void {
     control.valueChanges.subscribe(() => {
-      this.errors = validateData(this.newStudentForm);
+      this.errors = validateData(this.newStudentForm,this.anhHocSinhUploaded);
     });
   }
 
@@ -96,8 +96,9 @@ export class StudentAddNewFormComponent {
   }
 
   save() {
-    this.errors = validateData(this.newStudentForm,);
+    this.errors = validateData(this.newStudentForm,this.anhHocSinhUploaded);
 
+    if(Object.keys(this.errors).length > 0) return;
     this.saveStudent.emit({ student: this.newStudentForm.value, anh: this.anhHocSinhUploaded });
   }
 
