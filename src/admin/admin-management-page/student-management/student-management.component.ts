@@ -132,7 +132,7 @@ export class StudentManagementComponent implements OnInit {
         id: i,
         hoTen: `Học sinh ${i}`,
         gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
-        ngaySinh: Date.now().toString(),
+        ngaySinh: new Date().toLocaleDateString('vi-VN'),
         anh: 'https://picsum.photos/' + (i + 100),
         classId: i % 10 + 1,
         quanLiLop: this.classes.find((c) => c.id == i % 10 + 1)
@@ -158,7 +158,6 @@ export class StudentManagementComponent implements OnInit {
     this.openAddStudentForm = true;
   }
   handleOpenUpdateStudentForm(student: ThongTinTre) {
-    console.log(student)
     this.selectedStudent = student;
     this.openUpdateStudentForm = true;
   }
@@ -177,7 +176,7 @@ export class StudentManagementComponent implements OnInit {
     this.openDeleteConfirmationDialog = false;
   }
 
-  handleSaveNewStudent({ student, anh }: { student: ThongTinTre; anh?: File | null }) {
+  handleSaveNewStudent({ student, anh }: { student: ThongTinTre; anh: File | null }) {
     let upload$ = anh
       ? this.uploadService.uploadImage(anh).pipe(
         switchMap((res) => {
@@ -238,4 +237,14 @@ export function validateData(formGroup: FormGroup): any {
   if (!formGroup.value.ngaySinh) {
     errors.ngaySinh = 'Ngày sinh không được để trống';
   }
+
+  if (!formGroup.value.classId) {
+    errors.classId = 'Lớp không được để trống';
+  }
+
+  if (!formGroup.value.phuHuynhId) {
+    errors.phuHuynhId = 'Phụ huynh không được để trống';
+  }
+
+  return errors;
 }

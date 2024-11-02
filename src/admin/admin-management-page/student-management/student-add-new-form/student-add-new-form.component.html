@@ -7,20 +7,57 @@
 
         <label for="hoTen">Họ tên:</label>
         <input type="text" id="hoTen" formControlName="hoTen">
+        <p *ngIf="errors.hoTen" class="error-message">{{errors.hoTen}}</p>
 
         <label for="gioiTinh">Giới tính:</label>
         <select id="gioiTinh" class="gioiTinh" formControlName="gioiTinh">
           <option [value]="FEMALE_GENDER">Nữ</option>
           <option [value]="MALE_GENDER">Nam</option>
         </select>
+        <p *ngIf="errors.gioiTinh" class="error-message">{{errors.gioiTinh}}</p>
 
         <label for="ngaySinh">Ngày sinh:</label>
         <input type="date" id="ngaySinh" formControlName="ngaySinh">
+        <p *ngIf="errors.ngaySinh" class="error-message">{{errors.ngaySinh}}</p>
 
         <label for="anh">Ảnh:</label>
         <input id="anh" type="file" #filePicker (change)="onImagePicked($event)">
+        <p *ngIf="errors.anh" class="error-message">{{errors.anh}}</p>
+
+        <label for="classId">Lớp:</label>
+        <select id="classId" formControlName="classId">
+          <option *ngFor="let classes of classes" [value]="classes.id">{{classes.tenLop}}</option>
+        </select>
+        <p *ngIf="errors.classId" class="error-message">{{errors.classId}}</p>
       </div>
-      <div class="form-col">
+      <div class="form-2-col">
+        <label for="searchParent">Tìm kiếm phụ huynh:</label>
+        <input type="text" id="searchParent" (input)="onSearchParent($event)"
+          placeholder=" Nhập tên cha, tên mẹ hoặc tên tài khoản">
+        <div class="search-results" *ngIf="filteredParents.length > 0">
+          <label>Chọn phụ huynh:</label>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Username</th>
+                <th>Họ tên cha</th>
+                <th>Họ tên mẹ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of filteredParents">
+                <ng-container *ngIf="account">
+                  <td> <input type="radio" [value]="account.phuHuynh?.id" formControlName="phuHuynhId"></td>
+                  <td>{{account.username}}</td>
+                  <td>{{account.phuHuynh?.hoTenCha}}</td>
+                  <td>{{account.phuHuynh?.hoTenMe}}</td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p *ngIf="errors.phuHuynhId" class="error-message">{{errors.phuHuynhId}}</p>
         <img [src]="anhHocSinhPreview" *ngIf="anhHocSinhPreview" />
       </div>
     </div>

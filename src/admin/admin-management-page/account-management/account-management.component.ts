@@ -53,14 +53,13 @@ export class AccountManagementComponent implements OnInit {
       },
       error: (error) => {
         console.error('Lỗi khi tải accounts:', error);
-        this.accounts = this.generateMockAccounts(); // Sử dụng dữ liệu giả lập khi xảy ra lỗi
+        this.accounts = this.generateMockAccounts();
         this.isLoading = false;
-        this.onSearch(); // Gọi tìm kiếm trên dữ liệu giả lập
+        this.onSearch();
       }
     });
   }
 
-  // Hàm tạo dữ liệu giả lập trong trường hợp lỗi
   private generateMockAccounts() {
     const mockAccounts = [];
     for (let i = 0; i < 10; i++) {
@@ -76,7 +75,7 @@ export class AccountManagementComponent implements OnInit {
           gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
           soDienThoai: '0987654321',
           email: 'admin' + i + '@gmail.com',
-          anh: 'https://cdn.openart.ai/published/cMIZlKZ7jBHCVg4nP3Cf/_oUjeluh_Fm8c_1024.webp',
+          anh: `https://api.dicebear.com/9.x/avataaars/svg?seed=${i}`,
         }
       });
     }
@@ -142,7 +141,9 @@ export class AccountManagementComponent implements OnInit {
     this.openUpdateAccountForm = true;
   }
   handleUpdateAccount({ updatedAccount, anh: { file, oldFileChanged } }: { updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }) {
-    // Kiểm tra xem có cần tải lên ảnh không
+    if (updatedAccount.password === '') {
+      delete updatedAccount.password;
+    }
     let upload$;
     if (updatedAccount.role === 'GiaoVien' && oldFileChanged && file) {
       upload$ = this.uploadService.uploadImage(file).pipe(
@@ -157,13 +158,12 @@ export class AccountManagementComponent implements OnInit {
 
     upload$.subscribe({
       next: (res) => {
-        // Cập nhật danh sách tài khoản trong component
         this.accounts = this.accounts.map(account => account.id === res.id ? res : account);
-        this.onSearch(); // Gọi hàm tìm kiếm để cập nhật danh sách
-        this.closeForm(); // Đóng form sau khi hoàn tất
+        this.onSearch();
+        this.closeForm();
       },
       error: (error) => {
-        console.error('Error updating account:', error); // Log lỗi nếu có
+        console.error('Error updating account:', error);
       }
     });
   }

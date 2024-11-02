@@ -69,7 +69,6 @@ export class AccountAddNewFormComponent {
   subscribeToFormControls(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach((key) => {
       const control = formGroup.get(key);
-      const errorKey = key
 
       if (control) {
         if (control instanceof FormGroup) {

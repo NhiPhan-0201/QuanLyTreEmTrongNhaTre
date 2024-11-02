@@ -116,12 +116,7 @@ export class AccountUpdateFormComponent implements OnChanges {
 
   cancelUploadAnh() {
     this.anhGiaoVienPreview = this.oldFileUrl;
-    if (this.oldFileUrl) convertUrlToFile(this.oldFileUrl, Date.now() + '.jpg', 'image/jpeg')
-      .then((file) => {
-        this.anhGiaoVienUploaded = file;
-      })
-      .catch(error => console.error('Lỗi:', error));
-    else this.anhGiaoVienUploaded = null;
+    this.anhGiaoVienUploaded = null;
     this.oldFileChanged = false;
     this.updateAccountForm.get('giaoVien.anh')?.setValue(this.oldFileUrl);
   }

@@ -19,6 +19,13 @@
     overflow-y: auto;
 }
 
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 .account-add-new-form form {
     display: flex;
     flex-direction: column;

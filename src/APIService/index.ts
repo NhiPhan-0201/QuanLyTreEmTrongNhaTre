@@ -3,7 +3,7 @@ import { ThongTinTreService } from "./ThongTinTre.service";
 import { QuanLiLopService } from "./QuanLiLop.service";
 import { UploadService } from "./Upload.service";
 
-export type {
+export {
   AccountService,
   ThongTinTreService,
   QuanLiLopService,
