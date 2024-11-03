@@ -12,7 +12,7 @@ import { XemthongbaoService } from '../../../../APIService/xemthongbao.service';
   styleUrls: ['./xem-thong-bao.component.css']
 })
 export class XemThongBaoComponent implements OnInit {
-  announcements: any[] = []; // Mảng lưu thông báo
+  announcements: any[] = [];
 
   constructor(private notificationService: XemthongbaoService) {}
 
@@ -21,7 +21,7 @@ export class XemThongBaoComponent implements OnInit {
   }
 
   fetchAnnouncements(): void {
-    this.notificationService.getAllThongbao().subscribe(
+    this.notificationService.getThongBao().subscribe(
       (data: any[]) => this.announcements = data,
       (error: any) => console.error('Error fetching announcements:', error)
     );
