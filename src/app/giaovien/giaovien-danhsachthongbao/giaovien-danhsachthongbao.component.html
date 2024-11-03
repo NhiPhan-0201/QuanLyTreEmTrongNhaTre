@@ -1,0 +1,14 @@
+<div class="thong-bao-container">
+    <h2>Danh sách thông báo:</h2>
+    <ul>
+      <li *ngFor="let thongBao of thongBaoList">
+          <a class="thong-bao-title" (click)="viewThongBao(thongBao.id)">
+              {{ thongBao.tieuDe }}
+          </a>
+          <span class="thong-bao-type">({{ thongBao.loaiThongBao }})</span>
+      </li>
+    </ul>
+    <ng-template #noData>
+        <p>Không có thông báo nào để hiển thị.</p>
+    </ng-template>
+  </div>

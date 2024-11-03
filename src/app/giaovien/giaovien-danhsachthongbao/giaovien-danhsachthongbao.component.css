@@ -1,0 +1,46 @@
+.thong-bao-container {
+  padding: 10px;
+  background-color: #f8d7da; /* Màu nền hồng nhạt */
+  border: 1px solid #f5c6cb; /* Viền màu hồng đậm */
+  border-radius: 8px; /* Tăng độ bo tròn cho hộp */
+}
+
+.thong-bao-container h2 {
+  color: white; /* Màu chữ trắng */
+  background-color: #dc3545; /* Màu đỏ đậm cho phần tiêu đề */
+  padding: 8px;
+  margin: 0; /* Xóa khoảng cách bên ngoài */
+  border-radius: 8px 8px 0 0; /* Bo tròn góc trên */
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 8px 0; /* Tăng khoảng cách giữa các thông báo */
+}
+
+.thong-bao-title {
+  color: #007bff; /* Màu xanh dương cho tiêu đề thông báo */
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.thong-bao-title:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+
+.thong-bao-content {
+  display: block;
+  color: #333;
+  margin-left: 20px;
+}
+
+.thong-bao-type {
+  color: gray;
+  font-size: 0.9em;
+  margin-left: 5px;
+}

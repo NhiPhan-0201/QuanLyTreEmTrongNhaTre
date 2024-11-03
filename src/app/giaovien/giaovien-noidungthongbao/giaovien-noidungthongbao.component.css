@@ -1,0 +1,67 @@
+.chi-tiet-thong-bao-container {
+    width: 100%; /* Chiếm toàn bộ chiều rộng cột bên phải */
+    padding: 20px;
+    background-color: #f8d7da;
+    border-left: 3px solid #dc3545; /* Viền trái để tạo sự nổi bật */
+    font-family: Arial, sans-serif;
+    box-sizing: border-box; /* Đảm bảo padding không làm ảnh hưởng đến chiều rộng */
+    position: relative; /* Để nút "Trở về" có thể định vị tuyệt đối trong container */
+}
+
+.chi-tiet-thong-bao-container h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #dc3545;
+    padding: 10px;
+    margin: 0 0 20px 0;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.thong-bao-title {
+    font-size: 18px;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.thong-bao-title:hover {
+    text-decoration: underline;
+}
+
+.thong-bao-date {
+    font-size: 14px;
+    color: #6c757d;
+    margin-left: 10px;
+    font-style: italic;
+}
+
+.thong-bao-content {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    padding: 10px 0;
+}
+
+.view-other-notices {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #20c997;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.view-other-notices:hover {
+    background-color: #17a2b8;
+}

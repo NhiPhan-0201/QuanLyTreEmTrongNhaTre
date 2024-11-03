@@ -1,0 +1,15 @@
+<div class="chi-tiet-thong-bao-container" *ngIf="thongBao$ | async as thongBao">
+    <h2>Nội dung thông báo</h2>
+    <div>
+        <a class="thong-bao-title">{{ thongBao.tieuDe }}</a>
+        <span class="thong-bao-date">({{ thongBao.loaiThongBao }})</span>
+    </div>
+    <div class="thong-bao-content">
+        {{ thongBao.noiDung }}
+    </div>
+    <a class="view-other-notices" (click)="goBack()">Trở về</a>
+</div>
+<div *ngIf="!(thongBao$ | async)">
+    <p>Thông báo không tồn tại.</p>
+    <button class="view-other-notices" (click)="goBack()">Trở về</button>
+</div>

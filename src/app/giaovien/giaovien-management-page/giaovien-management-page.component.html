@@ -1,0 +1,20 @@
+<div class="header">
+  <h1>Phần Header</h1>
+</div>
+
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>GV Sidebar</h2>
+    <ul>
+      <li><button routerLink="danhsachhocsinh" routerLinkActive="active"><i class="icon">📋</i> Danh sách học sinh</button></li>
+      <li><button routerLink="diemdanh" routerLinkActive="active"><i class="icon">📋</i> Điểm danh</button></li>
+      <li><button routerLink="danhsachthongbao" routerLinkActive="active"><i class="icon">📋</i> Danh sách thông báo</button></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
