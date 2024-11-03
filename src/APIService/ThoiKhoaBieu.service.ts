@@ -25,7 +25,7 @@ interface ThoiKhoaBieu {
 })
 export class ThoiKhoaBieuService {
   private apiUrl = '../assets/api-thoikhoabieu.json';
-  // Token mặc định cung cấp trực tiếp
+  
   private defaultToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ3V5ZW50aGlhbiIsImlhdCI6MTczMDYyMTY0MSwiZXhwIjoxNzMwNzA4MDQxfQ.AaMSesrsprgUdBcRJzOajLfD8Xg40ojry_QjTbx3uPg';
 
   private sampleData: ThoiKhoaBieu[] = [
