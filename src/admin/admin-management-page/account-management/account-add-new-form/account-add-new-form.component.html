@@ -7,28 +7,30 @@
 
         <label for="username" class="mb-2">Username:</label>
         <input type="text" id="username" formControlName="username"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.username">{{errors?.username}}</h4>
 
         <label for="password" class="mb-2">Mật khẩu:</label>
         <input type="password" id="password" formControlName="password"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.password">{{errors?.password}}</h4>
 
         <label for="confirmPassword" class="mb-2">Nhập lại mật khẩu:</label>
         <input type="password" id="confirmPassword" formControlName="confirmPassword"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.confirmPassword">{{errors?.confirmPassword}}</h4>
 
         <label for="status" class="mb-2">Trạng thái:</label>
-        <select id="status" class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500"
+        <select id="status"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in hover:scale-105 active:scale-95"
           formControlName="status">
           <option [value]="ENABLED_STATUS">Đang sử dụng</option>
           <option [value]="DISABLED_STATUS">Không còn sử dụng</option>
         </select>
 
         <label for="role" class="mb-2">Vai trò:</label>
-        <select id="role" class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500"
+        <select id="role"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in hover:scale-105 active:scale-95"
           formControlName="role">
           <option [value]="ADMIN_ROLE">Admin</option>
           <option [value]="PARENT_ROLE">Phụ huynh</option>
@@ -36,7 +38,7 @@
         </select>
 
         <img [src]="anhGiaoVienPreview" *ngIf="anhGiaoVienPreview && newAccountForm.value.role === TEACHER_ROLE"
-          class="h-[200px] w-auto max-w-full object-contain mb-4" />
+          class="h-[200px] w-auto max-w-full object-contain mb-4 transition-transform duration-200 ease-in-out hover:scale-105" />
       </div>
 
       <div class="flex flex-col w-[25dvw]" formGroupName="phuHuynh" *ngIf="newAccountForm.value.role === PARENT_ROLE">
@@ -44,37 +46,37 @@
 
         <label for="hoTenCha" class="mb-2">Họ tên cha:</label>
         <input type="text" id="hoTenCha" formControlName="hoTenCha"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.hoTenCha">{{errors?.hoTenCha}}</h4>
 
         <label for="hoTenMe" class="mb-2">Họ tên mẹ:</label>
         <input type="text" id="hoTenMe" formControlName="hoTenMe"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.hoTenMe">{{errors?.hoTenMe}}</h4>
 
         <label for="sdtCha" class="mb-2">Số điện thoại cha:</label>
         <input type="text" id="sdtCha" formControlName="sdtCha"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.sdtCha">{{errors?.sdtCha}}</h4>
 
         <label for="sdtMe" class="mb-2">Số điện thoại mẹ:</label>
         <input type="text" id="sdtMe" formControlName="sdtMe"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.sdtMe">{{errors?.sdtMe}}</h4>
 
         <label for="emailCha" class="mb-2">Email cha:</label>
         <input type="text" id="emailCha" formControlName="emailCha"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.emailCha">{{errors?.emailCha}}</h4>
 
         <label for="emailMe" class="mb-2">Email mẹ:</label>
         <input type="text" id="emailMe" formControlName="emailMe"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.emailMe">{{errors?.emailMe}}</h4>
 
         <label for="diaChi" class="mb-2">Địa chỉ:</label>
         <input type="text" id="diaChi" formControlName="diaChi"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.diaChi">{{errors?.diaChi}}</h4>
       </div>
 
@@ -83,11 +85,12 @@
 
         <label for="hoTen" class="mb-2">Họ tên:</label>
         <input type="text" id="hoTen" formControlName="hoTen"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.hoTen">{{errors?.hoTen}}</h4>
 
         <label for="gioiTinh" class="mb-2">Giới tính:</label>
-        <select id="gioiTinh" class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500"
+        <select id="gioiTinh"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
           formControlName="gioiTinh">
           <option [value]="MALE_GENDER">Nam</option>
           <option [value]="FEMALE_GENDER">Nữ</option>
@@ -96,40 +99,46 @@
 
         <label for="soDienThoai" class="mb-2">Số điện thoại:</label>
         <input type="text" id="soDienThoai" formControlName="soDienThoai"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.soDienThoai">{{errors?.soDienThoai}}</h4>
 
         <label for="diaChi" class="mb-2">Địa chỉ:</label>
         <input type="text" id="diaChi" formControlName="diaChi"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.diaChi">{{errors?.diaChi}}</h4>
 
         <label for="chuyenMon" class="mb-2">Chuyên môn:</label>
         <input type="text" id="chuyenMon" formControlName="chuyenMon"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.chuyenMon">{{errors?.chuyenMon}}</h4>
 
         <label for="email" class="mb-2">Email:</label>
         <input type="text" id="email" formControlName="email"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.email">{{errors?.email}}</h4>
 
         <label for="anh" class="mb-2">Ảnh:</label>
-        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)" accept=".jpg, .jpeg, .png"
-          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500" />
+        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)"
+          accept="image/jpg, image/jpeg, image/png"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95" />
         <div class="flex justify-between" *ngIf="anhGiaoVienPreview">
-          <button class="cancel-button bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+          <button
+            class="cancel-button bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition-transform duration-200 ease-in-out focus:outline-none focus:ring-4 focus:ring-red-500 active:scale-95"
             (click)="cancelUploadAnh()">Xóa ảnh</button>
         </div>
         <h4 class="text-red-600 text-sm font-bold mb-2" *ngIf="errors?.anh">{{errors?.anh}}</h4>
       </div>
+
+
     </div>
 
-    <div class="flex justify-end mt-auto">
-      <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-        (click)="save()">Thêm</button>
-      <button type="button" (click)="close()"
-        class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 ml-2">Hủy</button>
+    <div class="flex justify-between mt-8">
+      <button type="button"
+        class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 focus:outline-none transition-transform duration-200 ease-in-out hover:scale-125 focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 active:scale-95"
+        (click)="save()">Lưu</button>
+      <button type="button"
+        class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 focus:outline-none transition-transform duration-200 ease-in-out hover:scale-125 focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 active:scale-95"
+        (click)="close()">Hủy</button>
     </div>
   </form>
 </div>

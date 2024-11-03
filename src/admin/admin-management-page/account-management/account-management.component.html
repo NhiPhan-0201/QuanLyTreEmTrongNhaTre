@@ -1,9 +1,11 @@
 <div class="flex flex-col p-5 bg-gray-100 rounded-lg shadow-md mx-auto font-sans">
   <div class="flex justify-between flex-wrap mb-5">
-    <input class="w-full p-2 border border-gray-300 rounded-lg focus:border-blue-500" type="text"
-      placeholder="Search user..." (input)="onSearch($event)" />
+    <input
+      class="w-full p-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200 ease-in-out"
+      type="text" placeholder="Search user..." (input)="onSearch($event)" />
     <div class="flex justify-end w-full">
-      <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+      <button
+        class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 hover:scale-105 transition-transform duration-200"
         (click)="handleOpenAddAccountForm()">Thêm tài khoản mới</button>
     </div>
   </div>
@@ -12,33 +14,44 @@
   <table class="w-full mb-5 border-collapse bg-white rounded-lg overflow-hidden shadow">
     <thead>
       <tr>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Tên tài khoản</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Họ tên Cha</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Họ tên Mẹ</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">SĐT Cha</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">SĐT Mẹ</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Email Cha</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Email Mẹ</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Địa chỉ</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Hành động</th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Tên tài
+          khoản</th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Họ tên Cha
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Họ tên Mẹ
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">SĐT Cha
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">SĐT Mẹ
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Email Cha
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Email Mẹ
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Địa chỉ
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Hành động
+        </th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngIf="!isLoading; else loadingPhuHuynhTemplate">
-        <tr *ngFor="let user of phuHuynhAccounts" class="hover:bg-gray-100">
-          <td class="p-3 border border-gray-300" data-label="Tên tài khoản">{{ user.username }}</td>
-          <td class="p-3 border border-gray-300" data-label="Họ tên Cha">{{ user.phuHuynh?.hoTenCha }}</td>
-          <td class="p-3 border border-gray-300" data-label="Họ tên mẹ">{{ user.phuHuynh?.hoTenMe }}</td>
-          <td class="p-3 border border-gray-300" data-label="SĐT Cha">{{ user.phuHuynh?.sdtCha }}</td>
-          <td class="p-3 border border-gray-300" data-label="SĐT Mẹ">{{ user.phuHuynh?.sdtMe }}</td>
-          <td class="p-3 border border-gray-300" data-label="Email Cha">{{ user.phuHuynh?.emailCha }}</td>
-          <td class="p-3 border border-gray-300" data-label="Email Mẹ">{{ user.phuHuynh?.emailMe }}</td>
-          <td class="p-3 border border-gray-300" data-label="Địa chỉ">{{ user.phuHuynh?.diaChi }}</td>
-          <td class="p-3 border border-gray-300" data-label="Hành động">
-            <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+        <tr *ngFor="let user of phuHuynhAccounts" class="hover:bg-gray-200 transition duration-200">
+          <td class="p-3 border border-gray-300 text-center" data-label="Tên tài khoản">{{ user.username }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Họ tên Cha">{{ user.phuHuynh?.hoTenCha }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Họ tên mẹ">{{ user.phuHuynh?.hoTenMe }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="SĐT Cha">{{ user.phuHuynh?.sdtCha }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="SĐT Mẹ">{{ user.phuHuynh?.sdtMe }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Email Cha">{{ user.phuHuynh?.emailCha }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Email Mẹ">{{ user.phuHuynh?.emailMe }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Địa chỉ">{{ user.phuHuynh?.diaChi }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Hành động">
+            <button
+              class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 hover:scale-105 transition-transform duration-200"
               (click)="handleOpenUpdateAccountForm(user)">Edit</button>
             <span class="mx-2">|</span>
-            <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+            <button
+              class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 hover:scale-105 transition-transform duration-200"
               (click)="handleOpenDeleteAccountConfirmation(user)">Delete</button>
           </td>
         </tr>
@@ -48,14 +61,14 @@
 
   <div class="page-navigator flex justify-between items-center mt-5">
     <button
-      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors duration-200"
       [disabled]="currentPhuHuynhAccountsPage === 1"
       (click)="handlePhuHuynhPageChange(currentPhuHuynhAccountsPage - 1)">
       Prev
     </button>
     <span class="text-gray-800 text-lg">{{ currentPhuHuynhAccountsPage }}/{{ totalPhuHuynhAccountsPage }}</span>
     <button
-      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors duration-200"
       [disabled]="currentPhuHuynhAccountsPage >= totalPhuHuynhAccountsPage"
       (click)="handlePhuHuynhPageChange(currentPhuHuynhAccountsPage + 1)">
       Next
@@ -66,37 +79,46 @@
   <table class="w-full mb-5 border-collapse bg-white rounded-lg overflow-hidden shadow">
     <thead>
       <tr>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Tên tài khoản</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Họ tên</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Giới tính</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Số ĐT</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Địa chỉ</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Chuyên môn</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Email</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Ảnh</th>
-        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold">Hành động</th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Tên tài
+          khoản</th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Họ tên
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Giới tính
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Số ĐT</th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Địa chỉ
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Chuyên môn
+        </th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Email</th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Ảnh</th>
+        <th class="p-3 border border-gray-300 bg-blue-500 text-white uppercase text-sm font-bold text-center">Hành động
+        </th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngIf="!isLoading; else loadingGiaoVienTemplate">
-        <tr *ngFor="let user of giaoVienAccounts" class="hover:bg-gray-100">
-          <td class="p-3 border border-gray-300" data-label="Tên tài khoản">{{ user.username }}</td>
-          <td class="p-3 border border-gray-300" data-label="Họ và tên">{{ user.giaoVien?.hoTen }}</td>
-          <td class="p-3 border border-gray-300" data-label="Giới tính">{{ user.giaoVien?.gioiTinh }}</td>
-          <td class="p-3 border border-gray-300" data-label="Số điện thoại">{{ user.giaoVien?.soDienThoai }}</td>
-          <td class="p-3 border border-gray-300" data-label="Địa chỉ">{{ user.giaoVien?.diaChi }}</td>
-          <td class="p-3 border border-gray-300" data-label="Chuyên môn">{{ user.giaoVien?.chuyenMon }}</td>
-          <td class="p-3 border border-gray-300" data-label="Email">{{ user.giaoVien?.email }}</td>
-          <td class="p-3 border border-gray-300" data-label="Ảnh">
+        <tr *ngFor="let user of giaoVienAccounts" class="hover:bg-gray-200 transition duration-200">
+          <td class="p-3 border border-gray-300 text-center" data-label="Tên tài khoản">{{ user.username }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Họ và tên">{{ user.giaoVien?.hoTen }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Giới tính">{{ user.giaoVien?.gioiTinh }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Số điện thoại">{{ user.giaoVien?.soDienThoai }}
+          </td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Địa chỉ">{{ user.giaoVien?.diaChi }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Chuyên môn">{{ user.giaoVien?.chuyenMon }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Email">{{ user.giaoVien?.email }}</td>
+          <td class="p-3 border border-gray-300 text-center" data-label="Ảnh">
             <div class="w-24 h-24 overflow-hidden rounded-full border">
               <img class="w-full h-full object-cover" [src]="user.giaoVien?.anh" alt="avatar" />
             </div>
           </td>
           <td class="p-3 border border-gray-300" data-label="Hành động">
-            <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+            <button
+              class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 hover:scale-105 transition-transform duration-200"
               (click)="handleOpenUpdateAccountForm(user)">Edit</button>
             <span class="mx-2">|</span>
-            <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+            <button
+              class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 hover:scale-105 transition-transform duration-200"
               (click)="handleOpenDeleteAccountConfirmation(user)">Delete</button>
           </td>
         </tr>
@@ -104,23 +126,23 @@
     </tbody>
   </table>
 
+
+
   <div class="page-navigator flex justify-between items-center mt-5">
     <button
-      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors duration-200"
       [disabled]="currentGiaoVienAccountsPage === 1"
       (click)="handleGiaoVienPageChange(currentGiaoVienAccountsPage - 1)">
       Prev
     </button>
     <span class="text-gray-800 text-lg">{{ currentGiaoVienAccountsPage }}/{{ totalGiaoVienAccountsPage }}</span>
     <button
-      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors duration-200"
       [disabled]="currentGiaoVienAccountsPage >= totalGiaoVienAccountsPage"
       (click)="handleGiaoVienPageChange(currentGiaoVienAccountsPage + 1)">
       Next
     </button>
   </div>
-
-
 
   <ng-template #loadingPhuHuynhTemplate>
     <tr>

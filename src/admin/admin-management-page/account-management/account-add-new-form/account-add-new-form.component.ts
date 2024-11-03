@@ -49,6 +49,7 @@ export class AccountAddNewFormComponent {
         sdtMe: '',
         emailCha: '',
         emailMe: '',
+        diaChi: '',
       }),
       giaoVien: this.fb.group({
         hoTen: '',
@@ -127,6 +128,11 @@ export class AccountAddNewFormComponent {
   }
 
   save() {
+
+    this.errors = validateData(this.newAccountForm, this.anhGiaoVienUploaded);
+
+    console.log(this.errors);
+
     if (Object.keys(this.errors).length === 0) {
       this.saveAccount.emit({ newAccount: this.newAccountForm.value, anh: this.anhGiaoVienUploaded });
     }

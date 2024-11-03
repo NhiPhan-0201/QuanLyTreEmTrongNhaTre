@@ -3,10 +3,10 @@
 
   <div class="search-bar flex flex-wrap justify-between mb-5">
     <input
-      class="w-full md:w-2/3 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-3 md:mb-0"
+      class="w-full md:w-2/3 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-3 md:mb-0 hover:shadow-lg transition-shadow"
       type="text" placeholder="Tìm kiếm theo tên..." (input)="onSearchStudent($event)" />
     <div class="actions flex justify-end w-full md:w-1/3">
-      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105"
         (click)="handleOpenAddStudentForm()">
         Thêm học sinh mới
       </button>
@@ -18,33 +18,35 @@
     <table class="student-management-table w-full mb-5 border-collapse bg-white rounded-lg overflow-hidden">
       <thead>
         <tr class="bg-blue-500 text-white uppercase text-sm font-semibold">
-          <th class="px-3 py-2">Họ và tên</th>
-          <th class="px-3 py-2">Ngày sinh</th>
-          <th class="px-3 py-2">Giới tính</th>
-          <th class="px-3 py-2">Lớp</th>
-          <th class="px-3 py-2">Ảnh</th>
-          <th class="px-3 py-2">Hành động</th>
+          <th class="text-center px-3 py-2">Họ và tên</th>
+          <th class="text-center px-3 py-2">Ngày sinh</th>
+          <th class="text-center px-3 py-2">Giới tính</th>
+          <th class="text-center px-3 py-2">Lớp</th>
+          <th class="text-center px-3 py-2">Ảnh</th>
+          <th class="text-center px-3 py-2">Hành động</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngIf="!isLoading; else loadingHocSinhTemplate">
           <tr *ngFor="let student of filteredStudents.slice((currentPage - 1) * rowPerPage, currentPage * rowPerPage)"
-            class="odd:bg-white even:bg-gray-50 border-b">
-            <td class="px-3 py-2 border">{{ student.hoTen }}</td>
-            <td class="px-3 py-2 border">{{ student.ngaySinh }}</td>
-            <td class="px-3 py-2 border">{{ student.gioiTinh }}</td>
-            <td class="px-3 py-2 border">{{ student.quanLiLop?.tenLop || 'Chưa có lớp' }}</td>
-            <td class="px-3 py-2 border">
-              <div class="image-container w-24 h-24 mx-auto">
+            class="odd:bg-white even:bg-gray-50 border-b transition-colors hover:bg-gray-200 duration-500">
+            <td class="text-center px-3 py-2 border">{{ student.hoTen }}</td>
+            <td class="text-center px-3 py-2 border">{{ student.ngaySinh }}</td>
+            <td class="text-center px-3 py-2 border">{{ student.gioiTinh }}</td>
+            <td class="text-center px-3 py-2 border">{{ student.quanLiLop?.tenLop || 'Chưa có lớp' }}</td>
+            <td class="text-center px-3 py-2 border">
+              <div class="image-container w-24 h-24 mx-auto hover:scale-[1.4] hover:z-10 transform duration-300">
                 <img class="w-full h-full object-cover rounded" [src]="student.anh" alt="avatar" />
               </div>
             </td>
-            <td class="px-3 py-2 border">
-              <button class="text-blue-500 hover:underline" (click)="handleOpenUpdateStudentForm(student)">Edit</button>
+            <td class="px-3 py-2 border text-center">
+              <button
+                class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition-transform duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                (click)="handleOpenUpdateStudentForm(student)">Edit</button>
               <span class="mx-2">|</span>
-              <button class="text-red-500 hover:underline" (click)="handleOpenDeleteStudentConfirmation(student)">
-                Delete
-              </button>
+              <button
+                class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition-transform duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                (click)="handleOpenDeleteStudentConfirmation(student)">Delete</button>
             </td>
           </tr>
         </ng-container>
@@ -56,7 +58,7 @@
   <div class="md:hidden">
     <ng-container
       *ngFor="let student of filteredStudents.slice((currentPage - 1) * rowPerPage, currentPage * rowPerPage)">
-      <div class="block bg-white rounded-lg p-4 shadow mb-4">
+      <div class="block bg-white rounded-lg p-4 shadow mb-4 transition-transform hover:shadow-lg hover:scale-105">
         <div class="font-semibold">{{ student.hoTen }}</div>
         <div>Ngày sinh: {{ student.ngaySinh }}</div>
         <div>Giới tính: {{ student.gioiTinh }}</div>
@@ -65,11 +67,11 @@
           <img class="w-full h-full object-cover rounded" [src]="student.anh" alt="avatar" />
         </div>
         <div class="mt-2">
-          <button class="text-blue-500 hover:underline" (click)="handleOpenUpdateStudentForm(student)">Edit</button>
+          <button class="text-blue-500 hover:underline hover:scale-105 transition-transform"
+            (click)="handleOpenUpdateStudentForm(student)">Edit</button>
           <span class="mx-2">|</span>
-          <button class="text-red-500 hover:underline" (click)="handleOpenDeleteStudentConfirmation(student)">
-            Delete
-          </button>
+          <button class="text-red-500 hover:underline hover:scale-105 transition-transform"
+            (click)="handleOpenDeleteStudentConfirmation(student)">Delete</button>
         </div>
       </div>
     </ng-container>
@@ -77,13 +79,13 @@
 
   <div class="page-navigator flex justify-between items-center mt-5">
     <button
-      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors hover:scale-105"
       [disabled]="currentPage === 1" (click)="handlePageChange(currentPage - 1)">
       Prev
     </button>
     <span class="text-gray-800 text-lg">{{ currentPage }}/{{ totalPage }}</span>
     <button
-      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors hover:scale-105"
       [disabled]="currentPage >= totalPage" (click)="handlePageChange(currentPage + 1)">
       Next
     </button>

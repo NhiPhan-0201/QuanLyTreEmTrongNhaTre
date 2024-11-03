@@ -1,7 +1,7 @@
 import { AccountService } from "./account.service";
-import { ThongTinTreService } from "./ThongTinTre.service";
-import { QuanLiLopService } from "./QuanLiLop.service";
-import { UploadService } from "./Upload.service";
+import { ThongTinTreService } from "./thong-tin-tre.service";
+import { QuanLiLopService } from "./quan-li-lop.service";
+import { UploadService } from "./upload.service";
 import { NhomLopService } from "./nhom-lop-service";
 
 export {
