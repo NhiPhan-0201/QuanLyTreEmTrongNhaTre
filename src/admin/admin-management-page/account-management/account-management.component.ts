@@ -30,11 +30,11 @@ export class AccountManagementComponent implements OnInit {
 
   giaoVienAccounts!: Account[];
   currentGiaoVienAccountsPage: number = 1;
-  totalGiaoVienAccountsPage!: number;
+  totalGiaoVienAccountsPage: number = 1;
 
   phuHuynhAccounts!: Account[];
   currentPhuHuynhAccountsPage: number = 1;
-  totalPhuHuynhAccountsPage!: number;
+  totalPhuHuynhAccountsPage: number = 1;
 
   constructor(private accountService: AccountService, private uploadService: UploadService) {
   }
@@ -119,33 +119,21 @@ export class AccountManagementComponent implements OnInit {
     this.totalPhuHuynhAccountsPage = Math.ceil(this.phuHuynhAccounts.length / 5) || 1;
     this.phuHuynhAccounts = this.phuHuynhAccounts.slice((this.currentPhuHuynhAccountsPage - 1) * 5, this.currentPhuHuynhAccountsPage * 5);
 
+    if (event) {
+      this.currentGiaoVienAccountsPage = 1;
+      this.currentPhuHuynhAccountsPage = 1;
+    }
     this.isLoading = false;
   }
 
-  prevPhuHuynhAccountsPage() {
-    if (this.currentPhuHuynhAccountsPage > 1) {
-      this.currentPhuHuynhAccountsPage--;
-      this.onSearch();
-    }
-  }
-  nextPhuHuynhAccountsPage() {
-    if (this.currentPhuHuynhAccountsPage < this.totalPhuHuynhAccountsPage) {
-      this.currentPhuHuynhAccountsPage++;
-      this.onSearch();
-    }
+  handlePhuHuynhPageChange(page: number) {
+    this.currentPhuHuynhAccountsPage = page;
+    this.onSearch();
   }
 
-  prevGiaoVienAccountsPage() {
-    if (this.currentGiaoVienAccountsPage > 1) {
-      this.currentGiaoVienAccountsPage--;
-      this.onSearch();
-    }
-  }
-  nextGiaoVienAccountsPage() {
-    if (this.currentGiaoVienAccountsPage < this.totalGiaoVienAccountsPage) {
-      this.currentGiaoVienAccountsPage++;
-      this.onSearch();
-    }
+  handleGiaoVienPageChange(page: number) {
+    this.currentGiaoVienAccountsPage = page;
+    this.onSearch();
   }
 
   handleOpenUpdateAccountForm(account: Account) {
@@ -228,10 +216,14 @@ export class AccountManagementComponent implements OnInit {
   }
 }
 
-export function validateData(formGroup: FormGroup) {
+export function validateData(formGroup: FormGroup, anh?: File | null) {
   const errors: any = {};
   const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const phoneNumberPattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+
+  if (!anh) {
+    errors.anh = 'Ảnh không được để trống';
+  }
 
   if (!formGroup.get('username')?.value) {
     errors.username = 'Tên đăng nhập không được để trống';

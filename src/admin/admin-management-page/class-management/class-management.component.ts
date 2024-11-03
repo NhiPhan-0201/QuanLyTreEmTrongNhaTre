@@ -31,7 +31,8 @@ export class ClassManagementComponent implements OnInit {
   filtered_list_lop!: QuanLiLop[];
 
   currentPage: number = 1;
-  totalPage!: number;
+  totalPage: number = 1;
+  rowPerPage: number = 5;
 
   constructor(private classService: QuanLiLopService, private accountService: AccountService, private classGroupService: NhomLopService) { }
 
@@ -157,24 +158,16 @@ export class ClassManagementComponent implements OnInit {
       lop.thongTinGiaoVien?.hoTen.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
 
+    this.totalPage = Math.ceil(this.filtered_list_lop.length / this.rowPerPage);
+
     if (event) {
-      this.totalPage = Math.ceil(this.filtered_list_lop.length / 10);
       this.currentPage = 1;
     }
     this.isLoading = false;
   }
 
-  prevClassesPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.onSearch();
-    }
-  }
-  nextClassesPage() {
-    if (this.currentPage < this.totalPage) {
-      this.currentPage++;
-      this.onSearch();
-    }
+  handlePageChange(page: number) {
+    this.currentPage = page;
   }
 
   handleOpenUpdateLopForm(lop: QuanLiLop) {

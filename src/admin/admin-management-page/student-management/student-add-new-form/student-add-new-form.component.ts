@@ -37,7 +37,7 @@ export class StudentAddNewFormComponent {
       ngaySinh: ['', Validators.required],
       anh: [null],
       classId: [1, Validators.required],
-      phuHuynhId: ['', Validators.required]
+      phuHuynhId: [-1, Validators.required]
     });
     this.subscribeToFormControls(this.newStudentForm);
   }
@@ -58,7 +58,9 @@ export class StudentAddNewFormComponent {
 
   private subscribeToValueChanges(control: AbstractControl): void {
     control.valueChanges.subscribe(() => {
-      this.errors = validateData(this.newStudentForm,this.anhHocSinhUploaded);
+      setTimeout(() => {
+        this.errors = validateData(this.newStudentForm, this.anhHocSinhUploaded);
+      }, 100);
     });
   }
 
@@ -66,6 +68,7 @@ export class StudentAddNewFormComponent {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files.length > 0) {
       this.anhHocSinhUploaded = input.files[0];
+      this.errors = validateData(this.newStudentForm, this.anhHocSinhUploaded);
       const reader = new FileReader();
       reader.onload = () => {
         this.anhHocSinhPreview = reader.result;
@@ -96,9 +99,9 @@ export class StudentAddNewFormComponent {
   }
 
   save() {
-    this.errors = validateData(this.newStudentForm,this.anhHocSinhUploaded);
+    this.errors = validateData(this.newStudentForm, this.anhHocSinhUploaded);
 
-    if(Object.keys(this.errors).length > 0) return;
+    if (Object.keys(this.errors).length > 0) return;
     this.saveStudent.emit({ student: this.newStudentForm.value, anh: this.anhHocSinhUploaded });
   }
 

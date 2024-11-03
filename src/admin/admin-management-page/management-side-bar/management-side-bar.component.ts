@@ -21,36 +21,21 @@ export class ManagementSideBarComponent {
 
   constructor(private router: Router) { }
 
-  handleMouseEnterSideBarToggle() {
-    this.sideBarToggled = "side-bar-toggled";
+  isOpen = false;
+
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
   }
 
-  handleMouseLeaveSideBarToggle() {
-    this.hoverSideBarToggle = false;
-    if (!this.hoverSideBar) {
-      this.sideBarToggled = "side-bar-not-toggled";
-    }
+  onMouseEnter() {
+    this.isOpen = true;
   }
 
-  handleMouseEnterSideBar() {
-    this.hoverSideBar = true;
-    this.sideBarToggled = "side-bar-toggled";
+  onMouseLeave() {
+    this.isOpen = false;
   }
 
-  handleMouseLeaveSideBar() {
-    this.hoverSideBar = false;
-    if (!this.hoverSideBarToggle) {
-      this.sideBarToggled = "side-bar-not-toggled";
-    }
-  }
-
-  handleClickSideBarToggle() {
-    this.sideBarToggled = this.sideBarToggled === "side-bar-toggled" ? "side-bar-not-toggled" : "side-bar-toggled";
-  }
-
-  handleNavigate(path: string) {
-    this.hoverSideBar = this.hoverSideBarToggle = false;
-    this.sideBarToggled = "side-bar-not-toggled";
-    this.router.navigate(['/admin/manage/' + path]);
+  handleClickItem(item: SideBarItem) {
+    this.router.navigate([`/admin/manage/${item.path}`]);
   }
 }

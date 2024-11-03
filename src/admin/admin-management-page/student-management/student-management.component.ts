@@ -28,6 +28,7 @@ export class StudentManagementComponent implements OnInit {
   filteredStudents: ThongTinTre[] = [];
   currentPage: number = 1;
   totalPage: number = 1;
+  rowPerPage: number = 5;
 
 
   openAddStudentForm: boolean = false;
@@ -41,6 +42,11 @@ export class StudentManagementComponent implements OnInit {
   }
 
   onLoad() {
+    this.isLoading = true;
+    this.loadLop();
+  }
+
+  loadLop() {
     this.isLoading = true;
     this.quanLiLopService.getAll().subscribe({
       next: (res) => {
@@ -137,7 +143,8 @@ export class StudentManagementComponent implements OnInit {
         id: i,
         hoTen: `Học sinh ${i}`,
         gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
-        ngaySinh: new Date().toString(),
+        ngaySinh: new Date().toLocaleDateString('vi-VN', { day: "2-digit", month: "2-digit", year: "numeric" })
+          .split('/').reverse().join('-'),
         anh: 'https://picsum.photos/' + (i + 100),
         classId: i % 10 + 1,
         quanLiLop: this.classes.find((c) => c.id == i % 10 + 1)
@@ -155,8 +162,9 @@ export class StudentManagementComponent implements OnInit {
       return student.hoTen.toLowerCase().includes(this.searchValue.toLowerCase());
     });
 
-    this.totalPage = Math.ceil(this.filteredStudents.length / 10);
-    this.currentPage = 1;
+    this.totalPage = Math.ceil(this.filteredStudents.length / this.rowPerPage);
+    if (event)
+      this.currentPage = 1;
   }
 
   handleOpenAddStudentForm() {
@@ -247,7 +255,7 @@ export function validateData(formGroup: FormGroup, anh: File | null): any {
     errors.classId = 'Lớp không được để trống';
   }
 
-  if (!formGroup.value.phuHuynhId) {
+  if (formGroup.value.phuHuynhId === -1) {
     errors.phuHuynhId = 'Phụ huynh không được để trống';
   }
 

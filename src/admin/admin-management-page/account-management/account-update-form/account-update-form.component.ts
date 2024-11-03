@@ -129,8 +129,7 @@ export class AccountUpdateFormComponent implements OnChanges {
   }
 
   save() {
-    this.errors = {};
-    this.errors = validateData(this.updateAccountForm);
+    console.log(this.errors)
 
     if (Object.keys(this.errors).length === 0) {
       this.saveAccount.emit({ updatedAccount: this.updateAccountForm.value, anh: { file: this.anhGiaoVienUploaded, oldFileChanged: this.oldFileChanged } });

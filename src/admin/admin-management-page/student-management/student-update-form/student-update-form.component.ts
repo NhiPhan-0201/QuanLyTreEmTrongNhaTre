@@ -6,6 +6,7 @@ import { Gender } from '../../../../constants/enums';
 import { convertUrlToFile } from '../../../../utils/fileUtils';
 import { QuanLiLop } from '../../../../models/QuanLiLop';
 import { Account } from '../../../../models/Account';
+import { validateData } from '../student-management.component';
 
 @Component({
   selector: 'app-student-update-form',
@@ -25,6 +26,8 @@ export class StudentUpdateFormComponent implements OnChanges {
   anhHocSinhUploaded!: File | null;
   oldFileChanged!: boolean;
   oldFileUrl!: string;
+
+  errors: any = {};
 
   @Input() student!: ThongTinTre | null;
   @Input() classes: QuanLiLop[] = [];
@@ -47,7 +50,7 @@ export class StudentUpdateFormComponent implements OnChanges {
     const studentChange = changes['student'];
 
     if (studentChange && studentChange.currentValue && this.student) {
-      this.updateStudentForm.patchValue({...this.student, classId: this.student.classId || -1});
+      this.updateStudentForm.patchValue({ ...this.student, classId: this.student.classId || -1 });
 
       this.oldFileUrl = this.student.anh || '';
       this.anhHocSinhPreview = this.oldFileUrl === '' ? null : this.oldFileUrl;
@@ -62,6 +65,7 @@ export class StudentUpdateFormComponent implements OnChanges {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files.length > 0) {
       this.anhHocSinhUploaded = input.files[0];
+      this.errors = validateData(this.updateStudentForm, this.anhHocSinhUploaded);
       this.oldFileChanged = true;
       let reader = new FileReader();
 

@@ -1,16 +1,16 @@
-<div class="side-bar-container">
-    <div class="btn-toggle-side-bar" [ngClass]="sideBarToggled" (click)="handleClickSideBarToggle()"
-        (mouseenter)="handleMouseEnterSideBarToggle()" (mouseleave)="handleMouseLeaveSideBarToggle()">
-        <i class="fas fa-bars"></i>
-    </div>
-    <aside class="management-side-bar" [ngClass]=sideBarToggled (mouseenter)="handleMouseEnterSideBar()"
-        (mouseleave)="handleMouseLeaveSideBar()">
-        <ul>
-            <li *ngFor="let item of sideBarItems">
-                <div [ngClass]="{'category-button': true, 'active': item.active}" (click)="handleNavigate(item.path)">
-                    {{item.name}}
-                </div>
-            </li>
-        </ul>
-    </aside>
+<div class="relative" (mouseleave)="onMouseLeave()">
+  <div class="cursor-pointer text-2xl p-2" (click)="toggleSidebar()" (mouseenter)="onMouseEnter()">
+    ☰ <!-- Biểu tượng sidebar -->
+  </div>
+
+  <div *ngIf="isOpen" class="absolute left-0 top-10 w-48 bg-white border border-gray-300 shadow-lg z-10">
+    <h2 class="text-lg font-bold p-2">Sidebar Menu</h2>
+    <ul class="list-none p-0 m-0">
+      <li *ngFor="let item of sideBarItems"
+        [ngClass]="{'p-2 cursor-pointer border-b border-gray-300':true, 'bg-blue-500':item.active}"
+        (click)="handleClickItem(item)">
+        {{item.name}}
+      </li>
+    </ul>
+  </div>
 </div>

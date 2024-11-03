@@ -1,41 +1,47 @@
-<div class="student-update-form">
-  <h3>Edit User</h3>
-  <form [formGroup]="updateStudentForm" id="student-update-form">
-    <div class="form-row">
-      <div class="thong-tin-student form-col">
-        <h3>Học sinh mới</h3>
+<div class="bg-white p-5 rounded-lg shadow-md max-w-2xl mx-auto overflow-y-auto h-auto max-h-[700px]">
+  <h3 class="text-xl font-semibold mb-4">Edit User</h3>
+  <form [formGroup]="updateStudentForm" id="student-update-form" class="flex flex-col justify-between h-[90%]">
+    <div class="flex flex-row justify-center">
+      <div class="w-1/2 pr-10">
+        <h3 class="text-lg font-semibold mb-4">Học sinh mới</h3>
 
-        <label for="hoTen">Họ tên:</label>
-        <input type="text" id="hoTen" formControlName="hoTen">
+        <label for="hoTen" class="block mb-2">Họ tên:</label>
+        <input type="text" id="hoTen" formControlName="hoTen"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
 
-        <label for="gioiTinh">Giới tính:</label>
-        <select id="gioiTinh" class="gioiTinh" formControlName="gioiTinh">
+        <label for="gioiTinh" class="block mb-2">Giới tính:</label>
+        <select id="gioiTinh"
+          class="gioiTinh p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500"
+          formControlName="gioiTinh">
           <option [value]="FEMALE_GENDER">Nữ</option>
           <option [value]="MALE_GENDER">Nam</option>
         </select>
 
-        <label for="ngaySinh">Ngày sinh:</label>
-        <input type="date" id="ngaySinh" formControlName="ngaySinh">
+        <label for="ngaySinh" class="block mb-2">Ngày sinh:</label>
+        <input type="date" id="ngaySinh" formControlName="ngaySinh"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
 
-        <label for="anh">Ảnh:</label>
-        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)" accept=".jpg, .jpeg, .png">
-        <div style="display: flex; margin-bottom: 10px;" *ngIf="oldFileChanged">
-          <button class="cancel-upload-anh-btn" (click)="cancelUploadAnh()"> Reset </button>
+        <label for="anh" class="block mb-2">Ảnh:</label>
+        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)" accept=".jpg, .jpeg, .png"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
+        <div class="flex mb-2" *ngIf="oldFileChanged">
+          <button type="button" class="bg-gray-400 text-white rounded px-4 py-2"
+            (click)="cancelUploadAnh()">Reset</button>
         </div>
 
-        <label for="classId">Lớp:</label>
-        <select id="classId" formControlName="classId">
+        <label for="classId" class="block mb-2">Lớp:</label>
+        <select id="classId" formControlName="classId"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500">
           <option *ngFor="let class of classes" [value]="+class.id">{{class.tenLop}}</option>
         </select>
-
       </div>
-      <div class="form-col">
-        <img [src]="anhHocSinhPreview" *ngIf="anhHocSinhPreview" />
+      <div class="w-1/2">
+        <img [src]="anhHocSinhPreview" *ngIf="anhHocSinhPreview" class="h-52 w-auto max-w-full object-contain" />
       </div>
     </div>
-    <div class="form-actions">
-      <button class="confirm-button" (click)="save()">Lưu</button>
-      <button class="cancel-button" (click)="close()">Hủy</button>
+    <div class="flex justify-between mt-4">
+      <button type="button" class="bg-green-500 text-gray-800 rounded px-6 py-3" (click)="save()">Lưu</button>
+      <button type="button" class="bg-gray-700 text-white rounded px-6 py-3" (click)="close()">Hủy</button>
     </div>
   </form>
 </div>

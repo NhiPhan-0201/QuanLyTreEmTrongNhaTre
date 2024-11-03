@@ -1,67 +1,102 @@
-<div class="class-management-panel">
-  <div class="search-bar">
-    <input class="w-full" type="text" placeholder="Search user..." (input)="onSearch($event)" />
-    <div class="actions flex justify-end w-full">
-      <button (click)="handleOpenAddLopForm()">Thêm lớp mới</button>
+<div class="class-management-panel flex flex-col p-5 bg-gray-100 rounded-lg shadow-md mx-auto font-sans">
+  <div class="search-bar flex flex-col mb-5">
+    <input class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-2" type="text"
+      placeholder="Search user..." (input)="onSearch($event)" />
+    <div class="actions flex justify-end">
+      <button class="bg-blue-500 text-white rounded px-5 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
+        (click)="handleOpenAddLopForm()">Thêm lớp mới</button>
     </div>
   </div>
-  <h2>Thông tin lớp học</h2>
-  <table class="class-management-table phu-huynh-table">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Tên lớp</th>
-        <th>Tên giáo viên</th>
-        <th>Tên phòng</th>
-        <th>Vị trí</th>
-        <th>Nhóm lớp</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngIf="!isLoading; else loadingTemplate">
-        <tr *ngFor="let lop of filtered_list_lop">
-          <td>{{ lop.id }}</td>
-          <td>{{ lop.tenLop }}</td>
-          <td>{{ lop.thongTinGiaoVien?.hoTen }}</td>
-          <td>{{ lop.tenPhong }}</td>
-          <td>{{ lop.viTri }}</td>
-          <td>{{ lop.nhomLop?.tenNhom }}</td>
-          <td>
-            <button (click)="handleOpenUpdateLopForm(lop)">Edit</button>
-            <button (click)="handleOpenDeleteLopConfirmation(lop)">Delete</button>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
-  <div class="page-navigator">
-    <button class="prev" [disabled]="currentPage === 1" (click)="prevClassesPage()">Prev</button>
-    <span>{{ currentPage}}/{{totalPage}}</span>
-    <button class="next" [disabled]="currentPage >= totalPage" (click)="nextClassesPage()">Next</button>
+
+  <h2 class="text-2xl mb-5 text-gray-800">Thông tin lớp học</h2>
+
+  <div class="class-management-table w-full mb-5 bg-white border-collapse rounded-lg overflow-hidden">
+    <ng-container *ngIf="!isLoading; else loadingTemplate">
+      <div class="hidden md:!grid md:grid-cols-7 border-b">
+        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Id</div>
+        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên lớp</div>
+        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên giáo viên</div>
+        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên phòng</div>
+        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Vị trí</div>
+        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Nhóm lớp</div>
+        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Actions</div>
+      </div>
+
+      <!-- Dạng bảng cho màn hình lớn -->
+      <div class="hidden md:!grid md:grid-cols-7">
+        <ng-container *ngFor="let lop of filtered_list_lop.slice((currentPage-1)*rowPerPage, currentPage * rowPerPage)">
+          <div class="p-3 border border-gray-300">{{ lop.id }}</div>
+          <div class="p-3 border border-gray-300">{{ lop.tenLop }}</div>
+          <div class="p-3 border border-gray-300">{{ lop.thongTinGiaoVien?.hoTen }}</div>
+          <div class="p-3 border border-gray-300">{{ lop.tenPhong }}</div>
+          <div class="p-3 border border-gray-300">{{ lop.viTri }}</div>
+          <div class="p-3 border border-gray-300">{{ lop.nhomLop?.tenNhom }}</div>
+          <div class="p-3 border border-gray-300 flex justify-between">
+            <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+              (click)="handleOpenUpdateLopForm(lop)">Edit</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+              (click)="handleOpenDeleteLopConfirmation(lop)">Delete</button>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Dạng stack cho màn hình nhỏ -->
+      <div class="md:hidden">
+        <ng-container *ngFor="let lop of filtered_list_lop.slice((currentPage-1)*rowPerPage, currentPage * rowPerPage)">
+          <div class="p-3 border border-gray-300 mb-2">
+            <div class="flex justify-between"><strong>Id:</strong> {{ lop.id }}</div>
+            <div class="flex justify-between"><strong>Tên lớp:</strong> {{ lop.tenLop }}</div>
+            <div class="flex justify-between"><strong>Tên giáo viên:</strong> {{ lop.thongTinGiaoVien?.hoTen }}</div>
+            <div class="flex justify-between"><strong>Tên phòng:</strong> {{ lop.tenPhong }}</div>
+            <div class="flex justify-between"><strong>Vị trí:</strong> {{ lop.viTri }}</div>
+            <div class="flex justify-between"><strong>Nhóm lớp:</strong> {{ lop.nhomLop?.tenNhom }}</div>
+            <div class="flex justify-end mt-2">
+              <button class="bg-yellow-500 text-white px-2 py-1 mr-8 rounded hover:bg-yellow-600"
+                (click)="handleOpenUpdateLopForm(lop)">Edit</button>
+              <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                (click)="handleOpenDeleteLopConfirmation(lop)">Delete</button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 
-  <div *ngIf="openUpdateLopForm" class="overlay">
+  <div class="page-navigator flex justify-between items-center mt-5">
+    <button
+      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      [disabled]="currentPage === 1" (click)="handlePageChange(currentPage - 1)">
+      Prev
+    </button>
+    <span class="text-gray-800 text-lg">{{ currentPage }}/{{ totalPage }}</span>
+    <button
+      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+      [disabled]="currentPage >= totalPage" (click)="handlePageChange(currentPage + 1)">
+      Next
+    </button>
+  </div>
+
+  <div *ngIf="openUpdateLopForm"
+    class="overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
     <app-class-update-form [selectedLop]="selectedLop" (closeForm)="closeForm()" (saveLop)="handleUpdateLop($event)" />
   </div>
 
-  <div *ngIf="openAddLopForm" class="overlay">
+  <div *ngIf="openAddLopForm"
+    class="overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
     <app-class-add-new-form (closeForm)="closeForm()" (saveLop)="handleSaveNewLop($event)" />
   </div>
 
-  <div *ngIf="openDeleteConfirmationDialog" class="overlay">
+  <div *ngIf="openDeleteConfirmationDialog"
+    class="overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
     <app-class-delete-confirmation-dialog (closeDialog)="closeForm()" (deleteLop)="handleDeleteLop()" />
   </div>
-
 </div>
 
 <!-- Loading Template -->
 <ng-template #loadingTemplate>
-  <tr>
-    <td colspan="7">
-      <div class="loading-container">
-        <div class="loading"></div>
-      </div>
-    </td>
-  </tr>
+  <div class="p-5">
+    <div class="loading-container flex justify-center items-center">
+      <div class="loading w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+    </div>
+  </div>
 </ng-template>
