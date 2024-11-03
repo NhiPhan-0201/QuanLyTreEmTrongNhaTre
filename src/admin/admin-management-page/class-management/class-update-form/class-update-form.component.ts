@@ -28,14 +28,13 @@ export class ClassUpdateFormComponent implements OnChanges {
   ngOnChanges() {
     this.updateLopForm = this.fb.group({
       tenLop: [this.selectedLop.tenLop, [Validators.required]],
-      idGiaoVien: [this.selectedLop.idGiaoVien, [Validators.required]],
+      idGiaoVien: [this.selectedLop.thongTinGiaoVien?.id || -1, [Validators.required]],
       tenPhong: [this.selectedLop.tenPhong, [Validators.required]],
       viTri: [this.selectedLop.viTri, [Validators.required]],
       idNhomLop: [this.selectedLop.idNhomLop || -1, [Validators.nullValidator]]
     });
 
     this.subscribeToFormControls(this.updateLopForm);
-
   }
 
   private subscribeToFormControls(formGroup: FormGroup): void {

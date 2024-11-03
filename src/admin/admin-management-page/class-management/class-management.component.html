@@ -78,7 +78,8 @@
 
   <div *ngIf="openUpdateLopForm"
     class="overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-    <app-class-update-form [selectedLop]="selectedLop" (closeForm)="closeForm()" (saveLop)="handleUpdateLop($event)" />
+    <app-class-update-form [selectedLop]="selectedLop" [giaoViens]="list_giaoVienAccount" [listNhomLop]="list_nhomLop"
+      (closeForm)="closeForm()" (saveLop)="handleUpdateLop($event)" />
   </div>
 
   <div *ngIf="openAddLopForm"
