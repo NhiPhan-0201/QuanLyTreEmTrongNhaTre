@@ -1,0 +1,59 @@
+<div class="payment-container">
+  <div class="header">Phần Header</div>
+
+  <div class="content">
+    <div class="menu-container">
+      <button class="menu-item" (click)="navigateTo('../feedback')">Ý kiến</button>
+      <button class="menu-item" (click)="navigateTo('../school-fee/view-schoolfee')">Xem học phí</button>
+      <button class="menu-item" (click)="navigateTo('../school-fee/pay')">Thanh toán</button>
+      <button class="menu-item" (click)="navigateTo('../roll-call/view')">Điểm danh</button>
+    </div>
+
+
+    <div class="payment-methods">
+      <div class="title">Phương thức thanh toán</div>
+
+      <div class="method-option">
+        <input type="radio" name="payment-method" id="atm">
+        <label for="atm">
+          <span>Thẻ ATM và tài khoản ngân hàng</span>
+          <p>Ngân hàng nội địa đã đăng ký thanh toán trực tuyến</p>
+        </label>
+      </div>
+
+      <div class="method-option">
+        <input type="radio" name="payment-method" id="international-card">
+        <label for="international-card">
+          <span>Thẻ thanh toán quốc tế</span>
+          <p>VISA, American Express, Master Card, JCB, Union Pay</p>
+        </label>
+      </div>
+
+      <div class="method-option">
+        <input type="radio" name="payment-method" id="vnpay">
+        <label for="vnpay">
+          <span>VNPAY QR</span>
+          <p>Ứng dụng Mobile Banking quét mã</p>
+        </label>
+      </div>
+
+      <div class="method-option">
+        <input type="radio" name="payment-method" id="bidv">
+        <label for="bidv">
+          <span>BIDV</span>
+          <p>Thanh toán qua cổng BIDV</p>
+        </label>
+      </div>
+
+      <div class="method-option">
+        <input type="radio" name="payment-method" id="atm-second">
+        <label for="atm-second">
+          <span>Thẻ ATM và tài khoản ngân hàng</span>
+          <p>Ngân hàng nội địa đã đăng ký thanh toán trực tuyến</p>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <button class="pay-button">Thanh toán</button>
+</div>
