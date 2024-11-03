@@ -1,0 +1,30 @@
+<div class="schedule-container">
+  <h2 class="schedule-title">
+    Thời khóa biểu
+  </h2>
+
+  <!-- Phần nhập ngày và nút xác nhận -->
+  <div>
+    <input type="date" [(ngModel)]="selectedDate" class="date-input" />
+    <button class="confirm-button" (click)="filterByDate()">Xác nhận</button>
+  </div>
+
+  <!-- Kiểm tra nếu không có dữ liệu thời khóa biểu -->
+  <div *ngIf="filteredThoiKhoaBieuList.length === 0" class="no-data">
+    <h3>Không có thời khóa biểu cho ngày đã chọn</h3>
+    <p><strong>Hoạt động:</strong> Không có hoạt động nào</p>
+    <p><strong>Tên lớp:</strong> Lớp Mặc Định</p>
+    <p><strong>Tên phòng:</strong> Phòng Mặc Định</p>
+    <p><strong>Vị trí:</strong> Tầng Mặc Định</p>
+    <p><strong>Thời gian:</strong> Không có thời gian xác định</p>
+  </div>
+
+  <div *ngFor="let item of filteredThoiKhoaBieuList" class="schedule-item">
+    <h3>{{ formatDate(item.ngay) }}</h3>
+    <p><strong>Hoạt động:</strong> {{ item.hoatDong }}</p>
+    <p *ngIf="item.idLop"><strong>Tên lớp:</strong> {{ item.idLop.tenLop }}</p>
+    <p *ngIf="item.idLop"><strong>Tên phòng:</strong> {{ item.idLop.tenPhong }}</p>
+    <p *ngIf="item.idLop"><strong>Vị trí:</strong> {{ item.idLop.viTri }}</p>
+    <p><strong>Thời gian:</strong> {{ formatTime(item.thoiGianBatDau) }} - {{ formatTime(item.thoiGianKetThuc) }}</p>
+  </div>
+</div>
