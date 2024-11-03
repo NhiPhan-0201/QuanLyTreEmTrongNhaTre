@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiResponse } from '../models/ApiResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,11 @@ export class UploadService {
   }
 
   // Upload file
-  uploadImage(file: File): Observable<{ DT: string, EM: string }> {
+  uploadImage(file: File): Observable<ApiResponse<string>> {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<{ DT: string, EM: string }>(this.apiUrl + '/image', formData, {
+    return this.http.post<ApiResponse<string>>(this.apiUrl + '/image', formData, {
       headers: this.getHeaders()
     });
   }

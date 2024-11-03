@@ -1,0 +1,117 @@
+.payment-container {
+  font-family: Arial, sans-serif;
+  width: 80%;
+  margin: auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.header {
+  background-color: #d9534f;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  margin-top: 20px;
+}
+
+.menu-container {
+  width: 200px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 15px 0;
+  border: 1px solid #000;
+  background-color: white;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.payment-methods {
+  flex-grow: 1;
+  margin-left: 20px;
+  padding: 20px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #e9ecef;
+}
+
+.title {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 15px;
+}
+
+.method-option {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.method-option:hover {
+  background-color: #f0f0f0;
+}
+
+.method-option input[type="radio"] {
+  margin-right: 10px;
+}
+
+.method-option label {
+  cursor: pointer;
+  width: 100%;
+}
+
+.method-option span {
+  font-weight: bold;
+}
+
+.method-option p {
+  margin: 0;
+  color: #666;
+}
+
+.pay-button {
+  background-color: #f0ad4e;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.pay-button:hover {
+  background-color: #ec971f;
+}

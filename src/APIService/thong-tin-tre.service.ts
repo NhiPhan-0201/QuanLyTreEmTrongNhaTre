@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { CRUDService } from './CRUD.service.interface';
 import { ThongTinTre } from '../models/ThongTinTre';
 import { ApiResponse } from '../models/ApiResponse.interface';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +35,7 @@ export class ThongTinTreService implements CRUDService<ThongTinTre> {
     return this.http.put<ApiResponse<ThongTinTre>>(`${this.apiUrl}/${t.id}`, t, { headers: this.getHeaders() });
   }
 
-  delete(id: number): Observable<ApiResponse<{ DT: ThongTinTre | null, EM: string }>> {
-    return this.http.delete<ApiResponse<{ DT: ThongTinTre | null, EM: string }>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  delete(id: number): Observable<ApiResponse<null | string>> {
+    return this.http.delete<ApiResponse<null | string>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 }

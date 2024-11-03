@@ -48,8 +48,8 @@ export class QuanLiLopService implements CRUDService<QuanLiLop> {
     });
   }
 
-  delete(id: number): Observable<ApiResponse<{ DT: QuanLiLop | null, EM: string }>> {
-    return this.http.delete<ApiResponse<{ DT: QuanLiLop | null, EM: string }>>(this.apiUrl + `/${id}`, {
+  delete(id: number): Observable<ApiResponse<string | null>> {
+    return this.http.delete<ApiResponse<string | null>>(this.apiUrl + `/${id}`, {
       headers: this.getHeaders()
     });
   }

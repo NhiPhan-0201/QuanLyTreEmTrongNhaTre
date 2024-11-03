@@ -1,0 +1,29 @@
+<div class="header">Xem Thực Đơn</div>
+<div class="content">
+  <div class="menu-content">
+    <div class="filter-section">
+      <input type="date" [(ngModel)]="selectedDate" placeholder="Chọn ngày" class="date-input">
+      <button (click)="filterByDate()" class="search-button">Tìm kiếm</button>
+    </div>
+
+    <div *ngIf="menuData.length === 0" class="no-data">Không có thực đơn cho ngày này</div>
+
+    <div *ngFor="let menu of menuData" class="menu-item">
+      <h3>Thực đơn ngày: {{ menu.menuDate[2] | number: '2.0' }}/{{ menu.menuDate[1] | number: '2.0' }}/{{ menu.menuDate[0] }} của lớp {{ menu.nhomLop.tenNhom }}</h3>
+      <div class="meal-time">
+        <div class="meal">
+          <span class="meal-label">Sáng:</span>
+          <span>{{ menu.sang || 'Không có' }}</span>
+        </div>
+        <div class="meal">
+          <span class="meal-label">Trưa:</span>
+          <span>{{ menu.trua || 'Không có' }}</span>
+        </div>
+        <div class="meal">
+          <span class="meal-label">Chiều:</span>
+          <span>{{ menu.chieu || 'Không có' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

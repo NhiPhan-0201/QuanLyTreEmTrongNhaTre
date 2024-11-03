@@ -49,6 +49,7 @@ export class AccountAddNewFormComponent {
         sdtMe: '',
         emailCha: '',
         emailMe: '',
+        diaChi: '',
       }),
       giaoVien: this.fb.group({
         hoTen: '',
@@ -69,7 +70,6 @@ export class AccountAddNewFormComponent {
   subscribeToFormControls(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach((key) => {
       const control = formGroup.get(key);
-      const errorKey = key
 
       if (control) {
         if (control instanceof FormGroup) {
@@ -99,13 +99,16 @@ export class AccountAddNewFormComponent {
 
   private subscribeToValueChanges(control: AbstractControl): void {
     control.valueChanges.subscribe(() => {
-      this.errors = validateData(this.newAccountForm);
+      setTimeout(() => {
+        this.errors = validateData(this.newAccountForm);
+      }, 200);
     });
   }
   onImagePicked(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files.length > 0) {
       this.anhGiaoVienUploaded = input.files[0];
+      this.errors = validateData(this.newAccountForm, this.anhGiaoVienUploaded);
       this.anhGiaoVienFileName = this.anhGiaoVienUploaded.name;
       let reader = new FileReader();
 
@@ -125,8 +128,10 @@ export class AccountAddNewFormComponent {
   }
 
   save() {
-    this.errors = {};
-    this.errors = validateData(this.newAccountForm);
+
+    this.errors = validateData(this.newAccountForm, this.anhGiaoVienUploaded);
+
+    console.log(this.errors);
 
     if (Object.keys(this.errors).length === 0) {
       this.saveAccount.emit({ newAccount: this.newAccountForm.value, anh: this.anhGiaoVienUploaded });

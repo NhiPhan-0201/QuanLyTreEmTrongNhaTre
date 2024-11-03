@@ -1,17 +1,17 @@
 .admin-page {
-    display: flex;
-    height: auto;
-    background-color: #f0f0f0;
+  display: flex;
+  height: auto;
+  background-color: #f0f0f0;
 }
 
 .management-content {
-    flex: 1;
-    padding-top: 28px;
-    background-color: var(--dark-primary-background-color);
+  flex: 1;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 
 @media screen and (min-width: 1200px) {
-    .management-content {
-        padding-top: 0;
-    }
+  .management-content {
+    padding-top: 0;
+  }
 }

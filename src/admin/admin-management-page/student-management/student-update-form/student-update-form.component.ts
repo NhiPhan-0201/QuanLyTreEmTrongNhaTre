@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ThongTinTre } from '../../../../models/ThongTinTre';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Gender } from '../../../../constants/enums';
 import { convertUrlToFile } from '../../../../utils/fileUtils';
 import { QuanLiLop } from '../../../../models/QuanLiLop';
 import { Account } from '../../../../models/Account';
+import { validateData } from '../student-management.component';
 
 @Component({
   selector: 'app-student-update-form',
@@ -26,6 +27,8 @@ export class StudentUpdateFormComponent implements OnChanges {
   oldFileChanged!: boolean;
   oldFileUrl!: string;
 
+  errors: any = {};
+
   @Input() student!: ThongTinTre | null;
   @Input() classes: QuanLiLop[] = [];
   @Input() parents: Account[] = [];
@@ -34,12 +37,12 @@ export class StudentUpdateFormComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.updateStudentForm = this.fb.group({
-      id: [''],
-      hoTen: [''],
-      gioiTinh: [''],
-      ngaySinh: [''],
-      classId: [''],
-      anh: [''],
+      id: ['', Validators.required],
+      hoTen: ['', Validators.required],
+      gioiTinh: ['', Validators.required],
+      ngaySinh: ['', Validators.required],
+      classId: [-1, Validators.required],
+      anh: ['', Validators.required],
     });
   }
 
@@ -47,7 +50,7 @@ export class StudentUpdateFormComponent implements OnChanges {
     const studentChange = changes['student'];
 
     if (studentChange && studentChange.currentValue && this.student) {
-      this.updateStudentForm.patchValue(this.student);
+      this.updateStudentForm.patchValue({ ...this.student, classId: this.student.classId || -1 });
 
       this.oldFileUrl = this.student.anh || '';
       this.anhHocSinhPreview = this.oldFileUrl === '' ? null : this.oldFileUrl;
@@ -62,6 +65,7 @@ export class StudentUpdateFormComponent implements OnChanges {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files.length > 0) {
       this.anhHocSinhUploaded = input.files[0];
+      this.errors = validateData(this.updateStudentForm, this.anhHocSinhUploaded);
       this.oldFileChanged = true;
       let reader = new FileReader();
 
@@ -81,6 +85,7 @@ export class StudentUpdateFormComponent implements OnChanges {
   }
 
   save() {
+    console.log(this.updateStudentForm.value);
     this.updateStudent.emit({ student: this.updateStudentForm.value, anh: { file: this.anhHocSinhUploaded, oldFileChanged: this.oldFileChanged } });
   }
 

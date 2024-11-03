@@ -1,0 +1,40 @@
+<div class="fee-container">
+  <div class="header">Phần Header</div>
+
+  <div class="content">
+    <div class="menu-container">
+      <button class="menu-item" (click)="navigateTo('../feedback')">Ý kiến</button>
+      <button class="menu-item" (click)="navigateTo('../school-fee/view-schoolfee')">Xem học phí</button>
+      <button class="menu-item" (click)="navigateTo('../school-fee/pay')">Thanh toán</button>
+      <button class="menu-item" (click)="navigateTo('../roll-call/view')">Điểm danh</button>
+    </div>
+
+    <div class="fee-details">
+      <div class="details-header">Chi tiết giao dịch</div>
+
+      <div class="month-info">
+        <strong>THÁNG 9</strong>
+        <span class="status">CHƯA NỘP</span>
+      </div>
+
+      <div class="date-range">Thời gian đóng: 5/09/2024 - 20/9/2024</div>
+
+      <div class="fee-breakdown">
+        <p>Tiền ăn:</p>
+        <p>Tiền học:</p>
+        <p>Tiền hoạt động ngoại khoá:</p>
+        <p>Tiền học bơi:</p>
+        <p>Tiền tham quan trường tiểu học:</p>
+        <p>Tiền tổ chức chia tay:</p>
+      </div>
+
+      <div class="summary">
+        <p>Thành tiền:</p>
+        <p>Đã đóng:</p>
+        <p>Còn lại:</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="pay-button">Thanh toán</button>
+</div>

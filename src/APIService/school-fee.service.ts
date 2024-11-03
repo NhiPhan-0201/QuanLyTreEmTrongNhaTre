@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HocPhi } from '../models/HocPhi';
+import { NhomLop } from '../models/NhomLop';
 
 @Injectable({
     providedIn: 'root'
@@ -12,36 +14,27 @@ export class SchoolFeeService {
 
     // Lấy token
     private getAuthHeaders(): HttpHeaders {
-        const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTk0NTkzNywiZXhwIjoxNzMwMDMyMzM3fQ.dxXfwQYpPW3WJmvP_cxBrU-bwL8tTcpl7V50F9_SOAc";
+        const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDQ3NjM5NywiZXhwIjoxNzMwNTYyNzk3fQ.HwTUthz6JLZHX1a_Oo0HAuYI5FSm0W8CCy7rk4a2ASM";
         return new HttpHeaders().set('Authorization', `Bearer ${token || ''}`);
     }
 
-    // Lấy danh sách học phí
-    getSchoolFees(): Observable<any> {
-        const headers = this.getAuthHeaders();
-        return this.http.get<any>(this.apiUrl, { headers });
+    getSchoolFees(): Observable<HocPhi[]> {
+        return this.http.get<HocPhi[]>(this.apiUrl, { headers: this.getAuthHeaders() });
     }
 
-    // Thêm mới học phí
-    addSchoolFee(schoolFee: any): Observable<any> {
-        const headers = this.getAuthHeaders();
-        return this.http.post<any>(this.apiUrl, schoolFee, { headers });
+    addSchoolFee(schoolFee: HocPhi): Observable<HocPhi> {
+        return this.http.post<HocPhi>(this.apiUrl, schoolFee, { headers: this.getAuthHeaders() });
     }
 
-    // Cập nhật học phí
-    updateSchoolFee(id: number, schoolFee: any): Observable<any> {
-        const headers = this.getAuthHeaders();
-        return this.http.put<any>(`${this.apiUrl}/${id}`, schoolFee, { headers });
+    updateSchoolFee(id: number, schoolFee: HocPhi): Observable<HocPhi> {
+        return this.http.put<HocPhi>(`${this.apiUrl}/${id}`, schoolFee, { headers: this.getAuthHeaders() });
     }
 
-    // Xóa học phí
-    deleteSchoolFee(id: number): Observable<void> {
-        const headers = this.getAuthHeaders();
-        return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
+    deleteSchoolFee(id: number): Observable<string> {
+        return this.http.delete<string>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
     }
 
-    getClasses(): Observable<any> {
-        const headers = this.getAuthHeaders();
-        return this.http.get<any>('http://localhost:8080/api/v1/nhom-lop', { headers });
+    getClasses(): Observable<NhomLop[]> {
+        return this.http.get<NhomLop[]>('http://localhost:8080/api/v1/nhom-lop', { headers: this.getAuthHeaders() });
     }
 }

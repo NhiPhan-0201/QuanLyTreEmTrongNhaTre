@@ -1,0 +1,79 @@
+.header {
+  background-color: #e6f0ff;
+  text-align: center;
+  font-size: 24px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+}
+
+.menu-content {
+  flex: 1;
+  background-color: #d2e5ff;
+  padding: 20px;
+  text-align: center;
+}
+
+.filter-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.date-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-button {
+  padding: 8px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+.no-data {
+  color: #ff3333;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.menu-item {
+  background-color: #fff;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.meal-time {
+  display: flex;
+  justify-content: space-around;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.meal {
+  flex: 1;
+  text-align: center;
+}
+
+.meal-label {
+  font-weight: bold;
+  color: #333;
+  margin-right: 5px;
+}

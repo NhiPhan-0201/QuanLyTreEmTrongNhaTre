@@ -1,7 +1,7 @@
 import { QuanLiLop } from "./QuanLiLop";
 
 export interface ThoiKhoaBieu {
-  id: string;
+  id: number;
   ngay: Date;
   idLop: number;
   quanLiLop?: QuanLiLop;

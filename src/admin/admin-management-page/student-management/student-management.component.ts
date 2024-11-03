@@ -1,19 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ThongTinTre } from '../../../models/ThongTinTre';
 import { StudentAddNewFormComponent } from './student-add-new-form/student-add-new-form.component';
 import { StudentUpdateFormComponent } from './student-update-form/student-update-form.component';
 import { StudentDeleteConfirmationDialogComponent } from './student-delete-confirmation-dialog/student-delete-confirmation-dialog.component';
-import { ThongTinTreService } from '../../../APIService/ThontTinTre.service';
-import { UploadService } from '../../../APIService/upload.service';
+import { UploadService } from '../../../APIService';
 import { switchMap } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { QuanLiLopService } from '../../../APIService/QuanLiLop.service';
-import { QuanLiLop } from '../../../models/QuanLiLop';
-import { error } from 'node:console';
-import { AccountService } from '../../../APIService/Account.service';
-import { Account } from '../../../models/Account';
+import { ThongTinTre, QuanLiLop, Account } from '../../../models';
 import { AccountRole, AccountStatus, Gender } from '../../../constants/enums';
+import { QuanLiLopService, AccountService, ThongTinTreService } from '../../../APIService';
 
 @Component({
   selector: 'app-student-management',
@@ -33,6 +28,7 @@ export class StudentManagementComponent implements OnInit {
   filteredStudents: ThongTinTre[] = [];
   currentPage: number = 1;
   totalPage: number = 1;
+  rowPerPage: number = 5;
 
 
   openAddStudentForm: boolean = false;
@@ -46,6 +42,11 @@ export class StudentManagementComponent implements OnInit {
   }
 
   onLoad() {
+    this.isLoading = true;
+    this.loadLop();
+  }
+
+  loadLop() {
     this.isLoading = true;
     this.quanLiLopService.getAll().subscribe({
       next: (res) => {
@@ -76,10 +77,7 @@ export class StudentManagementComponent implements OnInit {
     this.thongTinTreService.getAll().subscribe({
       next: (res) => {
         this.students = res.data;
-        this.students.map((s) => {
-          s.quanLiLop = this.classes.find((c) => c.id = s.classId);
-          return s;
-        })
+        this.mapStudentClasses();
         this.onSearchStudent();
         this.isLoading = false;
       },
@@ -92,19 +90,27 @@ export class StudentManagementComponent implements OnInit {
     });
   }
 
+  mapStudentClasses() {
+    this.students.map((s) => {
+      s.quanLiLop = this.classes.find((c) => c.id === s.classId);
+      return s;
+    })
+  }
+
   generateMockClasses(): QuanLiLop[] {
     let classes: QuanLiLop[] = [];
     for (let i = 0; i < 10; i++) {
       let j = i + 1;
       classes.push({
-        id: j,
+        id: 1 + i,
         idGiaoVien: j,
-        tenLop: "Lớp " + (j),
-        tenPhong: "Phòng " + (j),
+        tenLop: "Lớp " + j,
+        tenPhong: "Phòng " + j,
         viTri: "",
         idNhomLop: j
-      })
+      });
     }
+    console.log(classes);
     return classes;
   }
 
@@ -137,7 +143,8 @@ export class StudentManagementComponent implements OnInit {
         id: i,
         hoTen: `Học sinh ${i}`,
         gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
-        ngaySinh: Date.now().toString(),
+        ngaySinh: new Date().toLocaleDateString('vi-VN', { day: "2-digit", month: "2-digit", year: "numeric" })
+          .split('/').reverse().join('-'),
         anh: 'https://picsum.photos/' + (i + 100),
         classId: i % 10 + 1,
         quanLiLop: this.classes.find((c) => c.id == i % 10 + 1)
@@ -155,15 +162,15 @@ export class StudentManagementComponent implements OnInit {
       return student.hoTen.toLowerCase().includes(this.searchValue.toLowerCase());
     });
 
-    this.totalPage = Math.ceil(this.filteredStudents.length / 10);
-    this.currentPage = 1;
+    this.totalPage = Math.ceil(this.filteredStudents.length / this.rowPerPage);
+    if (event)
+      this.currentPage = 1;
   }
 
   handleOpenAddStudentForm() {
     this.openAddStudentForm = true;
   }
   handleOpenUpdateStudentForm(student: ThongTinTre) {
-    console.log(student)
     this.selectedStudent = student;
     this.openUpdateStudentForm = true;
   }
@@ -182,29 +189,28 @@ export class StudentManagementComponent implements OnInit {
     this.openDeleteConfirmationDialog = false;
   }
 
-  handleSaveNewStudent({ student, anh }: { student: ThongTinTre; anh?: File | null }) {
+  handleSaveNewStudent({ student, anh }: { student: ThongTinTre; anh: File | null }) {
     let upload$ = anh
       ? this.uploadService.uploadImage(anh).pipe(
-        switchMap((data) => {
-          student.anh = data.DT;
+        switchMap((res) => {
+          student.anh = res.data;
           return this.thongTinTreService.add(student);
         })
       )
       : this.thongTinTreService.add(student);
 
-    upload$.subscribe((data) => {
-      this.students.push(data.data);
+    upload$.subscribe((res) => {
+      this.students.push(res.data);
       this.onSearchStudent();
       this.closeForm();
     });
   }
 
   handleUpdateStudent({ student, anh: { file, oldFileChanged } }: { student: ThongTinTre; anh: { file: File | null, oldFileChanged: boolean } }) {
-    console.log(student)
     const upload$ = file && oldFileChanged
       ? this.uploadService.uploadImage(file).pipe(
-        switchMap((data) => {
-          student.anh = data.DT;
+        switchMap((res) => {
+          student.anh = res.data;
           return this.thongTinTreService.update(student);
         })
       )
@@ -214,6 +220,7 @@ export class StudentManagementComponent implements OnInit {
       const index = this.students.findIndex(s => s.id === res.data.id);
       this.students[index] = res.data;
       this.onSearchStudent();
+      this.mapStudentClasses();
       this.closeForm();
     });
   }
@@ -231,7 +238,7 @@ export class StudentManagementComponent implements OnInit {
   }
 }
 
-export function validateData(formGroup: FormGroup): any {
+export function validateData(formGroup: FormGroup, anh: File | null): any {
   let errors: any = {};
 
   if (!formGroup.value.hoTen) {
@@ -243,4 +250,18 @@ export function validateData(formGroup: FormGroup): any {
   if (!formGroup.value.ngaySinh) {
     errors.ngaySinh = 'Ngày sinh không được để trống';
   }
+
+  if (!formGroup.value.classId) {
+    errors.classId = 'Lớp không được để trống';
+  }
+
+  if (formGroup.value.phuHuynhId === -1) {
+    errors.phuHuynhId = 'Phụ huynh không được để trống';
+  }
+
+  if (!anh) {
+    errors.anh = 'Ảnh không được để trống';
+  }
+
+  return errors;
 }

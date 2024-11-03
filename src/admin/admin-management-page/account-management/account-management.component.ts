@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AccountUpdateFormComponent } from './account-update-form/account-update-form.component';
 import { AccountAddNewFormComponent } from './account-add-new-form/account-add-new-form.component';
 import { AccountDeleteConfirmationDialogComponent } from './account-delete-confirmation-dialog/account-delete-confirmation-dialog.component';
-import { Account } from '../../../models/Account';
-import { AccountService } from '../../../APIService/Account.service';
-import { UploadService } from '../../../APIService/upload.service';
+import { Account } from '../../../models';
+import { AccountService, UploadService } from '../../../APIService';
 import { switchMap } from 'rxjs';
 import { AccountRole, Gender } from '../../../constants/enums';
 
@@ -31,11 +30,11 @@ export class AccountManagementComponent implements OnInit {
 
   giaoVienAccounts!: Account[];
   currentGiaoVienAccountsPage: number = 1;
-  totalGiaoVienAccountsPage!: number;
+  totalGiaoVienAccountsPage: number = 1;
 
   phuHuynhAccounts!: Account[];
   currentPhuHuynhAccountsPage: number = 1;
-  totalPhuHuynhAccountsPage!: number;
+  totalPhuHuynhAccountsPage: number = 1;
 
   constructor(private accountService: AccountService, private uploadService: UploadService) {
   }
@@ -46,30 +45,33 @@ export class AccountManagementComponent implements OnInit {
 
   loadAccounts() {
     this.isLoading = true;
+    this.accounts = [];
     this.accountService.getParents().subscribe({
       next: (res) => {
         this.accounts = this.accounts.concat(res.data);
         this.accountService.getTeachers().subscribe({
           next: (res) => {
             this.accounts = this.accounts.concat(res.data);
-            this.isLoading = false;
             this.onSearch();
+            this.isLoading = false;
           },
           error: (error) => {
+            console.error('Lỗi khi tải accounts:', error);
+            this.accounts = this.generateMockAccounts();
             this.isLoading = false;
+            this.onSearch();
           }
         });
       },
       error: (error) => {
         console.error('Lỗi khi tải accounts:', error);
-        this.accounts = this.generateMockAccounts(); // Sử dụng dữ liệu giả lập khi xảy ra lỗi
+        this.accounts = this.generateMockAccounts();
         this.isLoading = false;
-        this.onSearch(); // Gọi tìm kiếm trên dữ liệu giả lập
+        this.onSearch();
       }
     });
   }
 
-  // Hàm tạo dữ liệu giả lập trong trường hợp lỗi
   private generateMockAccounts() {
     const mockAccounts = [];
     for (let i = 0; i < 10; i++) {
@@ -85,7 +87,7 @@ export class AccountManagementComponent implements OnInit {
           gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
           soDienThoai: '0987654321',
           email: 'admin' + i + '@gmail.com',
-          anh: 'https://cdn.openart.ai/published/cMIZlKZ7jBHCVg4nP3Cf/_oUjeluh_Fm8c_1024.webp',
+          anh: `https://api.dicebear.com/9.x/avataaars/svg?seed=${i}`,
         }
       });
     }
@@ -117,33 +119,21 @@ export class AccountManagementComponent implements OnInit {
     this.totalPhuHuynhAccountsPage = Math.ceil(this.phuHuynhAccounts.length / 5) || 1;
     this.phuHuynhAccounts = this.phuHuynhAccounts.slice((this.currentPhuHuynhAccountsPage - 1) * 5, this.currentPhuHuynhAccountsPage * 5);
 
+    if (event) {
+      this.currentGiaoVienAccountsPage = 1;
+      this.currentPhuHuynhAccountsPage = 1;
+    }
     this.isLoading = false;
   }
 
-  prevPhuHuynhAccountsPage() {
-    if (this.currentPhuHuynhAccountsPage > 1) {
-      this.currentPhuHuynhAccountsPage--;
-      this.onSearch();
-    }
-  }
-  nextPhuHuynhAccountsPage() {
-    if (this.currentPhuHuynhAccountsPage < this.totalPhuHuynhAccountsPage) {
-      this.currentPhuHuynhAccountsPage++;
-      this.onSearch();
-    }
+  handlePhuHuynhPageChange(page: number) {
+    this.currentPhuHuynhAccountsPage = page;
+    this.onSearch();
   }
 
-  prevGiaoVienAccountsPage() {
-    if (this.currentGiaoVienAccountsPage > 1) {
-      this.currentGiaoVienAccountsPage--;
-      this.onSearch();
-    }
-  }
-  nextGiaoVienAccountsPage() {
-    if (this.currentGiaoVienAccountsPage < this.totalGiaoVienAccountsPage) {
-      this.currentGiaoVienAccountsPage++;
-      this.onSearch();
-    }
+  handleGiaoVienPageChange(page: number) {
+    this.currentGiaoVienAccountsPage = page;
+    this.onSearch();
   }
 
   handleOpenUpdateAccountForm(account: Account) {
@@ -151,12 +141,14 @@ export class AccountManagementComponent implements OnInit {
     this.openUpdateAccountForm = true;
   }
   handleUpdateAccount({ updatedAccount, anh: { file, oldFileChanged } }: { updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }) {
-    // Kiểm tra xem có cần tải lên ảnh không
+    if (updatedAccount.password === '') {
+      delete updatedAccount.password;
+    }
     let upload$;
     if (updatedAccount.role === 'GiaoVien' && oldFileChanged && file) {
       upload$ = this.uploadService.uploadImage(file).pipe(
         switchMap((res) => {
-          updatedAccount.giaoVien!.anh = res.DT;
+          updatedAccount.giaoVien!.anh = res.data;
           return this.accountService.update(updatedAccount);
         }))
     }
@@ -166,13 +158,12 @@ export class AccountManagementComponent implements OnInit {
 
     upload$.subscribe({
       next: (res) => {
-        // Cập nhật danh sách tài khoản trong component
         this.accounts = this.accounts.map(account => account.id === res.data.id ? res.data : account);
-        this.onSearch(); // Gọi hàm tìm kiếm để cập nhật danh sách
-        this.closeForm(); // Đóng form sau khi hoàn tất
+        this.onSearch();
+        this.closeForm();
       },
       error: (error) => {
-        console.error('Error updating account:', error); // Log lỗi nếu có
+        console.error('Error updating account:', error);
       }
     });
   }
@@ -200,7 +191,7 @@ export class AccountManagementComponent implements OnInit {
     let upload$ = newAccount.role === 'GiaoVien' && anh
       ? this.uploadService.uploadImage(anh).pipe(
         switchMap((res) => {
-          newAccount.giaoVien!.anh = res.DT;
+          newAccount.giaoVien!.anh = res.data;
           return this.accountService.add(newAccount);
         })
       )
@@ -225,10 +216,14 @@ export class AccountManagementComponent implements OnInit {
   }
 }
 
-export function validateData(formGroup: FormGroup) {
+export function validateData(formGroup: FormGroup, anh?: File | null) {
   const errors: any = {};
   const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const phoneNumberPattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+
+  if (!anh) {
+    errors.anh = 'Ảnh không được để trống';
+  }
 
   if (!formGroup.get('username')?.value) {
     errors.username = 'Tên đăng nhập không được để trống';
@@ -251,6 +246,8 @@ export function validateData(formGroup: FormGroup) {
       }
       if (!formGroup.get('giaoVien.soDienThoai')?.value) {
         errors.soDienThoai = 'Số điện thoại không được để trống';
+      } else if (!phoneNumberPattern.test(formGroup.get('giaoVien.soDienThoai')?.value)) {
+        errors.soDienThoai = 'Số điện thoại không hợp lệ';
       }
       if (!formGroup.get('giaoVien.email')?.value) {
         errors.email = 'Email không được để trống';

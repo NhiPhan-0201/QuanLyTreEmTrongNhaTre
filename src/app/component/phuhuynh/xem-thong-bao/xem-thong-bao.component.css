@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.content-section {
+    margin-top: 20px;
+}
+
+.scroll-container {
+    max-height: 300px; /* Đặt chiều cao tối đa cho bảng */
+    overflow-y: scroll; /* Cho phép cuộn dọc */
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.announcement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.announcement-table th, .announcement-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.announcement-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.announcement-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.announcement-table tr:hover {
+    background-color: #ddd;
+}
+
+.announcement-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+}

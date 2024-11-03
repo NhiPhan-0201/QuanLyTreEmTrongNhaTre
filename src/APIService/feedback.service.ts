@@ -12,18 +12,16 @@ export class FeedbackService {
 
   // Lấy token 
   private getAuthHeaders(): HttpHeaders {
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTkzNjM4MCwiZXhwIjoxNzMwMDIyNzgwfQ.iReS6y1ncwtxDRRrjXHZXtHoTmokCpVet5JxI85l1TM";
+    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDQ3MTE0OCwiZXhwIjoxNzMwNTU3NTQ4fQ.0ExCyLkcqrFQCJmHDxgvjgXwUK7A-axtBfl39SfqeGU";
     return new HttpHeaders().set('Authorization', `Bearer ${token || ''}`);
   }
 
   // Lấy danh sách ý kiến với phân trang và lọc theo thể loại
   getFeedbackByAdmin(page: number, theLoaiId: string): Observable<any> {
-    const headers = this.getAuthHeaders();
-
     let params = new HttpParams()
       .set('page', page.toString())
       .set('theLoaiId', theLoaiId);
 
-    return this.http.get<any>(`${this.apiUrl}/admin`, { headers, params });
+    return this.http.get<any>(`${this.apiUrl}/admin`, { headers: this.getAuthHeaders(), params });
   }
 }

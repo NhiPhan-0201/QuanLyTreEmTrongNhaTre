@@ -1,0 +1,21 @@
+<div class="content-section">
+    <h2>Thông báo chung</h2>
+    <div class="scroll-container">
+        <table class="announcement-table">
+            <thead>
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Nội dung</th>
+                    <th>Loại thông báo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let announcement of announcements">
+                    <td>{{ announcement.tieuDe }}</td>
+                    <td>{{ announcement.noiDung }}</td>
+                    <td>{{ announcement.loaiThongBao }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
