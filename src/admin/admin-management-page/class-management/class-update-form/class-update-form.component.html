@@ -1,0 +1,38 @@
+<div class="account-update-form">
+  <h3>Edit User</h3>
+  <form [formGroup]="updateLopForm" id="account-update-form">
+    <div class="form-row">
+      <div class="thong-tin-account form-col">
+        <h3>Thông tin lớp học</h3>
+
+        <label for="tenLop">Tên lớp:</label>
+        <input type="text" id="tenLop" formControlName="tenLop" />
+        <h4 class="error-message" *ngIf="errors?.tenLop">{{ errors?.tenLop }}</h4>
+
+        <label for="idGiaoVien">Giáo viên:</label>
+        <select id="idGiaoVien" formControlName="idGiaoVien">
+          <option *ngFor="let account of giaoViens" [value]="account.id">{{ account.giaoVien?.hoTen }}</option>
+        </select>
+        <h4 class="error-message" *ngIf="errors?.idGiaoVien">{{ errors?.idGiaoVien }}</h4>
+
+        <label for="tenPhong">Tên phòng:</label>
+        <input type="text" id="tenPhong" formControlName="tenPhong" />
+        <h4 class="error-message" *ngIf="errors?.tenPhong">{{ errors?.tenPhong }}</h4>
+
+        <label for="viTri">Vị trí:</label>
+        <input type="text" id="viTri" formControlName="viTri" />
+        <h4 class="error-message" *ngIf="errors?.viTri">{{ errors?.viTri }}</h4>
+
+        <label for="nhomLop">Nhóm lớp:</label>
+        <select id="nhomLop" formControlName="nhomLop">
+          <option [value]="-1">Không có nhóm lớp</option>
+          <option *ngFor="let nhomLop of listNhomLop" [value]="nhomLop.id">{{ nhomLop.tenNhom }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="confirm-button" (click)="save()" [disabled]="getKeys(errors).length !== 0">Lưu</button>
+      <button class="cancel-button" (click)="close()">Hủy</button>
+    </div>
+  </form>
+</div>

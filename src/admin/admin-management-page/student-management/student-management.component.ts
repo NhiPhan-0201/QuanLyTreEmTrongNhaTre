@@ -72,7 +72,6 @@ export class StudentManagementComponent implements OnInit {
       next: (res) => {
         this.students = res.data;
         this.mapStudentClasses();
-        console.log(this.students);
         this.onSearchStudent();
         this.isLoading = false;
       },
@@ -97,7 +96,7 @@ export class StudentManagementComponent implements OnInit {
     for (let i = 0; i < 10; i++) {
       let j = i + 1;
       classes.push({
-        id: 1+i,
+        id: 1 + i,
         idGiaoVien: j,
         tenLop: "Lớp " + j,
         tenPhong: "Phòng " + j,
@@ -231,7 +230,7 @@ export class StudentManagementComponent implements OnInit {
   }
 }
 
-export function validateData(formGroup: FormGroup , anh: File | null): any {
+export function validateData(formGroup: FormGroup, anh: File | null): any {
   let errors: any = {};
 
   if (!formGroup.value.hoTen) {
@@ -252,7 +251,7 @@ export function validateData(formGroup: FormGroup , anh: File | null): any {
     errors.phuHuynhId = 'Phụ huynh không được để trống';
   }
 
-  if (!anh){
+  if (!anh) {
     errors.anh = 'Ảnh không được để trống';
   }
 

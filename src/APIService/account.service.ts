@@ -6,44 +6,44 @@ import { CRUDService } from './CRUD.service.interface';
 import { ApiResponse } from '../models/ApiResponse.interface';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AccountService implements CRUDService<Account> {
-    private apiUrl = 'http://localhost:8080/api/v1/admin/account';
-    constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/v1/admin/account';
+  constructor(private http: HttpClient) { }
 
-    private getHeaders() {
-        const token = localStorage.getItem('access_token');
-        return {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        };
-    }
+  private getHeaders() {
+    const token = localStorage.getItem('access_token');
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  }
 
-    getParents(): Observable<ApiResponse<Account[]>> {
-        return this.http.get<ApiResponse<Account[]>>(`${this.apiUrl}/parent`, { headers: this.getHeaders() });
-    }
+  getParents(): Observable<ApiResponse<Account[]>> {
+    return this.http.get<ApiResponse<Account[]>>(`${this.apiUrl}/parent`, { headers: this.getHeaders() });
+  }
 
-    getTeachers(): Observable<ApiResponse<Account[]>> {
-        return this.http.get<ApiResponse<Account[]>>(`${this.apiUrl}/teacher`, { headers: this.getHeaders() });
-    }
-    getAll(): Observable<ApiResponse<Account[]>> {
-        return this.http.get<ApiResponse<Account[]>>(this.apiUrl, { headers: this.getHeaders() });
-    }
+  getTeachers(): Observable<ApiResponse<Account[]>> {
+    return this.http.get<ApiResponse<Account[]>>(`${this.apiUrl}/teacher`, { headers: this.getHeaders() });
+  }
+  getAll(): Observable<ApiResponse<Account[]>> {
+    return this.http.get<ApiResponse<Account[]>>(this.apiUrl, { headers: this.getHeaders() });
+  }
 
-    get(id: number): Observable<ApiResponse<Account>> {
-        return this.http.get<ApiResponse<Account>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
-    }
+  get(id: number): Observable<ApiResponse<Account>> {
+    return this.http.get<ApiResponse<Account>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  }
 
-    add(account: Account): Observable<ApiResponse<Account>> {
-        return this.http.post<ApiResponse<Account>>(this.apiUrl, account, { headers: this.getHeaders() });
-    }
+  add(account: Account): Observable<ApiResponse<Account>> {
+    return this.http.post<ApiResponse<Account>>(this.apiUrl, account, { headers: this.getHeaders() });
+  }
 
-    update(account: Account): Observable<ApiResponse<Account>> {
-        return this.http.put<ApiResponse<Account>>(`${this.apiUrl}/${account.id}`, account, { headers: this.getHeaders() });
-    }
+  update(account: Account): Observable<ApiResponse<Account>> {
+    return this.http.put<ApiResponse<Account>>(`${this.apiUrl}/${account.id}`, account, { headers: this.getHeaders() });
+  }
 
-    delete(id: number): Observable<ApiResponse<null | string>> {
-        return this.http.delete<ApiResponse<null | string>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
-    }
+  delete(id: number): Observable<ApiResponse<null | string>> {
+    return this.http.delete<ApiResponse<null | string>>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  }
 }

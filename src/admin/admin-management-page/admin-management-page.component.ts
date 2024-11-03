@@ -3,11 +3,12 @@ import { ManagementSideBarComponent } from './management-side-bar/management-sid
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { AccountManagementComponent } from './account-management/account-management.component';
 import { filter } from 'rxjs/operators';
+import { ClassManagementComponent } from './class-management/class-management.component';
 
 @Component({
   selector: 'app-admin-management-page',
   standalone: true,
-  imports: [RouterOutlet, ManagementSideBarComponent, AccountManagementComponent],
+  imports: [RouterOutlet, ManagementSideBarComponent],
   templateUrl: './admin-management-page.component.html',
   styleUrls: ['./admin-management-page.component.css']
 })

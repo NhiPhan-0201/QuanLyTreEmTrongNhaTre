@@ -254,6 +254,8 @@ export function validateData(formGroup: FormGroup) {
       }
       if (!formGroup.get('giaoVien.soDienThoai')?.value) {
         errors.soDienThoai = 'Số điện thoại không được để trống';
+      } else if (!phoneNumberPattern.test(formGroup.get('giaoVien.soDienThoai')?.value)) {
+        errors.soDienThoai = 'Số điện thoại không hợp lệ';
       }
       if (!formGroup.get('giaoVien.email')?.value) {
         errors.email = 'Email không được để trống';
