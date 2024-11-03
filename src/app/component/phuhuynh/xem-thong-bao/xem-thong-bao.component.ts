@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { XemthongbaoService } from '../../APIService/xemthongbao.service';
+import { XemthongbaoService } from '../../../../APIService/xemthongbao.service';
 
 @Component({
   selector: 'app-xem-thong-bao',
