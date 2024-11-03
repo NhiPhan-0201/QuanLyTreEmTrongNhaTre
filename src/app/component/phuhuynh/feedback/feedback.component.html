@@ -1,0 +1,32 @@
+<div class="feedback-container">
+  <div class="header">Phần Header</div>
+
+  <div class="content">
+    <div class="menu-container">
+      <button class="menu-item" (click)="navigateTo('../feedback')">Ý kiến</button>
+      <button class="menu-item" (click)="navigateTo('../school-fee/view-schoolfee')">Xem học phí</button>
+      <button class="menu-item" (click)="navigateTo('../school-fee/pay')">Thanh toán</button>
+      <button class="menu-item" (click)="navigateTo('../roll-call/view')">Điểm danh</button>
+    </div>
+
+    <div class="feedback-form">
+      <div class="form-header">Phản hồi</div>
+
+      <div class="form-group">
+        <button class="icon-button">📁</button>
+        <input type="text" placeholder="Chủ đề bạn quan tâm" />
+      </div>
+
+      <div class="form-group">
+        <button class="icon-button">📄</button>
+        <input type="text" placeholder="Tiêu đề" />
+      </div>
+
+      <div class="form-group">
+        <textarea placeholder="Nội dung"></textarea>
+      </div>
+
+      <button class="submit-button">Gửi</button>
+    </div>
+  </div>
+</div>
