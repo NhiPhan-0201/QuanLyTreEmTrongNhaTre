@@ -1,4 +1,4 @@
-import { AccountService } from "./Account.service";
+import { AccountService } from "./account.service";
 import { ThongTinTreService } from "./ThongTinTre.service";
 import { QuanLiLopService } from "./QuanLiLop.service";
 import { UploadService } from "./Upload.service";

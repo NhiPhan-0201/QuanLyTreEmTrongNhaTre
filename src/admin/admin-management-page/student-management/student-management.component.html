@@ -1,8 +1,8 @@
 <div class="student-management-panel">
   <h2>Quản lý thông tin trẻ</h2>
   <div class="search-bar">
-    <input type="text" placeholder="Tìm kiếm theo tên..." (input)="onSearchStudent($event)" />
-    <div class="actions">
+    <input class="w-full" type="text" placeholder="Tìm kiếm theo tên..." (input)="onSearchStudent($event)" />
+    <div class="actions flex w-full justify-end">
       <button (click)="handleOpenAddStudentForm()">Thêm học sinh mới</button>
     </div>
   </div>

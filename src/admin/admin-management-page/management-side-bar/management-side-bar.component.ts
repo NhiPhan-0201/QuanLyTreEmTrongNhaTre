@@ -49,6 +49,8 @@ export class ManagementSideBarComponent {
   }
 
   handleNavigate(path: string) {
+    this.hoverSideBar = this.hoverSideBarToggle = false;
+    this.sideBarToggled = "side-bar-not-toggled";
     this.router.navigate(['/admin/manage/' + path]);
   }
 }

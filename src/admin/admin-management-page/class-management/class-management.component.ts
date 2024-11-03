@@ -1,4 +1,4 @@
-import { AccountService } from './../../../APIService/Account.service';
+import { AccountService } from './../../../APIService';
 import { Component, OnInit } from '@angular/core';
 import { Account, NhomLop, QuanLiLop } from '../../../models';
 import { NhomLopService, QuanLiLopService } from '../../../APIService';
