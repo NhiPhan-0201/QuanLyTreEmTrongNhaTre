@@ -4,6 +4,7 @@ import { FeedbackComponent } from '../admin/feedback/feedback.component';
 import { SchoolFeeComponent } from '../admin/school-fee/school-fee.component';
 import { NotificationsComponent } from '../teacher/notifications/notifications-page.component';
 import { TimetablesComponent } from '../teacher/timetable-management/timetable.component';
+import { XemThongBaoComponent } from './component/phuhuynh/xem-thong-bao/xem-thong-bao.component';
 
 import { AdminManagementPageComponent } from '../admin/admin-management-page/admin-management-page.component';
 import { AccountManagementComponent } from '../admin/admin-management-page/account-management/account-management.component';
@@ -25,4 +26,7 @@ export const routes: Routes = [
       { path: 'classes', component: ClassManagementComponent }
     ]
   },
+  {
+    path: 'app/component/phuhuynh', component: XemThongBaoComponent
+  }
 ];
