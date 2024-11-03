@@ -27,6 +27,6 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'app/component/phuhuynh', component: XemThongBaoComponent
+    path: 'phuhuynh/xem-thong-bao', component: XemThongBaoComponent
   }
 ];
