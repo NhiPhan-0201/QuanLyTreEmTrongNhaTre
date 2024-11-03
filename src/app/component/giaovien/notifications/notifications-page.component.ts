@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
-import { ThongBaoLop } from '../../models/ThongBaoLop';
+import { ThongBaoLop } from '../../../../models/ThongBaoLop';
 
 @Component({
   selector: 'app-notification-page',

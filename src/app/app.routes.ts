@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { FeedbackCategoryComponent } from '../admin/feedback-category/feedback-category.component';
 import { FeedbackComponent } from '../admin/feedback/feedback.component';
 import { SchoolFeeComponent } from '../admin/school-fee/school-fee.component';
-import { NotificationsComponent } from '../teacher/notifications/notifications-page.component';
-import { TimetablesComponent } from '../teacher/timetable-management/timetable.component';
+import { NotificationsComponent } from './component/giaovien/notifications/notifications-page.component';
+import { TimetablesComponent } from './component/giaovien/timetable-management/timetable.component';
 import { XemThongBaoComponent } from './component/phuhuynh/xem-thong-bao/xem-thong-bao.component';
 
 import { AdminManagementPageComponent } from '../admin/admin-management-page/admin-management-page.component';
