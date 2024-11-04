@@ -36,7 +36,7 @@ export class QuanLyLopComponent implements OnInit {
   }
 
   fetchClasses(idGiaoVien: number): void {
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDU0OTkwMSwiZXhwIjoxNzMwNjM2MzAxfQ.Dp3pys5M9kbSZGKmURnxZKk_5AwOfjUNhSGmFdP2hZ0';
+    const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http.get<Class[]>(`${this.apiUrl}/${idGiaoVien}`, { headers })
