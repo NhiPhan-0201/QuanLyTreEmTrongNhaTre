@@ -21,7 +21,7 @@ export class QuanLyNhomLopComponent implements OnInit {
   }
 
   loadNhomLop(id: number): void {
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDU0OTkwMSwiZXhwIjoxNzMwNjM2MzAxfQ.Dp3pys5M9kbSZGKmURnxZKk_5AwOfjUNhSGmFdP2hZ0';
+    const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http.get<any[]>(`${this.apiUrl}`, { headers })

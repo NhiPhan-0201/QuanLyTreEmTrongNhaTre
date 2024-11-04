@@ -21,7 +21,7 @@ export class XemDanhGiaTreComponent implements OnInit {
   }
 
   fetchReviews(): void {
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDAzMTE2MSwiZXhwIjoxNzMwMTE3NTYxfQ.NRE-x7SOZoe9Aag6mb3i0jRFHYrOba4vjoO8shQP0no';
+    const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
