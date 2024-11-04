@@ -13,7 +13,6 @@ export class XemDanhGiaTreComponent implements OnInit {
   studentName: string = 'Tên Bé';
   teacherReviews: any[] = [];
   treId: number = 1;
-
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -25,6 +24,7 @@ export class XemDanhGiaTreComponent implements OnInit {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+    const phuhuynhID = localStorage.getItem('idAccount');
 
     this.http.get<any[]>(`http://localhost:8080/api/v1/danh-gia-tre-em/tre/${this.treId}`, { headers })
       .subscribe(
