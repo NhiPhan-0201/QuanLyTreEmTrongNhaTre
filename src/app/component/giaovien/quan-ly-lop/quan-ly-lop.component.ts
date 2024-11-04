@@ -36,21 +36,16 @@ export class QuanLyLopComponent implements OnInit {
   }
 
   fetchClasses(idGiaoVien: number): void {
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDAzMTk1NywiZXhwIjoxNzMwMTE4MzU3fQ.csvvN4y60W5aHewJvV7DMJXoev2okQx04Kxzrdr1jQI';
-
+    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDU0OTkwMSwiZXhwIjoxNzMwNjM2MzAxfQ.Dp3pys5M9kbSZGKmURnxZKk_5AwOfjUNhSGmFdP2hZ0';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<{ DT: Class[]; EM: string }>(`${this.apiUrl}/${idGiaoVien}`, { headers })
+    this.http.get<Class[]>(`${this.apiUrl}/${idGiaoVien}`, { headers })
       .subscribe(
         response => {
-          if (response.EM === 'success') {
-            this.classes = response.DT;
-          } else {
-            console.error('Error fetching classes:', response.EM);
-          }
+          this.classes = response;
         },
         error => {
-          console.error('Request failed:', error);
+          console.error('Error fetching classes:', error);
         }
       );
   }
