@@ -11,5 +11,5 @@ export const AccountStatus = {
 
 export const Gender = {
   Nam: 'Nam',
-  Nu: 'Nữ'
+  Nu: 'Nu'
 }

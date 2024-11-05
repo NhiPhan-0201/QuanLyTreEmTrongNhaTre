@@ -44,7 +44,7 @@ export class ClassManagementComponent implements OnInit {
     this.list_lop = [];
     this.classService.getAll().subscribe({
       next: (res) => {
-        this.list_lop = res.data;
+        this.list_lop = res;
         this.loadGiaoVien();
       },
       error: (error) => {
@@ -59,7 +59,7 @@ export class ClassManagementComponent implements OnInit {
     this.isLoading = true;
     this.accountService.getTeachers().subscribe({
       next: (res) => {
-        this.list_giaoVienAccount = res.data;
+        this.list_giaoVienAccount = res;
         this.list_lop = this.list_lop.map(lop => { return { ...lop, thongTinGiaoVien: this.list_giaoVienAccount.find(gv => gv.id === lop.idGiaoVien)?.giaoVien } });
         this.loadNhomLop();
       },
@@ -76,7 +76,7 @@ export class ClassManagementComponent implements OnInit {
     this.isLoading = true;
     this.classGroupService.getAll().subscribe({
       next: (res) => {
-        this.list_nhomLop = res.data;
+        this.list_nhomLop = res;
         this.list_lop = this.list_lop.map(lop => { return { ...lop, nhomLop: this.list_nhomLop.find(nl => nl.id === lop.idNhomLop) } });
         this.isLoading = false;
         this.onSearch();
@@ -176,7 +176,7 @@ export class ClassManagementComponent implements OnInit {
   handleUpdateLop(updatedLop: QuanLiLop) {
     this.classService.update(updatedLop).subscribe({
       next: (res) => {
-        this.list_lop = this.list_lop.map(lop => lop.id === res.data.id ? res.data : lop);
+        this.list_lop = this.list_lop.map(lop => lop.id === res.id ? res : lop);
         this.onSearch();
         this.closeForm();
       },
@@ -208,7 +208,7 @@ export class ClassManagementComponent implements OnInit {
   handleSaveNewLop(newLop: QuanLiLop) {
     this.classService.add(newLop).subscribe({
       next: (res) => {
-        this.list_lop.push(res.data);
+        this.list_lop.push(res);
         this.onSearch();
         this.closeForm();
       },

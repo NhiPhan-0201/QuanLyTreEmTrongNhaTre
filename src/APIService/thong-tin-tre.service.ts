@@ -5,6 +5,7 @@ import { CRUDService } from './CRUD.service.interface';
 import { ThongTinTre } from '../models/ThongTinTre';
 import { ApiResponse } from '../models/ApiResponse.interface';
 import { access_token } from '../constants/test_api';
+import { Account } from '../models';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,11 +30,27 @@ export class ThongTinTreService implements CRUDService<ThongTinTre> {
   }
 
   add(t: ThongTinTre): Observable<ThongTinTre> {
-    return this.http.post<ThongTinTre>(this.apiUrl, t, { headers: this.getHeaders() });
+    let formData = {
+      hoTen: t.hoTen,
+      ngaySinh: t.ngaySinh,
+      gioiTinh: t.gioiTinh,
+      classId: t.classId,
+      username: (t.thongTinPhuHuynh as Account).username,
+      anh: t.anh
+    }
+    return this.http.post<ThongTinTre>(this.apiUrl, formData, { headers: this.getHeaders() });
   }
 
   update(t: ThongTinTre): Observable<ThongTinTre> {
-    return this.http.put<ThongTinTre>(`${this.apiUrl}/${t.id}`, t, { headers: this.getHeaders() });
+    let formData = {
+      hoTen: t.hoTen,
+      ngaySinh: t.ngaySinh,
+      gioiTinh: t.gioiTinh,
+      classId: t.classId,
+      username: (t.thongTinPhuHuynh as Account).username,
+      anh: t.anh
+    }
+    return this.http.put<ThongTinTre>(`${this.apiUrl}/${t.id}`, formData, { headers: this.getHeaders() });
   }
 
   delete(id: number): Observable<null | string> {

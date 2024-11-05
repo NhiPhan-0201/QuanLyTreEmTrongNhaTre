@@ -8,6 +8,7 @@ import { Account } from '../../../../../models';
 import { AccountService, UploadService } from '../../../../../APIService';
 import { switchMap } from 'rxjs';
 import { AccountRole, Gender } from '../../../../../constants/enums';
+import { ToastService } from '../../../../service';
 
 @Component({
   selector: 'app-account-management',
@@ -36,7 +37,7 @@ export class AccountManagementComponent implements OnInit {
   currentPhuHuynhAccountsPage: number = 1;
   totalPhuHuynhAccountsPage: number = 1;
 
-  constructor(private accountService: AccountService, private uploadService: UploadService) {
+  constructor(private accountService: AccountService, private uploadService: UploadService, private toastService: ToastService) {
   }
 
   ngOnInit(): void {
@@ -48,10 +49,10 @@ export class AccountManagementComponent implements OnInit {
     this.accounts = [];
     this.accountService.getParents().subscribe({
       next: (res) => {
-        this.accounts = this.accounts.concat(res.data);
+        this.accounts = this.accounts.concat(res);
         this.accountService.getTeachers().subscribe({
           next: (res) => {
-            this.accounts = this.accounts.concat(res.data);
+            this.accounts = this.accounts.concat(res);
             this.onSearch();
             this.isLoading = false;
           },
@@ -148,7 +149,7 @@ export class AccountManagementComponent implements OnInit {
     if (updatedAccount.role === 'GiaoVien' && oldFileChanged && file) {
       upload$ = this.uploadService.uploadImage(file).pipe(
         switchMap((res) => {
-          updatedAccount.giaoVien!.anh = res.data;
+          updatedAccount.giaoVien!.anh = res[0];
           return this.accountService.update(updatedAccount);
         }))
     }
@@ -158,12 +159,15 @@ export class AccountManagementComponent implements OnInit {
 
     upload$.subscribe({
       next: (res) => {
-        this.accounts = this.accounts.map(account => account.id === res.data.id ? res.data : account);
+        this.accounts = this.accounts.map(account => account.id === res.id ? res : account);
         this.onSearch();
+        this.toastService.showSuccess('Cập nhật tài khoản thành công');
         this.closeForm();
       },
       error: (error) => {
         console.error('Error updating account:', error);
+        this.toastService.showError('Có lỗi xảy ra khi cập nhật tài khoản');
+        this.closeForm();
       }
     });
   }
@@ -176,9 +180,14 @@ export class AccountManagementComponent implements OnInit {
     this.accountService.delete(this.selectedAccount.id).subscribe({
       next: (_) => {
         this.accounts = this.accounts.filter(account => account.id !== this.selectedAccount.id);
+        this.onSearch();
+        this.toastService.showSuccess('Xóa tài khoản thành công');
+        this.closeForm();
       },
       error: (error) => {
         console.error('Error deleting account:', error);
+        this.toastService.showError('Có lỗi xảy ra khi xóa tài khoản');
+        this.closeForm();
       }
     });
     this.openDeleteConfirmationDialog = false;
@@ -188,10 +197,11 @@ export class AccountManagementComponent implements OnInit {
     this.openAddAccountForm = true;
   }
   handleSaveNewAccount({ newAccount, anh }: { newAccount: Account, anh: File | null }) {
+    console.log('newAccount:', newAccount);
     let upload$ = newAccount.role === 'GiaoVien' && anh
       ? this.uploadService.uploadImage(anh).pipe(
         switchMap((res) => {
-          newAccount.giaoVien!.anh = res.data;
+          newAccount.giaoVien!.anh = res[0];
           return this.accountService.add(newAccount);
         })
       )
@@ -199,12 +209,15 @@ export class AccountManagementComponent implements OnInit {
 
     upload$.subscribe({
       next: (res) => {
-        this.accounts.push(res.data);
+        this.accounts.push(res);
         this.onSearch();
+        this.toastService.showSuccess('Thêm tài khoản mới thành công');
         this.closeForm();
       },
       error: (error) => {
         console.error('Error saving new account:', error);
+        this.toastService.showError('Có lỗi xảy ra khi thêm tài khoản mới');
+        this.closeForm();
       }
     });
   }
@@ -216,12 +229,12 @@ export class AccountManagementComponent implements OnInit {
   }
 }
 
-export function validateData(formGroup: FormGroup, anh?: File | null) {
+export function validateData(formGroup: FormGroup, anh?: File | null): any {
   const errors: any = {};
   const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const phoneNumberPattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 
-  if (!anh) {
+  if (!anh && formGroup.get('role')?.value === AccountRole.GiaoVien) {
     errors.anh = 'Ảnh không được để trống';
   }
 

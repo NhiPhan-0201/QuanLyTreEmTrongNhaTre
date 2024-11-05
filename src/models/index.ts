@@ -14,6 +14,7 @@ import { ThongTinTre } from "./ThongTinTre";
 import { ThucDon } from "./ThucDon";
 import { XinNghi } from "./XinNghi";
 import { YKienPhuHuynh } from "./YKienPhuHuynh";
+import { PhuHuynhTre } from "./PhuHuynhTre";
 
 export type {
   Account,
@@ -31,5 +32,6 @@ export type {
   ThongTinTre,
   ThucDon,
   XinNghi,
-  YKienPhuHuynh
+  YKienPhuHuynh,
+  PhuHuynhTre
 }
