@@ -3,15 +3,16 @@ import { NhomLop } from "../models";
 import { CRUDService } from "./CRUD.service.interface";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
+import { access_token } from "../constants/test_api";
 
 @Injectable({ providedIn: 'root' })
 
 export class NhomLopService implements CRUDService<NhomLop> {
-  private apiUrl: string = "https://localhost:8080/api/v1/nhom-lop";
+  private apiUrl: string = "http://localhost:8080/api/v1/nhom-lop";
   constructor(private httpClient: HttpClient) { }
 
   getHeaders() {
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDY0MTQ1NiwiZXhwIjoxNzMwNzI3ODU2fQ.NVOj-GLg64OfEix-uXYgUrwV0CivgJiaxWn1iRs0aRE";
+    const token = access_token;
     return {
       'Authorization': `Bearer ${token}`,
     };
