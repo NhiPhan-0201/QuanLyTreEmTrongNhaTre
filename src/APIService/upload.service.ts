@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../models/ApiResponse.interface';
+import { access_token } from '../constants/test_api';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +13,20 @@ export class UploadService {
 
   // Lấy token
   private getHeaders() {
-    const token = localStorage.getItem('access_token');
+    const token = access_token;
     return {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     };
   }
 
+
   // Upload file
-  uploadImage(file: File): Observable<ApiResponse<string>> {
+  uploadImage(file: File): Observable<string[]> {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<ApiResponse<string>>(this.apiUrl + '/image', formData, {
-      headers: this.getHeaders()
+    return this.http.post<string[]>(`${this.apiUrl}/image`, formData, {
+      headers: new HttpHeaders(this.getHeaders())
     });
   }
 }

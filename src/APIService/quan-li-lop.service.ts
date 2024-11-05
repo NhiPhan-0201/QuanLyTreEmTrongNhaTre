@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { QuanLiLop } from '../models/QuanLiLop';
 import { ApiResponse } from '../models/ApiResponse.interface';
 import { CRUDService } from './CRUD.service.interface';
+import { access_token } from '../constants/test_api';
 
 @Injectable({
   providedIn: 'root'
@@ -16,40 +17,39 @@ export class QuanLiLopService implements CRUDService<QuanLiLop> {
 
   // Lấy token
   private getHeaders() {
-    const token = localStorage.getItem('access_token');
+    const token = access_token;
     return {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     };
   }
 
 
-  getAll(): Observable<ApiResponse<QuanLiLop[]>> {
-    return this.http.get<ApiResponse<QuanLiLop[]>>(this.apiUrl, {
+  getAll(): Observable<QuanLiLop[]> {
+    return this.http.get<QuanLiLop[]>(this.apiUrl, {
       headers: this.getHeaders()
     });
   }
 
-  get(id: number): Observable<ApiResponse<QuanLiLop>> {
-    return this.http.get<ApiResponse<QuanLiLop>>(this.apiUrl + `/${id}`, {
+  get(id: number): Observable<QuanLiLop> {
+    return this.http.get<QuanLiLop>(this.apiUrl + `/${id}`, {
       headers: this.getHeaders()
     });
   }
 
-  add(item: QuanLiLop): Observable<ApiResponse<QuanLiLop>> {
-    return this.http.post<ApiResponse<QuanLiLop>>(this.apiUrl, item, {
+  add(item: QuanLiLop): Observable<QuanLiLop> {
+    return this.http.post<QuanLiLop>(this.apiUrl, item, {
       headers: this.getHeaders()
     });
   }
 
-  update(item: QuanLiLop): Observable<ApiResponse<QuanLiLop>> {
-    return this.http.put<ApiResponse<QuanLiLop>>(this.apiUrl, item, {
+  update(item: QuanLiLop): Observable<QuanLiLop> {
+    return this.http.put<QuanLiLop>(this.apiUrl, item, {
       headers: this.getHeaders()
     });
   }
 
-  delete(id: number): Observable<ApiResponse<string | null>> {
-    return this.http.delete<ApiResponse<string | null>>(this.apiUrl + `/${id}`, {
+  delete(id: number): Observable<string | null> {
+    return this.http.delete<string | null>(this.apiUrl + `/${id}`, {
       headers: this.getHeaders()
     });
   }
