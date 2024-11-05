@@ -59,8 +59,8 @@ export class StudentManagementComponent implements OnInit {
         this.loadParents();
       },
       error: (error) => {
-        this.classes = this.generateMockClasses();
-        this.loadParents();
+        console.error(error);
+        this.toastService.showError('Lỗi khi tải danh sách lớp');
       }
     });
   }
@@ -69,12 +69,11 @@ export class StudentManagementComponent implements OnInit {
     this.accountService.getParents().subscribe({
       next: (res) => {
         this.parents = res
-        this.loadStudents();
+        this.loadStudentParents();
       },
       error: (error) => {
         console.error(error);
-        this.parents = this.generateMockParents();
-        this.loadStudents();
+        this.toastService.showError('Lỗi khi tải danh sách phụ huynh');
       }
     })
   }
@@ -87,8 +86,7 @@ export class StudentManagementComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.students_parents = [];
-        this.loadStudents();
+        this.toastService.showError('Lỗi khi tải danh sách phụ huynh trẻ');
       }
     });
   }
@@ -104,11 +102,8 @@ export class StudentManagementComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        console.error(err);
-        this.students = this.generateMockStudents();
         this.isLoading = false;
-        this.mapStudentParents();
-        this.onSearchStudent();
+        this.toastService.showError('Lỗi khi tải danh sách học sinh');
       }
     });
   }
@@ -124,66 +119,11 @@ export class StudentManagementComponent implements OnInit {
     this.students.map((s) => {
       let phuHuynhTre = this.students_parents.find((p) => p.tre.id === s.id);
       if (phuHuynhTre) {
-        let phuHuynh = this.parents.find((p) => p.id === phuHuynhTre.phuHuynh.id);
+        let phuHuynh = this.parents.find((p) => p.phuHuynh?.id === phuHuynhTre.phuHuynh.id);
         s.thongTinPhuHuynh = phuHuynh;
+        s.phuHuynhId = phuHuynh?.id || -1;
       }
     });
-  }
-
-  generateMockClasses(): QuanLiLop[] {
-    let classes: QuanLiLop[] = [];
-    for (let i = 0; i < 10; i++) {
-      let j = i + 1;
-      classes.push({
-        id: 1 + i,
-        idGiaoVien: j,
-        tenLop: "Lớp " + j,
-        tenPhong: "Phòng " + j,
-        viTri: "",
-        idNhomLop: j
-      });
-    }
-    console.log(classes);
-    return classes;
-  }
-
-  generateMockParents(): Account[] {
-    let parents: Account[] = [];
-    for (let i = 0; i < 10; i++) {
-      parents.push({
-        id: i,
-        username: `phuhuynh${i}`,
-        password: '123456',
-        role: AccountRole.PhuHuynh,
-        status: AccountStatus.Enabled,
-        phuHuynhId: i,
-        phuHuynh: {
-          id: i,
-          diaChi: `Địa chỉ ${i}`,
-          ...(i % 2 === 0
-            ? { hoTenCha: `Phụ huynh ${i}` }
-            : { hoTenMe: `Phụ huynh ${i}` })
-        }
-      });
-    }
-    return parents;
-  }
-
-  generateMockStudents(): ThongTinTre[] {
-    let students: ThongTinTre[] = [];
-    for (let i = 0; i < 100; i++) {
-      students.push({
-        id: i,
-        hoTen: `Học sinh ${i}`,
-        gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
-        ngaySinh: new Date().toLocaleDateString('vi-VN', { day: "2-digit", month: "2-digit", year: "numeric" })
-          .split('/').reverse().join('-'),
-        anh: 'https://picsum.photos/' + (i + 100),
-        classId: i % 10 + 1,
-        quanLiLop: this.classes.find((c) => c.id == i % 10 + 1)
-      });
-    }
-    return students;
   }
 
   onSearchStudent = (event?: Event) => {
@@ -227,49 +167,14 @@ export class StudentManagementComponent implements OnInit {
     return student;
   }
 
-  handleSaveNewStudent({ student, anh }: { student: ThongTinTre; anh: File | null }) {
-    console.log(student)
-    student = this.mapStudentParentsBeforeSave(student);
-    console.log(student)
-    let upload$ = anh
-      ? this.uploadService.uploadImage(anh).pipe(
-        switchMap((res) => {
-          student.anh = res[0]
-          return this.thongTinTreService.add(student);
-        })
-      )
-      : this.thongTinTreService.add(student);
-
-    upload$.subscribe({
-      next: (res) => {
-        this.students.push(res);
-        this.onSearchStudent();
-        this.toastService.showSuccess('Thêm học sinh thành công');
-        this.closeForm();
-      },
-      error: (err) => {
-        this.toastService.showError('Thêm học sinh thất bại');
-      }
-    });
+  handleSaveNewStudent(student: ThongTinTre) {
+    this.students.push(student);
+    this.filteredStudents.push(student);
   }
 
-  handleUpdateStudent({ student, anh: { file, oldFileChanged } }: { student: ThongTinTre; anh: { file: File | null, oldFileChanged: boolean } }) {
-    const upload$ = file && oldFileChanged
-      ? this.uploadService.uploadImage(file).pipe(
-        switchMap((res) => {
-          student.anh = res[0]
-          return this.thongTinTreService.update(student);
-        })
-      )
-      : this.thongTinTreService.update(student);
-
-    upload$.subscribe((res) => {
-      const index = this.students.findIndex(s => s.id === res.id);
-      this.students[index] = res
-      this.onSearchStudent();
-      this.mapStudentClasses();
-      this.closeForm();
-    });
+  handleUpdateStudent(student: ThongTinTre) {
+    this.students = this.students.map(s => s.id === student.id ? student : s);
+    this.filteredStudents = this.filteredStudents.map(s => s.id === student.id ? student : s);
   }
 
 

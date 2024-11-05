@@ -11,4 +11,5 @@ export interface ThongTinTre {
   quanLiLop?: QuanLiLop;
 
   thongTinPhuHuynh?: Account | ThongTinPhuHuynh;
+  phuHuynhId?: number;
 }

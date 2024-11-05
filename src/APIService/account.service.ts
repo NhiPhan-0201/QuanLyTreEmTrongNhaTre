@@ -5,6 +5,7 @@ import { Account } from '../models/Account';
 import { CRUDService } from './CRUD.service.interface';
 import { ApiResponse } from '../models/ApiResponse.interface';
 import { access_token } from '../constants/test_api';
+import { AccountRole } from '../constants/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,6 @@ export class AccountService implements CRUDService<Account> {
   private getHeaders() {
     const token = access_token;
     return {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     };
   }
@@ -37,11 +37,27 @@ export class AccountService implements CRUDService<Account> {
   }
 
   add(account: Account): Observable<Account> {
-    return this.http.post<Account>(this.apiUrl, account, { headers: this.getHeaders() });
+    let formData = {
+      username: account.username,
+      password: account.password,
+      role: account.role,
+      status: account.status,
+      ...(account.role === AccountRole.GiaoVien ? { giaoVien: account.giaoVien } : {}),
+      ...(account.role === AccountRole.PhuHuynh ? { phuHuynh: account.phuHuynh } : {})
+    }
+    return this.http.post<Account>(this.apiUrl, formData, { headers: this.getHeaders() });
   }
 
   update(account: Account): Observable<Account> {
-    return this.http.put<Account>(`${this.apiUrl}/${account.id}`, account, { headers: this.getHeaders() });
+    let formData = {
+      username: account.username,
+      password: account.password,
+      role: account.role,
+      status: account.status,
+      ...(account.role === AccountRole.GiaoVien ? { giaoVien: account.giaoVien } : {}),
+      ...(account.role === AccountRole.PhuHuynh ? { phuHuynh: account.phuHuynh } : {})
+    }
+    return this.http.put<Account>(`${this.apiUrl}/${account.id}`, formData, { headers: this.getHeaders() });
   }
 
   delete(id: number): Observable<null | string> {

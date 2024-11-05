@@ -37,13 +37,29 @@ export class QuanLiLopService implements CRUDService<QuanLiLop> {
   }
 
   add(item: QuanLiLop): Observable<QuanLiLop> {
-    return this.http.post<QuanLiLop>(this.apiUrl, item, {
+    let formData = {
+      tenLop: item.tenLop,
+      idGiaoVien: item.idGiaoVien,
+      tenPhong: item.tenPhong,
+      viTri: item.viTri,
+      ...(item.idNhomLop ? { idNhomLop: item.idNhomLop } : {})
+    };
+
+    return this.http.post<QuanLiLop>(this.apiUrl, formData, {
       headers: this.getHeaders()
     });
   }
 
   update(item: QuanLiLop): Observable<QuanLiLop> {
-    return this.http.put<QuanLiLop>(this.apiUrl, item, {
+    let formData = {
+      tenLop: item.tenLop,
+      idGiaoVien: item.idGiaoVien,
+      tenPhong: item.tenPhong,
+      viTri: item.viTri,
+      ...(item.idNhomLop ? { idNhomLop: item.idNhomLop } : {})
+    };
+
+    return this.http.put<QuanLiLop>(this.apiUrl, formData, {
       headers: this.getHeaders()
     });
   }

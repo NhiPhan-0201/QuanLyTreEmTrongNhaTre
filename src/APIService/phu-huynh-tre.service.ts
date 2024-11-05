@@ -11,7 +11,7 @@ import { access_token } from '../constants/test_api';
 })
 
 export class PhuHuynhTreService implements CRUDService<PhuHuynhTre> {
-  private apiUrl = 'http://localhost:8080/api/v1/quan-li-lop';
+  private apiUrl = 'http://localhost:8080/api/v1/phuhuynhtre';
 
   constructor(private http: HttpClient) { }
 

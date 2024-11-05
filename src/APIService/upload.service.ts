@@ -21,11 +21,11 @@ export class UploadService {
 
 
   // Upload file
-  uploadImage(file: File): Observable<string[]> {
+  uploadImage(file: File): Observable<{ link: string }> {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<string[]>(`${this.apiUrl}/image`, formData, {
+    return this.http.post<{ link: string }>(`${this.apiUrl}/image`, formData, {
       headers: new HttpHeaders(this.getHeaders())
     });
   }

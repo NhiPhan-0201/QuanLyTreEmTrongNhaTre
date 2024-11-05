@@ -37,7 +37,7 @@ export class AccountManagementComponent implements OnInit {
   currentPhuHuynhAccountsPage: number = 1;
   totalPhuHuynhAccountsPage: number = 1;
 
-  constructor(private accountService: AccountService, private uploadService: UploadService, private toastService: ToastService) {
+  constructor(private accountService: AccountService, private toastService: ToastService) {
   }
 
   ngOnInit(): void {
@@ -141,35 +141,10 @@ export class AccountManagementComponent implements OnInit {
     this.selectedAccount = { ...account };
     this.openUpdateAccountForm = true;
   }
-  handleUpdateAccount({ updatedAccount, anh: { file, oldFileChanged } }: { updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }) {
-    if (updatedAccount.password === '') {
-      delete updatedAccount.password;
-    }
-    let upload$;
-    if (updatedAccount.role === 'GiaoVien' && oldFileChanged && file) {
-      upload$ = this.uploadService.uploadImage(file).pipe(
-        switchMap((res) => {
-          updatedAccount.giaoVien!.anh = res[0];
-          return this.accountService.update(updatedAccount);
-        }))
-    }
-    else {
-      upload$ = this.accountService.update(updatedAccount);
-    }
-
-    upload$.subscribe({
-      next: (res) => {
-        this.accounts = this.accounts.map(account => account.id === res.id ? res : account);
-        this.onSearch();
-        this.toastService.showSuccess('Cập nhật tài khoản thành công');
-        this.closeForm();
-      },
-      error: (error) => {
-        console.error('Error updating account:', error);
-        this.toastService.showError('Có lỗi xảy ra khi cập nhật tài khoản');
-        this.closeForm();
-      }
-    });
+  handleUpdateAccount(updatedAccount: Account) {
+    this.accounts = this.accounts.map(account => account.id === updatedAccount.id ? updatedAccount : account);
+    this.phuHuynhAccounts = this.phuHuynhAccounts.map(account => account.id === updatedAccount.id ? updatedAccount : account);
+    this.giaoVienAccounts = this.giaoVienAccounts.map(account => account.id === updatedAccount.id ? updatedAccount : account);
   }
 
   handleOpenDeleteAccountConfirmation(account: Account) {
@@ -196,30 +171,10 @@ export class AccountManagementComponent implements OnInit {
   handleOpenAddAccountForm() {
     this.openAddAccountForm = true;
   }
-  handleSaveNewAccount({ newAccount, anh }: { newAccount: Account, anh: File | null }) {
-    console.log('newAccount:', newAccount);
-    let upload$ = newAccount.role === 'GiaoVien' && anh
-      ? this.uploadService.uploadImage(anh).pipe(
-        switchMap((res) => {
-          newAccount.giaoVien!.anh = res[0];
-          return this.accountService.add(newAccount);
-        })
-      )
-      : this.accountService.add(newAccount);
-
-    upload$.subscribe({
-      next: (res) => {
-        this.accounts.push(res);
-        this.onSearch();
-        this.toastService.showSuccess('Thêm tài khoản mới thành công');
-        this.closeForm();
-      },
-      error: (error) => {
-        console.error('Error saving new account:', error);
-        this.toastService.showError('Có lỗi xảy ra khi thêm tài khoản mới');
-        this.closeForm();
-      }
-    });
+  handleSaveNewAccount(newAccount: Account) {
+    this.accounts.push(newAccount);
+    this.phuHuynhAccounts = this.phuHuynhAccounts.map(account => account.id === newAccount.id ? newAccount : account);
+    this.giaoVienAccounts = this.giaoVienAccounts.map(account => account.id === newAccount.id ? newAccount : account);
   }
 
   closeForm() {
@@ -233,10 +188,6 @@ export function validateData(formGroup: FormGroup, anh?: File | null): any {
   const errors: any = {};
   const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const phoneNumberPattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
-
-  if (!anh && formGroup.get('role')?.value === AccountRole.GiaoVien) {
-    errors.anh = 'Ảnh không được để trống';
-  }
 
   if (!formGroup.get('username')?.value) {
     errors.username = 'Tên đăng nhập không được để trống';
