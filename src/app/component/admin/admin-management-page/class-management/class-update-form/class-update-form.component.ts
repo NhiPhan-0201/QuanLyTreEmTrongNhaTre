@@ -27,7 +27,7 @@ export class ClassUpdateFormComponent implements OnChanges {
   ngOnChanges() {
     this.updateLopForm = this.fb.group({
       tenLop: [this.selectedLop.tenLop, [Validators.required]],
-      idGiaoVien: [this.selectedLop.thongTinGiaoVien?.id || -1, [Validators.required]],
+      idGiaoVien: [this.selectedLop.idGiaoVien || -1, [Validators.required]],
       tenPhong: [this.selectedLop.tenPhong, [Validators.required]],
       viTri: [this.selectedLop.viTri, [Validators.required]],
       idNhomLop: [this.selectedLop.idNhomLop || -1, [Validators.nullValidator]]
@@ -39,7 +39,6 @@ export class ClassUpdateFormComponent implements OnChanges {
   private subscribeToFormControls(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach((key) => {
       const control = formGroup.get(key);
-      const errorKey = key
 
       if (control) {
         if (control instanceof FormGroup) {
@@ -63,6 +62,7 @@ export class ClassUpdateFormComponent implements OnChanges {
 
   save() {
     if (Object.keys(this.errors).length === 0) {
+      if (this.updateLopForm.value.idNhomLop === -1) delete this.updateLopForm.value.idNhomLop;
       this.saveLop.emit(this.updateLopForm.value);
     }
   }

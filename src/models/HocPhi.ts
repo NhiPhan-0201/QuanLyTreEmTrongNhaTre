@@ -1,4 +1,4 @@
-import { NhomLop } from './NhomLop';
+import { NhomLop } from '.';
 
 export interface HocPhi {
   id: number;

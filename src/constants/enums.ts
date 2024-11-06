@@ -1,15 +1,15 @@
 export const AccountRole = {
-    PhuHuynh: 'PhuHuynh',
-    GiaoVien: 'GiaoVien',
-    Admin: 'Admin',
+  PhuHuynh: 'PhuHuynh',
+  GiaoVien: 'GiaoVien',
+  Admin: 'Admin',
 };
 
 export const AccountStatus = {
-    Enabled: 'Enabled',
-    Disabled: 'Disabled',
+  Enabled: 'Enable',
+  Disabled: 'Disable',
 };
 
 export const Gender = {
-    Nam: 'Nam',
-    Nu: 'Nữ'
+  Nam: 'Nam',
+  Nu: 'Nu'
 }

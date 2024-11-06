@@ -21,9 +21,11 @@ export class ManagementSideBarComponent {
   constructor(private router: Router) { }
 
   isOpen = false;
+  isClosed = false;
 
   toggleSidebar() {
     this.isOpen = !this.isOpen;
+    this.isClosed = !this.isClosed;
   }
 
   onMouseEnter() {

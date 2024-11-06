@@ -1,5 +1,4 @@
-import { ThongTinGiaoVien } from './ThongTinGiaoVien';
-import { ThongTinTre } from './ThongTinTre';
+import { ThongTinGiaoVien, ThongTinTre } from '.';
 
 export interface DanhGiaTreEm {
   id: number;

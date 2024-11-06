@@ -4,6 +4,9 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { Account } from '../../../../../../models';
 import { AccountRole, AccountStatus, Gender } from '../../../../../../constants/enums';
 import { validateData } from '../account-management.component';
+import { AccountService, UploadService } from '../../../../../../APIService';
+import { ToastService } from '../../../../../service';
+import { catchError, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-account-add-new-form',
@@ -32,9 +35,9 @@ export class AccountAddNewFormComponent {
   errors!: any;
 
   @Output() closeForm = new EventEmitter<void>();
-  @Output() saveAccount: EventEmitter<{ newAccount: Account, anh: File | null }> = new EventEmitter<{ newAccount: Account, anh: File | null }>();
+  @Output() saveAccount: EventEmitter<Account> = new EventEmitter<Account>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private accountService: AccountService, private uploadService: UploadService, private toastService: ToastService) {
     this.newAccountForm = this.fb.group({
       id: '',
       username: ['', [Validators.required]],
@@ -128,13 +131,40 @@ export class AccountAddNewFormComponent {
   }
 
   save() {
-
     this.errors = validateData(this.newAccountForm, this.anhGiaoVienUploaded);
 
-    console.log(this.errors);
-
     if (Object.keys(this.errors).length === 0) {
-      this.saveAccount.emit({ newAccount: this.newAccountForm.value, anh: this.anhGiaoVienUploaded });
+      let uploadObservable: Observable<Account>;
+
+      if (this.newAccountForm.value.role === this.TEACHER_ROLE && this.anhGiaoVienUploaded) {
+        try {
+          uploadObservable = this.uploadService.uploadImage(this.anhGiaoVienUploaded).pipe(
+            switchMap((res) => {
+              this.newAccountForm.get('giaoVien')?.patchValue({ anh: res.link });
+              return this.accountService.add(this.newAccountForm.value);
+            }),
+            catchError((err) => {
+              throw err;
+            })
+          );
+        } catch (err) {
+          this.toastService.showError('Lỗi khi tải ảnh lên server');
+          return;
+        }
+      } else {
+        uploadObservable = this.accountService.add(this.newAccountForm.value);
+      }
+
+      uploadObservable.subscribe({
+        next: (res) => {
+          this.saveAccount.emit(res);
+          this.toastService.showSuccess('Cập nhật tài khoản thành công');
+          this.close();
+        },
+        error: (err) => {
+          this.toastService.showError('Lỗi khi cập nhật tài khoản');
+        }
+      });
     }
   }
 

@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Account, NhomLop, QuanLiLop } from '../../../../../models';
 import { NhomLopService, QuanLiLopService, AccountService } from '../../../../../APIService';
@@ -44,13 +45,11 @@ export class ClassManagementComponent implements OnInit {
     this.list_lop = [];
     this.classService.getAll().subscribe({
       next: (res) => {
-        this.list_lop = res.data;
+        this.list_lop = res;
         this.loadGiaoVien();
       },
       error: (error) => {
         console.error('Lỗi khi tải list_lop:', error);
-        this.list_lop = this.generateMockClasses();
-        this.loadGiaoVien();
       }
     });
   }
@@ -59,16 +58,22 @@ export class ClassManagementComponent implements OnInit {
     this.isLoading = true;
     this.accountService.getTeachers().subscribe({
       next: (res) => {
-        this.list_giaoVienAccount = res.data;
-        this.list_lop = this.list_lop.map(lop => { return { ...lop, thongTinGiaoVien: this.list_giaoVienAccount.find(gv => gv.id === lop.idGiaoVien)?.giaoVien } });
+        this.list_giaoVienAccount = res;
+        this.mapGiaoVien_Lop();
         this.loadNhomLop();
       },
       error: (error) => {
         console.error('Lỗi khi tải list_giaoVienAccount:', error);
-        this.list_giaoVienAccount = this.generateMockGiaoVienAccounts();
-        this.list_lop = this.list_lop.map(lop => { return { ...lop, thongTinGiaoVien: this.list_giaoVienAccount.find(gv => gv.id === lop.idGiaoVien)?.giaoVien } });
-        this.loadNhomLop();
       }
+    });
+  }
+
+  mapGiaoVien_Lop() {
+    this.list_lop = this.list_lop.map(lop => {
+      if (lop.idGiaoVien) {
+        lop.thongTinGiaoVien = this.list_giaoVienAccount.find(gv => gv.id === lop.idGiaoVien)?.giaoVien;
+      }
+      return lop;
     });
   }
 
@@ -76,70 +81,26 @@ export class ClassManagementComponent implements OnInit {
     this.isLoading = true;
     this.classGroupService.getAll().subscribe({
       next: (res) => {
-        this.list_nhomLop = res.data;
-        this.list_lop = this.list_lop.map(lop => { return { ...lop, nhomLop: this.list_nhomLop.find(nl => nl.id === lop.idNhomLop) } });
+        this.list_nhomLop = res;
+        this.mapLop_NhomLop();
         this.isLoading = false;
         this.onSearch();
       },
       error: (error) => {
         console.error('Lỗi khi tải list_nhomLop:', error);
-        this.list_nhomLop = this.generateMockClassGroups();
-        this.list_lop = this.list_lop.map(lop => { return { ...lop, nhomLop: this.list_nhomLop.find(nl => nl.id === lop.idNhomLop) } });
         this.isLoading = false;
-        this.onSearch();
       }
     });
   }
 
-  private generateMockClassGroups() {
-    const mockClassGroups: NhomLop[] = [];
-    for (let i = 0; i < 10; i++) {
-      mockClassGroups.push({
-        id: i,
-        tenNhom: `Nhóm lớp ${i}`
-      });
-    }
-    return mockClassGroups;
+  mapLop_NhomLop() {
+    this.list_lop = this.list_lop.map(lop => {
+      if (lop.idNhomLop) {
+        lop.nhomLop = this.list_nhomLop.find(nl => nl.id === lop.idNhomLop);
+      }
+      return lop;
+    });
   }
-
-  private generateMockGiaoVienAccounts() {
-    const mockGiaoVienAccounts: Account[] = [];
-    for (let i = 0; i < 10; i++) {
-      mockGiaoVienAccounts.push({
-        id: i,
-        role: AccountRole.GiaoVien,
-        status: AccountStatus.Enabled,
-        username: `giaovien${i}`,
-        giaoVien: {
-          id: i,
-          hoTen: `Giáo viên ${i}`,
-          email: `giaovien${i}@example.com`,
-          soDienThoai: `098765432${i}`,
-          diaChi: `Địa chỉ ${i}`,
-          gioiTinh: i % 2 === 0 ? 'Nam' : 'Nữ',
-          anh: `https://randomuser.me/api/portraits`,
-          chuyenMon: `Chuyên môn ${i}`
-        }
-      });
-    }
-    return mockGiaoVienAccounts;
-  }
-
-  private generateMockClasses() {
-    const mockClasses: QuanLiLop[] = [];
-    for (let i = 0; i < 10; i++) {
-      mockClasses.push({
-        id: i,
-        tenLop: `Lớp ${i}`,
-        idGiaoVien: i,
-        idNhomLop: i,
-        tenPhong: `Phòng ${i}`,
-        viTri: `Tầng ${i}`,
-      });
-    }
-    return mockClasses;
-  }
-
 
   onSearch(event?: Event) {
     if (event) {
@@ -176,7 +137,7 @@ export class ClassManagementComponent implements OnInit {
   handleUpdateLop(updatedLop: QuanLiLop) {
     this.classService.update(updatedLop).subscribe({
       next: (res) => {
-        this.list_lop = this.list_lop.map(lop => lop.id === res.data.id ? res.data : lop);
+        this.list_lop = this.list_lop.map(lop => lop.id === res.id ? res : lop);
         this.onSearch();
         this.closeForm();
       },
@@ -208,7 +169,7 @@ export class ClassManagementComponent implements OnInit {
   handleSaveNewLop(newLop: QuanLiLop) {
     this.classService.add(newLop).subscribe({
       next: (res) => {
-        this.list_lop.push(res.data);
+        this.list_lop.push(res);
         this.onSearch();
         this.closeForm();
       },
@@ -230,6 +191,21 @@ export function validateData(formGroup: FormGroup) {
   const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const phoneNumberPattern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 
+  if (!formGroup.get('tenLop')?.value) {
+    errors.tenLop = 'Tên lớp không được để trống';
+  }
+
+  if (!formGroup.get('idGiaoVien')?.value || formGroup.get('idGiaoVien')?.value === -1) {
+    errors.idGiaoVien = 'Giáo viên không được để trống';
+  }
+
+  if (!formGroup.get('tenPhong')?.value) {
+    errors.tenPhong = 'Tên phòng không được để trống';
+  }
+
+  if (!formGroup.get('viTri')?.value) {
+    errors.viTri = 'Vị trí không được để trống';
+  }
 
   return errors;
 }
