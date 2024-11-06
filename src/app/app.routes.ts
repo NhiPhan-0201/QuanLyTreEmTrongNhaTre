@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { FeedbackCategoryComponent } from './component/admin/feedback-category/feedback-category.component'
-//import { FeedbackComponent } from './component/admin/feedback/feedback.component';
-import { SchoolFeeComponent } from './component/admin/school-fee/school-fee.component';
+
 import { NotificationsComponent } from './component/giaovien/notifications/notifications-page.component';
 import { TimetablesComponent } from './component/giaovien/timetable-management/timetable.component';
 import { XemThongBaoComponent } from './component/phuhuynh/xem-thong-bao/xem-thong-bao.component';
@@ -19,6 +17,11 @@ import { AccountManagementComponent } from './component/admin/admin-management-p
 import { StudentManagementComponent } from './component/admin/admin-management-page/student-management/student-management.component';
 import { ClassManagementComponent } from './component/admin/admin-management-page/class-management/class-management.component';
 
+import { FeedbackCategoryComponent } from './component/admin/feedback-category/feedback-category.component'
+import { AdminFeedbackComponent } from './component/admin/feedback/feedback.component';
+import { SchoolFeeComponent } from './component/admin/school-fee/school-fee.component';
+import { ReportComponent } from './component/admin/report/report.component';
+
 // giao vien
 import { GiaovienManagementPageComponent } from './giaovien/giaovien-management-page/giaovien-management-page.component';
 import { GiaovienDanhsachhocsinhComponent } from './giaovien/giaovien-danhsachhocsinh/giaovien-danhsachhocsinh.component';
@@ -30,8 +33,10 @@ import { GiaovienThongtinhocsinhComponent } from './giaovien/giaovien-thongtinho
 
 export const routes: Routes = [
   { path: 'admin/manageCategory', component: FeedbackCategoryComponent },
-  { path: 'admin/feedback', component: FeedbackComponent },
+  { path: 'admin/feedback', component: AdminFeedbackComponent },
   { path: 'admin/schoolFee', component: SchoolFeeComponent },
+  { path: 'admin/report', component: ReportComponent },
+
   { path: 'teacher/notifications', component: NotificationsComponent },
   { path: 'teacher/timetable-management', component: TimetablesComponent },
 

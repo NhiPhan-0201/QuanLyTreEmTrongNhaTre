@@ -1,0 +1,35 @@
+<div class="tabs">
+    <button (click)="showTab('totalStudent')" [class.active]="activeTab === 'totalStudent'">Tổng số học sinh</button>
+    <button (click)="showTab('studentByClass')" [class.active]="activeTab === 'studentByClass'">Số học sinh theo
+        lớp</button>
+    <button (click)="showTab('studentByGroup')" [class.active]="activeTab === 'studentByGroup'">Số học sinh theo
+        nhóm</button>
+    <button (click)="showTab('monthlyFee')" [class.active]="activeTab === 'monthlyFee'">Học phí theo lớp</button>
+    <button (click)="showTab('absence')" [class.active]="activeTab === 'absence'">Vắng và Trễ</button>
+    <button (click)="showTab('absenceByClass')" [class.active]="activeTab === 'absenceByClass'">Vắng và Trễ theo
+        lớp</button>
+</div>
+
+<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'totalStudent' }">
+    <canvas #totalStudentChart></canvas>
+</div>
+
+<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'studentByClass' }">
+    <canvas #studentByClassChart></canvas>
+</div>
+
+<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'studentByGroup' }">
+    <canvas #studentByGroupChart></canvas>
+</div>
+
+<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'monthlyFee' }">
+    <canvas #monthlyFeeChart></canvas>
+</div>
+
+<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'absence' }">
+    <canvas #absenceChart></canvas>
+</div>
+
+<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'absenceByClass' }">
+    <canvas #absenceByClassChart></canvas>
+</div>
