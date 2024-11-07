@@ -1,0 +1,30 @@
+.header-container {
+  position: relative;
+}
+
+button {
+  background-color: #42A5F5;
+  border: none;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 10px 20px; /* Thêm padding để làm nút lớn hơn */
+  font-size: 16px; /* Điều chỉnh kích cỡ chữ */
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+h1 {
+  color: white;
+  font-size: 3em;  /* Set "KIDZONE" to white */
+}
+
+header {
+  background-color: #1E88E5;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}

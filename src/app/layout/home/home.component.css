@@ -1,0 +1,211 @@
+/* General Styling */
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #fdfefe;
+  color: #000000;
+}
+
+h1, h2, h3 {
+  color: #1565C0;
+  text-shadow: 1px 1px #90CAF9;
+}
+
+h1 {
+  color: white;
+  font-size: 3em;  /* Set "KIDZONE" to white */
+}
+
+p {
+  color: #666;
+}
+
+header {
+  background-color: #1E88E5;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+button {
+  background-color: #42A5F5;
+  border: none;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 10px 20px; /* Thêm padding để làm nút lớn hơn */
+  font-size: 16px; /* Điều chỉnh kích cỡ chữ */
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+
+/* Enlarged Main Image */
+.enlarged-image {
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Section Images */
+.section-image,
+.program-image,
+.activity-image {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 15px;
+  margin: 1em auto;
+  display: block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* About Section */
+/* About Section */
+.about {
+  background-color: #f9fbfc;
+  padding: 3em;
+  text-align: center;
+}
+
+.about .content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.about h2 {
+  font-size: 2.5em; /* Kích cỡ chữ tiêu đề */
+  margin-bottom: 1em; /* Khoảng cách phía dưới */
+  color:#f50707;
+  font-weight: 600;
+  font-style: italic;
+}
+.section-image {
+  width: 100%; /* Đặt chiều rộng hình ảnh bằng 100% chiều rộng của phần tử cha */
+  max-width: 500px; /* Giới hạn chiều rộng tối đa */
+  height: auto; /* Giữ tỉ lệ khung hình */
+
+}
+.about p{
+  font-size: 1.3em;
+  font-weight: 400;
+  color:#333;
+  font-style: italic;
+}
+
+/* Programs Section */
+.programs {
+  background-color: #f3f4f6;
+  padding: 2em;
+  text-align: center;
+}
+.programs h2 {
+  font-size: 2.5em; /* Tăng kích thước tiêu đề */
+  text-align: center; /* Căn giữa tiêu đề */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+}
+
+.program-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5em;
+}
+.program h3{
+  color: #000000;
+}
+.program-list p{
+  color:#000000
+}
+.program {
+  background-color: #64B5F6;
+  padding: 1.5em;
+  border-radius: 15px;
+  width: 200px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Testimonials Section */
+.testimonials {
+  background-color: #f9f9f9;
+  padding: 2em;
+  text-align: center;
+}
+.testimonials p{
+  color:#000000;
+  font-style: italic;
+}
+.testimonials h2{
+  font-size: 2.5em; /* Tăng kích thước tiêu đề */
+  text-align: center; /* Căn giữa tiêu đề */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+}
+
+/* Activities Section */
+.activities {
+  background-color: #f6f8f9;
+  padding: 2em;
+  text-align: center;
+}
+.activities h3{
+  color:#000000;
+}
+.activities p{
+  color:#000000;
+}
+.activities h2{
+  font-size: 2.5em; /* Tăng kích thước tiêu đề */
+  text-align: center; /* Căn giữa tiêu đề */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+}
+
+.activity-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.activity {
+  background-color: #64B5F6;
+  padding: 1.5em;
+  border-radius: 15px;
+  width: 200px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Contact Section */
+.contact {
+  background-color: #f5f5f6;
+  padding: 2em;
+  text-align: center;
+}
+.contact h2{
+  font-size: 2.5em; /* Tăng kích thước tiêu đề */
+  text-align: center; /* Căn giữa tiêu đề */
+  margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+}
+.social-icons a {
+  color: #1565C0;
+  font-size: 2em;
+  margin: 0 0.5em;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #42A5F5;
+}
+
+/* Footer */
+footer {
+  background-color: #E3F2FD;
+  text-align: center;
+  padding: 1em;
+  font-size: 0.9em;
+  color: #333;
+}
+
+footer i {
+  color: #1565C0;
+}

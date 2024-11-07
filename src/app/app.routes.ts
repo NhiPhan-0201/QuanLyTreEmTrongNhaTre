@@ -29,6 +29,11 @@ import { GiaovienDiemdanhComponent } from './giaovien/giaovien-diemdanh/giaovien
 import { GiaovienDanhsachthongbaoComponent } from './giaovien/giaovien-danhsachthongbao/giaovien-danhsachthongbao.component';
 import { GiaovienNoidungthongbaoComponent } from './giaovien/giaovien-noidungthongbao/giaovien-noidungthongbao.component';
 import { GiaovienThongtinhocsinhComponent } from './giaovien/giaovien-thongtinhocsinh/giaovien-thongtinhocsinh.component';
+import { HomeComponent } from './layout/home/home.component';
+import { LoginComponent } from './auth/login/login.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { VerifyOtpComponent } from './auth/verify-otp/verify-otp.component';
+import { NewComponent } from './layout/new/new.component';
 //
 
 export const routes: Routes = [
@@ -39,7 +44,11 @@ export const routes: Routes = [
 
   { path: 'teacher/notifications', component: NotificationsComponent },
   { path: 'teacher/timetable-management', component: TimetablesComponent },
-
+  {path:'home',component: HomeComponent},
+  {path:'login',component: LoginComponent},
+  {path:'forgot-password', component: ForgotPasswordComponent},
+  {path:'verify', component: VerifyOtpComponent},
+  {path:'adventure', component: NewComponent},
   // giaovien routes
   {
     path: 'giaovien-management', component: GiaovienManagementPageComponent, children: [
