@@ -1,46 +1,38 @@
+/* Container chính của danh sách thông báo */
 .thong-bao-container {
   padding: 10px;
-  background-color: #f8d7da; /* Màu nền hồng nhạt */
-  border: 1px solid #f5c6cb; /* Viền màu hồng đậm */
-  border-radius: 8px; /* Tăng độ bo tròn cho hộp */
+  background-color: #f8d7da; 
+  border: 1px solid #f5c6cb; 
+  border-radius: 8px; 
+  margin: 0 auto;
+  width: 100%; /* Chiều rộng tối đa */
+  box-sizing: border-box;
 }
 
-.thong-bao-container h2 {
-  color: white; /* Màu chữ trắng */
-  background-color: #dc3545; /* Màu đỏ đậm cho phần tiêu đề */
+/* Phần tiêu đề của danh sách thông báo */
+.thong-bao-header {
+  color: white; 
+  background-color: #dc3545; 
   padding: 8px;
-  margin: 0; /* Xóa khoảng cách bên ngoài */
-  border-radius: 8px 8px 0 0; /* Bo tròn góc trên */
+  margin: 0; 
+  border-radius: 8px 8px 0 0; 
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+/* Danh sách các thông báo */
+.thong-bao-list {
+  padding: 10px;
 }
 
-li {
-  margin: 8px 0; /* Tăng khoảng cách giữa các thông báo */
-}
-
-.thong-bao-title {
-  color: #007bff; /* Màu xanh dương cho tiêu đề thông báo */
+/* Mỗi thông báo trong danh sách */
+.thong-bao-item {
+  color: #007bff; 
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
-}
-
-.thong-bao-title:hover {
-  text-decoration: underline; /* Gạch chân khi hover */
-}
-
-.thong-bao-content {
   display: block;
-  color: #333;
-  margin-left: 20px;
+  margin-bottom: 8px; 
 }
 
-.thong-bao-type {
-  color: gray;
-  font-size: 0.9em;
-  margin-left: 5px;
+.thong-bao-item:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
 }

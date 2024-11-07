@@ -8,6 +8,7 @@ interface ThongBao {
   tieuDe: string;
   noiDung: string;
   loaiThongBao: string;
+  uniqueId: string;
 }
 
 @Component({
@@ -25,17 +26,16 @@ export class GiaovienDanhsachthongbaoComponent implements OnInit {
   ngOnInit(): void {
     this.thongBaoService.getThongBao().subscribe(
         (data) => {
-        console.log('Data received:', data); // In dữ liệu trả về lên console
+        console.log('Data received:', data);
         this.thongBaoList = data;
       },
       (error) => {
-        console.error('Error fetching data:', error); // In lỗi nếu có
+        console.error('Error fetching data:', error);
       }
     );
   }
 
-  viewThongBao(id: number): void {
-    this.router.navigate(['/giaovien-management/noidungthongbao', id]);
-}
- 
+  viewThongBao(uniqueId: string): void {
+    this.router.navigate(['/giaovien-management/noidungthongbao', uniqueId]);
+  }
 }

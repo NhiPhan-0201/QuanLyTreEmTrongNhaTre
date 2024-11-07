@@ -5,12 +5,12 @@ import { ThongBaoService } from '../../../APIService/thongbao.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-
 interface ThongBao {
   id: number;
   tieuDe: string;
   noiDung: string;
   loaiThongBao: string;
+  uniqueId: string;
 }
 
 @Component({
@@ -21,7 +21,7 @@ interface ThongBao {
   styleUrl: './giaovien-noidungthongbao.component.css'
 })
 export class GiaovienNoidungthongbaoComponent implements OnInit {
-  thongBao$: Observable<ThongBao | undefined> = of(undefined); // Khởi tạo Observable để chứa thông báo tìm thấy
+  thongBao$: Observable<ThongBao | undefined> = of(undefined);
 
   constructor(
     private route: ActivatedRoute,
@@ -30,15 +30,22 @@ export class GiaovienNoidungthongbaoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id')); // Lấy id từ route
+    const uniqueId = this.route.snapshot.paramMap.get('uniqueId'); // Lấy uniqueId từ route
 
-    // Gọi service để lấy tất cả thông báo và sau đó lọc theo id
-    this.thongBao$ = this.thongBaoService.getThongBao().pipe(
-      map((thongBaoList: ThongBao[]) => thongBaoList.find(thongBao => thongBao.id === id))
-    );
+    if (uniqueId) {
+      const [loaiThongBao, id] = uniqueId.split('_'); // Tách loaiThongBao và id
+
+      this.thongBao$ = this.thongBaoService.getThongBao().pipe(
+        map((thongBaoList: ThongBao[]) =>
+          thongBaoList.find(
+            thongBao =>
+              thongBao.id === Number(id) && thongBao.loaiThongBao === loaiThongBao
+          )
+        )
+      );
+    }
   }
 
-  // Hàm quay về danh sách thông báo
   goBack(): void {
     this.router.navigate(['/giaovien-management/danhsachthongbao']);
   }

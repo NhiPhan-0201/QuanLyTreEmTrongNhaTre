@@ -4,9 +4,9 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-giaovien-management-page',
   standalone: true,
-  imports: [RouterModule],  // Import RouterModule để hỗ trợ router-outlet và routerLink
+  imports: [RouterModule],  
   templateUrl: './giaovien-management-page.component.html',
-  styleUrls: ['./giaovien-management-page.component.css']  // Sửa thành styleUrls
+  styleUrls: ['./giaovien-management-page.component.css']  
 })
 export class GiaovienManagementPageComponent {
   constructor(private router: Router) {}

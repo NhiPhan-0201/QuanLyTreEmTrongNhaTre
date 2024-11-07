@@ -38,3 +38,14 @@
   .attendance-table tr:hover {
     background-color: #f2f2f2;
   }
+
+  .student-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .student-link:hover {
+    color: darkblue;
+    text-decoration: underline;
+  }

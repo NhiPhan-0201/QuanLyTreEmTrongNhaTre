@@ -1,13 +1,15 @@
+/* Chiếm toàn bộ chiều rộng cột bên phải */
 .chi-tiet-thong-bao-container {
-    width: 100%; /* Chiếm toàn bộ chiều rộng cột bên phải */
+    width: calc(100% - 40px); 
     padding: 20px;
     background-color: #f8d7da;
-    border-left: 3px solid #dc3545; /* Viền trái để tạo sự nổi bật */
+    border-left: 3px solid #dc3545;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Đảm bảo padding không làm ảnh hưởng đến chiều rộng */
-    position: relative; /* Để nút "Trở về" có thể định vị tuyệt đối trong container */
+    box-sizing: border-box; 
+    position: relative; 
 }
 
+/* Tiêu đề chính */
 .chi-tiet-thong-bao-container h2 {
     font-size: 20px;
     font-weight: bold;
@@ -19,6 +21,7 @@
     border-radius: 5px;
 }
 
+/* Tiêu đề thông báo */
 .thong-bao-title {
     font-size: 18px;
     color: #007bff;
@@ -33,6 +36,7 @@
     text-decoration: underline;
 }
 
+/* Loại thông báo */
 .thong-bao-date {
     font-size: 14px;
     color: #6c757d;
@@ -40,6 +44,7 @@
     font-style: italic;
 }
 
+/* Nội dung thông báo */
 .thong-bao-content {
     font-size: 16px;
     color: #333;
@@ -47,10 +52,11 @@
     padding: 10px 0;
 }
 
+/* Nút Trở về */
 .view-other-notices {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 10px;
+    right: 10px;
     background-color: #20c997;
     color: white;
     border: none;

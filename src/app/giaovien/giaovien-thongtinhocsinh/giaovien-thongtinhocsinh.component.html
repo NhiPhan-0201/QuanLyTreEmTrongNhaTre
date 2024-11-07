@@ -1,42 +1,45 @@
-<div class="thongtin-container">
+<div class="thongtin-container" *ngIf="studentDetail">
     <div class="thongtin-content">
         <h2 class="thongtin-title">Thông tin học sinh</h2>
 
         <div class="thongtin-row">
             <span class="thongtin-label">Mã số học sinh:</span>
-            <span class="thongtin-value">2015SV000001</span>
+            <span class="thongtin-value">{{ studentDetail.id }}</span>
         </div>
         <div class="thongtin-row">
             <span class="thongtin-label">Họ và tên:</span>
-            <span class="thongtin-value">Nguyễn Văn A</span>
+            <span class="thongtin-value">{{ studentDetail.hoTen }}</span>
         </div>
         <div class="thongtin-row">
             <span class="thongtin-label">Ngày sinh:</span>
-            <span class="thongtin-value">02/09/2019</span>
+            <span class="thongtin-value">{{ studentDetail.ngaySinh | date: 'dd-MM-yyyy' }}</span>
         </div>
         <div class="thongtin-row">
             <span class="thongtin-label">Lớp:</span>
-            <span class="thongtin-value">A01</span>
+            <span class="thongtin-value">{{ studentDetail.tenLop }}</span>
         </div>
-        <div class="thongtin-row">
+
+        <div class="thongtin-row double-info">
             <span class="thongtin-label">Họ tên cha:</span>
-            <span class="thongtin-value">Nguyễn Văn B</span>
-            <span class="thongtin-label">SĐT:</span>
-            <span class="thongtin-value">0955001001</span>
+            <span class="thongtin-name">{{ studentDetail.hoTenCha }}</span>
+            <span class="thongtin-sdt-label">SĐT:</span>
+            <span class="thongtin-phone">{{ studentDetail.sdtCha }}</span>
         </div>
-        <div class="thongtin-row">
+
+        <div class="thongtin-row double-info">
             <span class="thongtin-label">Họ tên mẹ:</span>
-            <span class="thongtin-value">Nguyễn Thị C</span>
-            <span class="thongtin-label">SĐT:</span>
-            <span class="thongtin-value">0923009009</span>
+            <span class="thongtin-name">{{ studentDetail.hoTenMe }}</span>
+            <span class="thongtin-sdt-label">SĐT:</span>
+            <span class="thongtin-phone">{{ studentDetail.sdtMe }}</span>
         </div>
+
         <div class="thongtin-row">
             <span class="thongtin-label">Địa chỉ:</span>
-            <span class="thongtin-address">Số 01, Võ Văn Ngân, Phường Linh Trung, TP. Thủ Đức, TP. Hồ Chí Minh</span>
+            <span class="thongtin-address">{{ studentDetail.diaChi }}</span>
         </div>
 
         <a href="/giaovien-management" class="thongtin-back-button">Trở về</a>
     </div>
-    
-    <img src="path/to/avatar.jpg" alt="Avatar" class="thongtin-avatar" />
+
+    <img [src]="studentDetail.anh" alt="Avatar" class="thongtin-avatar" />
 </div>

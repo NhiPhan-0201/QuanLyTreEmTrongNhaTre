@@ -26,6 +26,7 @@ import { GiaovienDiemdanhComponent } from './giaovien/giaovien-diemdanh/giaovien
 import { GiaovienDanhsachthongbaoComponent } from './giaovien/giaovien-danhsachthongbao/giaovien-danhsachthongbao.component';
 import { GiaovienNoidungthongbaoComponent } from './giaovien/giaovien-noidungthongbao/giaovien-noidungthongbao.component';
 import { GiaovienThongtinhocsinhComponent } from './giaovien/giaovien-thongtinhocsinh/giaovien-thongtinhocsinh.component';
+
 //
 
 export const routes: Routes = [
@@ -42,7 +43,7 @@ export const routes: Routes = [
       { path: 'diemdanh', component: GiaovienDiemdanhComponent },
       { path: 'thongtinhocsinh', component: GiaovienThongtinhocsinhComponent },
       { path: 'danhsachthongbao', component: GiaovienDanhsachthongbaoComponent },
-      { path: 'noidungthongbao/:id', component: GiaovienNoidungthongbaoComponent },
+      { path: 'noidungthongbao/:uniqueId', component: GiaovienNoidungthongbaoComponent },
       { path: '', redirectTo: 'danhsachhocsinh', pathMatch: 'full' }  // Đường dẫn mặc định
     ]
   },
