@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { FeedbackCategoryComponent } from './component/admin/feedback-category/feedback-category.component'
-//import { FeedbackComponent } from './component/admin/feedback/feedback.component';
-import { SchoolFeeComponent } from './component/admin/school-fee/school-fee.component';
+
 import { NotificationsComponent } from './component/giaovien/notifications/notifications-page.component';
 import { TimetablesComponent } from './component/giaovien/timetable-management/timetable.component';
 import { XemThongBaoComponent } from './component/phuhuynh/xem-thong-bao/xem-thong-bao.component';
@@ -19,6 +17,11 @@ import { AccountManagementComponent } from './component/admin/admin-management-p
 import { StudentManagementComponent } from './component/admin/admin-management-page/student-management/student-management.component';
 import { ClassManagementComponent } from './component/admin/admin-management-page/class-management/class-management.component';
 
+import { FeedbackCategoryComponent } from './component/admin/feedback-category/feedback-category.component'
+import { AdminFeedbackComponent } from './component/admin/feedback/feedback.component';
+import { SchoolFeeComponent } from './component/admin/school-fee/school-fee.component';
+import { ReportComponent } from './component/admin/report/report.component';
+
 // giao vien
 import { GiaovienManagementPageComponent } from './giaovien/giaovien-management-page/giaovien-management-page.component';
 import { GiaovienDanhsachhocsinhComponent } from './giaovien/giaovien-danhsachhocsinh/giaovien-danhsachhocsinh.component';
@@ -26,15 +29,26 @@ import { GiaovienDiemdanhComponent } from './giaovien/giaovien-diemdanh/giaovien
 import { GiaovienDanhsachthongbaoComponent } from './giaovien/giaovien-danhsachthongbao/giaovien-danhsachthongbao.component';
 import { GiaovienNoidungthongbaoComponent } from './giaovien/giaovien-noidungthongbao/giaovien-noidungthongbao.component';
 import { GiaovienThongtinhocsinhComponent } from './giaovien/giaovien-thongtinhocsinh/giaovien-thongtinhocsinh.component';
+//
 
+import { HomeComponent } from './layout/home/home.component';
+import { LoginComponent } from './auth/login/login.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { VerifyOtpComponent } from './auth/verify-otp/verify-otp.component';
 //
 
 export const routes: Routes = [
   { path: 'admin/manageCategory', component: FeedbackCategoryComponent },
-  { path: 'admin/feedback', component: FeedbackComponent },
+  { path: 'admin/feedback', component: AdminFeedbackComponent },
   { path: 'admin/schoolFee', component: SchoolFeeComponent },
+  { path: 'admin/report', component: ReportComponent },
+
   { path: 'teacher/notifications', component: NotificationsComponent },
   { path: 'teacher/timetable-management', component: TimetablesComponent },
+  {path:'home',component: HomeComponent},
+  {path:'login',component: LoginComponent},
+  {path:'forgot-password', component: ForgotPasswordComponent},
+  {path:'verify', component: VerifyOtpComponent},
 
   // giaovien routes
   {

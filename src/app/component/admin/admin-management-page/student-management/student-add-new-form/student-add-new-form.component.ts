@@ -5,6 +5,9 @@ import { Gender } from '../../../../../../constants/enums';
 import { QuanLiLop, ThongTinTre } from '../../../../../../models';
 import { CommonModule } from '@angular/common';
 import { validateData } from '../student-management.component';
+import { ThongTinTreService, UploadService } from '../../../../../../APIService';
+import { ToastService } from '../../../../../service';
+import { catchError, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-student-add-new-form',
@@ -17,7 +20,7 @@ export class StudentAddNewFormComponent {
   @Input() classes: QuanLiLop[] = [];
   @Input() parents: Account[] = [];
   @Output() closeForm = new EventEmitter<void>();
-  @Output() saveStudent = new EventEmitter<{ student: ThongTinTre, anh: File | null }>();
+  @Output() saveStudent = new EventEmitter<ThongTinTre>();
 
   newStudentForm: FormGroup;
   filteredParents: Account[] = [];
@@ -30,14 +33,15 @@ export class StudentAddNewFormComponent {
   anhHocSinhUploaded: File | null = null;
   anhHocSinhFileName: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private uploadService: UploadService, private studentService: ThongTinTreService, private toastService: ToastService) {
     this.newStudentForm = this.fb.group({
       hoTen: ['', Validators.required],
       gioiTinh: ['', Validators.required],
       ngaySinh: ['', Validators.required],
       anh: [null],
       classId: [1, Validators.required],
-      phuHuynhId: [-1, Validators.required]
+      phuHuynhId: [-1, Validators.required],
+      thongTinPhuHuynh: null
     });
     this.subscribeToFormControls(this.newStudentForm);
   }
@@ -101,8 +105,43 @@ export class StudentAddNewFormComponent {
   save() {
     this.errors = validateData(this.newStudentForm, this.anhHocSinhUploaded);
 
-    if (Object.keys(this.errors).length > 0) return;
-    this.saveStudent.emit({ student: this.newStudentForm.value, anh: this.anhHocSinhUploaded });
+    if (Object.keys(this.errors).length === 0) {
+      let uploadObservable: Observable<ThongTinTre>;
+
+      this.newStudentForm.patchValue({ thongTinPhuHuynh: this.parents.find(parent => parent.id === this.newStudentForm.value.phuHuynhId) });
+
+      if (this.anhHocSinhUploaded) {
+        try {
+          uploadObservable = this.uploadService.uploadImage(this.anhHocSinhUploaded).pipe(
+            switchMap((res) => {
+              this.newStudentForm.patchValue({ anh: res.link });
+              return this.studentService.add(this.newStudentForm.value);
+            }),
+            catchError((err) => {
+              throw err;
+            })
+          );
+        } catch (err) {
+          this.errors.anh = 'Có lỗi xảy ra khi tải ảnh lên';
+          this.toastService.showError('Có lỗi xảy ra khi tải ảnh lên');
+          return;
+        }
+      } else {
+        uploadObservable = this.studentService.add(this.newStudentForm.value);
+      }
+
+      uploadObservable.subscribe({
+        next: (res) => {
+          this.saveStudent.emit(res);
+          this.toastService.showSuccess('Thêm học sinh thành công');
+          this.closeForm.emit();
+        },
+        error: (err) => {
+          console.log(err)
+          this.toastService.showError('Có lỗi xảy ra khi thêm học sinh');
+        }
+      });
+    }
   }
 
   close() {

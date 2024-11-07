@@ -1,14 +1,17 @@
+import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { StudentAddNewFormComponent } from './student-add-new-form/student-add-new-form.component';
 import { StudentUpdateFormComponent } from './student-update-form/student-update-form.component';
 import { StudentDeleteConfirmationDialogComponent } from './student-delete-confirmation-dialog/student-delete-confirmation-dialog.component';
-import { UploadService } from '../../../../../APIService';
+import { PhuHuynhTreService, UploadService } from '../../../../../APIService';
 import { switchMap } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { ThongTinTre, QuanLiLop, Account } from '../../../../../models';
+import { ThongTinTre, QuanLiLop, Account, ThongTinPhuHuynh, PhuHuynhTre } from '../../../../../models';
 import { AccountRole, AccountStatus, Gender } from '../../../../../constants/enums';
 import { QuanLiLopService, AccountService, ThongTinTreService } from '../../../../../APIService';
+import { ToastService } from '../../../../service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-student-management',
@@ -25,6 +28,7 @@ export class StudentManagementComponent implements OnInit {
   classes: QuanLiLop[] = [];
   parents: Account[] = [];
   students: ThongTinTre[] = [];
+  students_parents: PhuHuynhTre[] = [];
   filteredStudents: ThongTinTre[] = [];
   currentPage: number = 1;
   totalPage: number = 1;
@@ -36,7 +40,8 @@ export class StudentManagementComponent implements OnInit {
   openDeleteConfirmationDialog: boolean = false;
   selectedStudent: ThongTinTre | null = null;
 
-  constructor(private thongTinTreService: ThongTinTreService, private quanLiLopService: QuanLiLopService, private accountService: AccountService, private uploadService: UploadService) { }
+  constructor(private thongTinTreService: ThongTinTreService, private quanLiLopService: QuanLiLopService,
+    private accountService: AccountService, private uploadService: UploadService, private toastService: ToastService, private phuHuynhTreService: PhuHuynhTreService) { }
   ngOnInit(): void {
     this.onLoad();
   }
@@ -50,12 +55,12 @@ export class StudentManagementComponent implements OnInit {
     this.isLoading = true;
     this.quanLiLopService.getAll().subscribe({
       next: (res) => {
-        this.classes = res.data
+        this.classes = res
         this.loadParents();
       },
       error: (error) => {
-        this.classes = this.generateMockClasses();
-        this.loadParents();
+        console.error(error);
+        this.toastService.showError('Lỗi khi tải danh sách lớp');
       }
     });
   }
@@ -63,29 +68,42 @@ export class StudentManagementComponent implements OnInit {
   loadParents() {
     this.accountService.getParents().subscribe({
       next: (res) => {
-        this.parents = res.data;
-        this.loadStudents();
+        this.parents = res
+        this.loadStudentParents();
       },
       error: (error) => {
-        this.parents = this.generateMockParents();
-        this.loadStudents();
+        console.error(error);
+        this.toastService.showError('Lỗi khi tải danh sách phụ huynh');
       }
     })
   }
 
+  loadStudentParents() {
+    this.phuHuynhTreService.getAll().subscribe({
+      next: (res) => {
+        this.students_parents = res
+        this.loadStudents();
+      },
+      error: (err) => {
+        console.error(err);
+        this.toastService.showError('Lỗi khi tải danh sách phụ huynh trẻ');
+      }
+    });
+  }
+
+
   loadStudents() {
     this.thongTinTreService.getAll().subscribe({
       next: (res) => {
-        this.students = res.data;
+        this.students = res
         this.mapStudentClasses();
+        this.mapStudentParents();
         this.onSearchStudent();
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Lỗi khi tải students:', err);
-        this.students = this.generateMockStudents();
         this.isLoading = false;
-        this.onSearchStudent();
+        this.toastService.showError('Lỗi khi tải danh sách học sinh');
       }
     });
   }
@@ -97,60 +115,15 @@ export class StudentManagementComponent implements OnInit {
     })
   }
 
-  generateMockClasses(): QuanLiLop[] {
-    let classes: QuanLiLop[] = [];
-    for (let i = 0; i < 10; i++) {
-      let j = i + 1;
-      classes.push({
-        id: 1 + i,
-        idGiaoVien: j,
-        tenLop: "Lớp " + j,
-        tenPhong: "Phòng " + j,
-        viTri: "",
-        idNhomLop: j
-      });
-    }
-    console.log(classes);
-    return classes;
-  }
-
-  generateMockParents(): Account[] {
-    let parents: Account[] = [];
-    for (let i = 0; i < 10; i++) {
-      parents.push({
-        id: i,
-        username: `phuhuynh${i}`,
-        password: '123456',
-        role: AccountRole.PhuHuynh,
-        status: AccountStatus.Enabled,
-        phuHuynhId: i,
-        phuHuynh: {
-          id: i,
-          diaChi: `Địa chỉ ${i}`,
-          ...(i % 2 === 0
-            ? { hoTenCha: `Phụ huynh ${i}` }
-            : { hoTenMe: `Phụ huynh ${i}` })
-        }
-      });
-    }
-    return parents;
-  }
-
-  generateMockStudents(): ThongTinTre[] {
-    let students: ThongTinTre[] = [];
-    for (let i = 0; i < 100; i++) {
-      students.push({
-        id: i,
-        hoTen: `Học sinh ${i}`,
-        gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
-        ngaySinh: new Date().toLocaleDateString('vi-VN', { day: "2-digit", month: "2-digit", year: "numeric" })
-          .split('/').reverse().join('-'),
-        anh: 'https://picsum.photos/' + (i + 100),
-        classId: i % 10 + 1,
-        quanLiLop: this.classes.find((c) => c.id == i % 10 + 1)
-      });
-    }
-    return students;
+  mapStudentParents() {
+    this.students.map((s) => {
+      let phuHuynhTre = this.students_parents.find((p) => p.tre.id === s.id);
+      if (phuHuynhTre) {
+        let phuHuynh = this.parents.find((p) => p.phuHuynh?.id === phuHuynhTre.phuHuynh.id);
+        s.thongTinPhuHuynh = phuHuynh;
+        s.phuHuynhId = phuHuynh?.id || -1;
+      }
+    });
   }
 
   onSearchStudent = (event?: Event) => {
@@ -188,51 +161,36 @@ export class StudentManagementComponent implements OnInit {
     this.openUpdateStudentForm = false;
     this.openDeleteConfirmationDialog = false;
   }
-
-  handleSaveNewStudent({ student, anh }: { student: ThongTinTre; anh: File | null }) {
-    let upload$ = anh
-      ? this.uploadService.uploadImage(anh).pipe(
-        switchMap((res) => {
-          student.anh = res.data;
-          return this.thongTinTreService.add(student);
-        })
-      )
-      : this.thongTinTreService.add(student);
-
-    upload$.subscribe((res) => {
-      this.students.push(res.data);
-      this.onSearchStudent();
-      this.closeForm();
-    });
+  mapStudentParentsBeforeSave(student: any) {
+    let phuHuynh = this.parents.find((p) => p.id === student.phuHuynhId);
+    student.thongTinPhuHuynh = phuHuynh;
+    return student;
   }
 
-  handleUpdateStudent({ student, anh: { file, oldFileChanged } }: { student: ThongTinTre; anh: { file: File | null, oldFileChanged: boolean } }) {
-    const upload$ = file && oldFileChanged
-      ? this.uploadService.uploadImage(file).pipe(
-        switchMap((res) => {
-          student.anh = res.data;
-          return this.thongTinTreService.update(student);
-        })
-      )
-      : this.thongTinTreService.update(student);
+  handleSaveNewStudent(student: ThongTinTre) {
+    this.students.push(student);
+    this.filteredStudents.push(student);
+  }
 
-    upload$.subscribe((res) => {
-      const index = this.students.findIndex(s => s.id === res.data.id);
-      this.students[index] = res.data;
-      this.onSearchStudent();
-      this.mapStudentClasses();
-      this.closeForm();
-    });
+  handleUpdateStudent(student: ThongTinTre) {
+    this.students = this.students.map(s => s.id === student.id ? student : s);
+    this.filteredStudents = this.filteredStudents.map(s => s.id === student.id ? student : s);
   }
 
 
   handleDeleteStudent() {
     if (this.selectedStudent) {
-      this.thongTinTreService.delete(this.selectedStudent.id).subscribe(() => {
-        this.students = this.students.filter(s => s.id !== this.selectedStudent?.id);
-        this.selectedStudent = null;
-        this.onSearchStudent();
-        this.closeForm();
+      this.thongTinTreService.delete(this.selectedStudent.id).subscribe({
+        next: () => {
+          this.students = this.students.filter(s => s.id !== this.selectedStudent?.id);
+          this.selectedStudent = null;
+          this.onSearchStudent();
+
+          this.closeForm();
+        },
+        error: (err) => {
+          this.toastService.showError('Xóa học sinh thất bại');
+        }
       });
     }
   }

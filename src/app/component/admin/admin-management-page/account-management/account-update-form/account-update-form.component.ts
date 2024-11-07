@@ -4,6 +4,9 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { Account } from '../../../../../../models';
 import { AccountRole, AccountStatus, Gender } from '../../../../../../constants/enums';
 import { validateData } from '../account-management.component';
+import { ToastService } from '../../../../../service';
+import { AccountService, UploadService } from '../../../../../../APIService';
+import { catchError, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-account-update-form',
@@ -35,9 +38,9 @@ export class AccountUpdateFormComponent implements OnChanges {
 
   @Input() account!: Account;
   @Output() closeForm: EventEmitter<void> = new EventEmitter<void>();
-  @Output() saveAccount: EventEmitter<{ updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }> = new EventEmitter<{ updatedAccount: Account, anh: { file: File | null, oldFileChanged: boolean } }>();
+  @Output() saveAccount: EventEmitter<Account> = new EventEmitter<Account>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private uploadService: UploadService, private toastService: ToastService, private accountService: AccountService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -79,7 +82,6 @@ export class AccountUpdateFormComponent implements OnChanges {
   private subscribeToFormControls(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach((key) => {
       const control = formGroup.get(key);
-      const errorKey = key
 
       if (control) {
         if (control instanceof FormGroup) {
@@ -128,12 +130,43 @@ export class AccountUpdateFormComponent implements OnChanges {
   }
 
   save() {
-    console.log(this.errors)
+    this.errors = validateData(this.updateAccountForm, this.anhGiaoVienUploaded);
 
     if (Object.keys(this.errors).length === 0) {
-      this.saveAccount.emit({ updatedAccount: this.updateAccountForm.value, anh: { file: this.anhGiaoVienUploaded, oldFileChanged: this.oldFileChanged } });
+      let uploadObservable: Observable<Account>;
+
+      if (this.updateAccountForm.value.role === this.TEACHER_ROLE && this.anhGiaoVienUploaded && this.oldFileChanged) {
+        try {
+          uploadObservable = this.uploadService.uploadImage(this.anhGiaoVienUploaded).pipe(
+            switchMap((res) => {
+              this.updateAccountForm.get('giaoVien')?.patchValue({ anh: res.link });
+              return this.accountService.update(this.updateAccountForm.value);
+            }),
+            catchError((err) => {
+              throw err;
+            })
+          );
+        } catch (err) {
+          this.toastService.showError('Lỗi khi tải ảnh lên server');
+          return;
+        }
+      } else {
+        uploadObservable = this.accountService.update(this.updateAccountForm.value);
+      }
+
+      uploadObservable.subscribe({
+        next: (res) => {
+          this.saveAccount.emit(res);
+          this.toastService.showSuccess('Cập nhật tài khoản thành công');
+          this.close();
+        },
+        error: (err) => {
+          this.toastService.showError('Lỗi khi cập nhật tài khoản');
+        }
+      });
     }
   }
+
 
   close() {
     this.closeForm.emit();

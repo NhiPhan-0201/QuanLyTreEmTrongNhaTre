@@ -1,6 +1,4 @@
-import { Account } from "./Account";
-import { QuanLiLop } from "./QuanLiLop";
-import { ThongTinPhuHuynh } from "./ThongTinPhuHuynh";
+import { Account, QuanLiLop, ThongTinPhuHuynh } from ".";
 
 export interface ThongTinTre {
   id: number;
@@ -13,4 +11,5 @@ export interface ThongTinTre {
   quanLiLop?: QuanLiLop;
 
   thongTinPhuHuynh?: Account | ThongTinPhuHuynh;
+  phuHuynhId?: number;
 }

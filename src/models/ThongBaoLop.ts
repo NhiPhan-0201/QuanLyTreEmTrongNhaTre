@@ -1,4 +1,4 @@
-import { QuanLiLop } from "./QuanLiLop";
+import { QuanLiLop } from ".";
 
 export interface ThongBaoLop {
   id: number;

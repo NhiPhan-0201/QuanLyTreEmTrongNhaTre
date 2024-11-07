@@ -1,5 +1,4 @@
-import { Account } from "./Account";
-import { TheLoaiYKien } from "./TheLoaiYKien";
+import { Account, TheLoaiYKien } from ".";
 
 export interface YKienPhuHuynh {
   id: number;

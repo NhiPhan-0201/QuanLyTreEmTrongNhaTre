@@ -17,7 +17,7 @@ import { TheLoaiYKien } from '../../../../models/TheLoaiYKien';
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
-export class FeedbackComponent implements OnInit {
+export class AdminFeedbackComponent implements OnInit {
   feedbacks: YKienPhuHuynhAdmin[] = [];
   categories: TheLoaiYKien[] = [];
   feedbackForm: FormGroup;

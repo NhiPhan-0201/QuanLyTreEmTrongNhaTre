@@ -1,0 +1,41 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Đăng Nhập vào Hệ Thống</h2>
+    <form (submit)="handleLogin(); $event.preventDefault()">
+      <div class="form-group">
+        <label for="username">Tên người dùng:</label>
+        <input
+          id="username"
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          class="form-control"
+          placeholder="Nhập tên đăng nhập"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Mật khẩu:</label>
+        <div class="password-container">
+          <input
+            id="password"
+            [type]="isPasswordVisible ? 'text' : 'password'"
+            [(ngModel)]="password"
+            name="password"
+            class="form-control"
+            placeholder="Nhập mật khẩu"
+            required
+          />
+          <button type="button" (click)="togglePasswordVisibility()" class="toggle-password">
+            <i [ngClass]="isPasswordVisible ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-login">Đăng Nhập</button>
+      <p *ngIf="error" class="error-message">{{ error }}</p>
+    </form>
+    <div class="forgot-password">
+      <a href="#" (click)="handleForgotPassword()">Quên mật khẩu?</a>
+    </div>
+  </div>
+</div>
