@@ -33,7 +33,6 @@ import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { VerifyOtpComponent } from './auth/verify-otp/verify-otp.component';
-import { NewComponent } from './layout/new/new.component';
 //
 
 export const routes: Routes = [
@@ -48,7 +47,7 @@ export const routes: Routes = [
   {path:'login',component: LoginComponent},
   {path:'forgot-password', component: ForgotPasswordComponent},
   {path:'verify', component: VerifyOtpComponent},
-  {path:'adventure', component: NewComponent},
+
   // giaovien routes
   {
     path: 'giaovien-management', component: GiaovienManagementPageComponent, children: [
