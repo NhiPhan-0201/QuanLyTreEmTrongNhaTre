@@ -38,17 +38,14 @@ import { VerifyOtpComponent } from './auth/verify-otp/verify-otp.component';
 //
 
 export const routes: Routes = [
-  { path: 'admin/manageCategory', component: FeedbackCategoryComponent },
-  { path: 'admin/feedback', component: AdminFeedbackComponent },
-  { path: 'admin/schoolFee', component: SchoolFeeComponent },
-  { path: 'admin/report', component: ReportComponent },
+
 
   { path: 'teacher/notifications', component: NotificationsComponent },
   { path: 'teacher/timetable-management', component: TimetablesComponent },
-  {path:'home',component: HomeComponent},
-  {path:'login',component: LoginComponent},
-  {path:'forgot-password', component: ForgotPasswordComponent},
-  {path:'verify', component: VerifyOtpComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'verify', component: VerifyOtpComponent },
 
   // giaovien routes
   {
@@ -68,7 +65,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'accounts', pathMatch: 'full' },
       { path: 'accounts', component: AccountManagementComponent },
       { path: 'students', component: StudentManagementComponent },
-      { path: 'classes', component: ClassManagementComponent }
+      { path: 'classes', component: ClassManagementComponent },
+      { path: 'manageCategory', component: FeedbackCategoryComponent },
+      { path: 'feedback', component: AdminFeedbackComponent },
+      { path: 'schoolFee', component: SchoolFeeComponent },
+      { path: 'report', component: ReportComponent },
     ]
   },
   { path: 'phuhuynh/xem-thong-bao', component: XemThongBaoComponent },

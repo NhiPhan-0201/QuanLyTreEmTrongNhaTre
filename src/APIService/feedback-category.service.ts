@@ -13,7 +13,7 @@ export class FeedbackCategoryService {
 
   // Lấy token 
   private getAuthHeaders(): HttpHeaders {
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDQ2NjU5MCwiZXhwIjoxNzMwNTUyOTkwfQ.YiIm_ovyY-NZ16-53Iiy8AIX_-7q6zCTQxHF3nHW5kw";
+    const token = localStorage.getItem('access_token');
     return new HttpHeaders().set('Authorization', `Bearer ${token || ''}`);
   }
 

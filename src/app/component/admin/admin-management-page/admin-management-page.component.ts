@@ -17,6 +17,10 @@ export class AdminManagementPageComponent implements OnInit {
       { name: 'Quản lý tài khoản', path: 'accounts' },
       { name: 'Quản lý học sinh', path: 'students' },
       { name: 'Quản lý lớp học', path: 'classes' },
+      { name: 'Quản lý thể loại ý kiến', path: 'manageCategory' },
+      { name: 'Quản lý ý kiến', path: 'feedback' },
+      { name: 'Quản lý học phí', path: 'schoolFee' },
+      { name: 'Báo cáo thống kê', path: 'report' }
     ];
   }
 

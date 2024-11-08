@@ -14,7 +14,7 @@ export class SchoolFeeService {
 
     // Lấy token
     private getAuthHeaders(): HttpHeaders {
-        const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTczMDQ3NjM5NywiZXhwIjoxNzMwNTYyNzk3fQ.HwTUthz6JLZHX1a_Oo0HAuYI5FSm0W8CCy7rk4a2ASM";
+        const token = localStorage.getItem('access_token');
         return new HttpHeaders().set('Authorization', `Bearer ${token || ''}`);
     }
 
