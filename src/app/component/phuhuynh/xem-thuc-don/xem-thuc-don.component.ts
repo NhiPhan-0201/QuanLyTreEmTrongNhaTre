@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './xem-thuc-don.component.html',
   styleUrl: './xem-thuc-don.component.css'
 })
-export class XemThucDonComponent implements OnInit {
+export class PHXemThucDonComponent implements OnInit {
   menuData: any[] = [];
   selectedDate: string = '';
 
