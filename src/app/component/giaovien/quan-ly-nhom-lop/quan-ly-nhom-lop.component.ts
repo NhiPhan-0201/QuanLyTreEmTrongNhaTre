@@ -16,7 +16,7 @@ export class QuanLyNhomLopComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    const id = 1;
+    const id = 4;
     this.loadNhomLop(id);
   }
 
@@ -24,11 +24,18 @@ export class QuanLyNhomLopComponent implements OnInit {
     const token = localStorage.getItem('access_token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any[]>(`${this.apiUrl}`, { headers })
+    this.http.get<any>(`${this.apiUrl}/${id}`, { headers })
       .subscribe(
         response => {
           console.log('API Response:', response);
-          this.nhomLop = response;
+
+          if (Array.isArray(response)) {
+            this.nhomLop = response;
+          } else if (response) {
+            this.nhomLop = [response];
+          } else {
+            this.nhomLop = []; 
+          }
         },
         error => {
           console.error('API error:', error);
