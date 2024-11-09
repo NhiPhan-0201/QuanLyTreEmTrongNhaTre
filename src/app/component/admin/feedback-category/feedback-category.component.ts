@@ -1,32 +1,36 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FeedbackCategoryService } from '../../../../APIService/feedback-category.service';
 import { TheLoaiYKien } from '../../../../models/TheLoaiYKien';
+import { ToastService } from '../../../../app/service/toast.service';
 
 @Component({
   selector: 'app-feedback-category',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './feedback-category.component.html',
   styleUrls: ['./feedback-category.component.css']
 })
-
 export class FeedbackCategoryComponent implements OnInit {
   categoryForm: FormGroup;
   categories: TheLoaiYKien[] = [];
+  filteredCategories: TheLoaiYKien[] = [];
   categoryToDelete: number | null = null;
   categoryToEdit: TheLoaiYKien | null = null;
   showPopup: boolean = false;
   showFormPopup: boolean = false;
   isEditMode: boolean = false;
+  searchQuery: string = '';
 
   constructor(
     private fb: FormBuilder,
-    private feedbackCategoryService: FeedbackCategoryService
+    private feedbackCategoryService: FeedbackCategoryService,
+    private toastService: ToastService
   ) {
     this.categoryForm = this.fb.group({
       tenTheLoai: ['', Validators.required]
@@ -41,9 +45,10 @@ export class FeedbackCategoryComponent implements OnInit {
     this.feedbackCategoryService.getCategories().subscribe({
       next: (data) => {
         this.categories = data || [];
+        this.filteredCategories = this.categories;
       },
-      error: (error) => {
-        console.error('Error fetching categories:', error);
+      error: () => {
+        this.toastService.showError('Lỗi khi lấy danh sách thể loại');
       }
     });
   }
@@ -57,9 +62,10 @@ export class FeedbackCategoryComponent implements OnInit {
           next: () => {
             this.loadCategories();
             this.resetForm();
+            this.toastService.showSuccess('Cập nhật thể loại thành công');
           },
-          error: (error) => {
-            console.error('Error updating category:', error);
+          error: () => {
+            this.toastService.showError('Lỗi khi cập nhật thể loại');
           }
         });
       } else {
@@ -67,13 +73,15 @@ export class FeedbackCategoryComponent implements OnInit {
           next: () => {
             this.loadCategories();
             this.resetForm();
+            this.toastService.showSuccess('Thêm thể loại mới thành công');
           },
-          error: (error) => {
-            console.error('Error adding category:', error);
+          error: () => {
+            this.toastService.showError('Lỗi khi thêm thể loại');
           }
         });
       }
     }
+    this.showFormPopup = false;
   }
 
   openEditCategory(category: TheLoaiYKien) {
@@ -96,9 +104,10 @@ export class FeedbackCategoryComponent implements OnInit {
         next: () => {
           this.loadCategories();
           this.cancelDelete();
+          this.toastService.showSuccess('Xóa thể loại thành công');
         },
-        error: (error) => {
-          console.error('Error deleting category:', error);
+        error: () => {
+          this.toastService.showError('Lỗi khi xóa thể loại');
         }
       });
     }
@@ -124,5 +133,11 @@ export class FeedbackCategoryComponent implements OnInit {
     this.categoryForm.reset();
     this.categoryToEdit = null;
     this.isEditMode = false;
+  }
+
+  searchCategories() {
+    this.filteredCategories = this.categories.filter(category =>
+      category.tenTheLoai.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
   }
 }

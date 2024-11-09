@@ -45,4 +45,9 @@ export class ReportService {
     getAbsenceAndLateByClass(classId: number): Observable<any> {
         return this.http.get(`${this.baseUrl}/vang-tre-lop/${classId}`, { headers: this.getAuthHeaders() });
     }
+
+    getClassess(): Observable<any> {
+        return this.http.get("http://localhost:8080/api/v1/quan-li-lop", { headers: this.getAuthHeaders() });
+    }
+
 }

@@ -1,99 +1,140 @@
-<div class="admin-school-fee">
-    <h2>Quản lý Học Phí</h2>
+<div class="admin-school-fee flex flex-col p-5 bg-gray-100 rounded-lg shadow-lg mx-auto font-sans">
+    <h2 class="text-2xl font-semibold mb-5 text-gray-800">Quản lý Học Phí</h2>
 
-    <div class="header-container">
-        <button class="add-fee-btn button" (click)="openPopup()">Thêm học phí</button>
-        <div class="filter-container">
-            <div class="filter">
-                <label for="nhomLop">Nhóm Lớp:</label>
-                <select id="nhomLop" [(ngModel)]="selectedClass" (change)="applyFilters()">
-                    <option value=''>Tất cả</option>
+    <div class="search-bar flex justify-between items-center mb-5">
+        <div class="filter-container flex gap-4 w-full md:w-2/3">
+            <div class="filter flex items-center w-full md:w-1/3">
+                <label for="nhomLop" class="mr-2 flex-shrink-0">Nhóm Lớp:</label>
+                <select id="nhomLop" [(ngModel)]="selectedClass" (change)="applyFilters()" class="w-full">
+                    <option value="">Tất cả</option>
                     <option *ngFor="let cls of classes" [value]="cls.tenNhom">{{ cls.tenNhom }}</option>
                 </select>
             </div>
-            <div class="filter">
-                <label for="nam">Năm:</label>
-                <select id="nam" [(ngModel)]="selectedYear" (change)="applyFilters()">
+            <div class="filter flex items-center w-full md:w-1/3">
+                <label for="nam" class="mr-2 flex-shrink-0">Năm:</label>
+                <select id="nam" [(ngModel)]="selectedYear" (change)="applyFilters()" class="w-full">
                     <option [ngValue]="0">Tất cả</option>
                     <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
                 </select>
             </div>
-            <div class="filter">
-                <label for="thang">Tháng:</label>
-                <select id="thang" [(ngModel)]="selectedMonth" (change)="applyFilters()">
+            <div class="filter flex items-center w-full md:w-1/3">
+                <label for="thang" class="mr-2 flex-shrink-0">Tháng:</label>
+                <select id="thang" [(ngModel)]="selectedMonth" (change)="applyFilters()" class="w-full">
                     <option [ngValue]="0">Tất cả</option>
                     <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
                 </select>
             </div>
         </div>
+
+        <div class="actions flex justify-end w-1/3">
+            <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105"
+                (click)="openPopup()">Thêm học phí</button>
+        </div>
     </div>
 
-    <div class="popup" [ngClass]="{ 'active': showPopup }">
-        <div class="popup-content">
-            <h3>{{ editingFee ? 'Chỉnh sửa Học Phí' : 'Thêm Học Phí' }}</h3>
 
+    <!-- Bảng hiển thị học phí -->
+    <div class="w-full mb-5">
+        <table class="w-full border-collapse bg-white rounded-lg overflow-hidden">
+            <thead>
+                <tr class="bg-blue-500 text-white uppercase text-sm font-semibold">
+                    <th class="text-center px-3 py-2">Nhóm Lớp</th>
+                    <th class="text-center px-3 py-2">Tên Học Phí</th>
+                    <th class="text-center px-3 py-2">Mức Học Phí (VND)</th>
+                    <th class="text-center px-3 py-2">Tháng</th>
+                    <th class="text-center px-3 py-2">Năm</th>
+                    <th class="text-center px-3 py-2">Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let fee of paginatedFees"
+                    class="odd:bg-white even:bg-gray-50 border-b transition-colors hover:bg-gray-200 duration-500">
+                    <td class="text-center px-3 py-2 border">{{ fee.nhomLop.tenNhom }}</td>
+                    <td class="text-center px-3 py-2 border">{{ fee.tenHocPhi }}</td>
+                    <td class="text-center px-3 py-2 border">{{ fee.mucHocPhi | currency:'VND' }}</td>
+                    <td class="text-center px-3 py-2 border">{{ fee.thang }}</td>
+                    <td class="text-center px-3 py-2 border">{{ fee.nam }}</td>
+                    <td class="text-center px-3 py-2 border">
+                        <button
+                            class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition-transform duration-300 hover:scale-105"
+                            (click)="editSchoolFee(fee)">Sửa</button>
+                        <span class="mx-2">|</span>
+                        <button
+                            class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition-transform duration-300 hover:scale-105"
+                            (click)="openDeletePopup(fee.id)">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Popup cho form thêm/sửa học phí -->
+    <div class="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" *ngIf="showPopup">
+        <div class="popup-content bg-white rounded-lg p-6 shadow-lg w-1/3">
+            <h2 class="text-xl font-semibold mb-4">{{ editingFee ? 'Chỉnh sửa Học Phí' : 'Thêm Học Phí' }}</h2>
             <form [formGroup]="schoolFeeForm" (ngSubmit)="saveSchoolFee()">
-                <div>
+                <div class="mb-3">
                     <label for="tenHocPhi">Tên học phí:</label>
-                    <input id="tenHocPhi" formControlName="tenHocPhi" />
+                    <input id="tenHocPhi" formControlName="tenHocPhi"
+                        class="w-full p-2 border border-gray-300 rounded" />
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="mucHocPhi">Mức học phí (VND):</label>
-                    <input type="number" id="mucHocPhi" formControlName="mucHocPhi" />
+                    <input type="number" id="mucHocPhi" formControlName="mucHocPhi"
+                        class="w-full p-2 border border-gray-300 rounded" />
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="idNhomLop">Nhóm Lớp:</label>
-                    <select id="idNhomLop" formControlName="idNhomLop">
+                    <select id="idNhomLop" formControlName="idNhomLop"
+                        class="w-full p-2 border border-gray-300 rounded">
                         <option *ngFor="let cls of classes" [value]="cls.id">{{ cls.tenNhom }}</option>
                     </select>
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="nam">Năm:</label>
-                    <select id="nam" formControlName="nam">
+                    <select id="nam" formControlName="nam" class="w-full p-2 border border-gray-300 rounded">
                         <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
                     </select>
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="thang">Tháng:</label>
-                    <select id="thang" formControlName="thang">
+                    <select id="thang" formControlName="thang" class="w-full p-2 border border-gray-300 rounded">
                         <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
                     </select>
                 </div>
-                <button type="submit">{{ editingFee ? 'Cập nhật' : 'Thêm' }}</button>
-                <button type="button" class="delete-btn" (click)="closePopup()">Hủy</button>
+                <div class="flex justify-end space-x-3">
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+                        {{ editingFee ? 'Cập nhật' : 'Thêm mới' }}
+                    </button>
+                    <button type="button" (click)="closePopup()"
+                        class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">Hủy</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nhóm Lớp</th>
-                <th>Tên Học Phí</th>
-                <th>Số Tiền (VND)</th>
-                <th>Tháng</th>
-                <th>Năm</th>
-                <th>Hành Động</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let fee of paginatedFees">
-                <td>{{ fee.nhomLop.tenNhom }}</td>
-                <td>{{ fee.tenHocPhi }}</td>
-                <td>{{ fee.mucHocPhi | currency:'VND' }}</td>
-                <td>{{ fee.thang }}</td>
-                <td>{{ fee.nam }}</td>
-                <td>
-                    <button class="edit-btn button" (click)="editSchoolFee(fee)">Chỉnh sửa</button>
-                    <button class="delete-btn button" (click)="deleteSchoolFee(fee.id)">Xóa</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="pagination">
-        <button class="button" (click)="previousPage()" [disabled]="currentPage === 1">Trước</button>
-        <span>Trang {{ currentPage }} trên {{ totalPages }}</span>
-        <button class="button " (click)="nextPage()" [disabled]="currentPage === totalPages">Sau</button>
+    <!-- Pagination -->
+    <div class="pagination flex justify-between items-center">
+        <button
+            class="bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors hover:scale-105"
+            (click)="previousPage()" [disabled]="currentPage === 1">Trước</button>
+        <span class="text-gray-800 text-lg">Trang {{ currentPage }} trên {{ totalPages }}</span>
+        <button
+            class="bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors hover:scale-105"
+            (click)="nextPage()" [disabled]="currentPage === totalPages">Sau</button>
     </div>
+
+    <!-- Popup xác nhận xóa -->
+    <div class="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        *ngIf="showDeletePopup">
+        <div class="popup-content bg-white rounded-lg p-6 shadow-lg w-1/3 text-center">
+            <h4 class="text-lg font-semibold mb-4">Xác nhận xóa</h4>
+            <p class="mb-5">Bạn có chắc chắn muốn xóa học phí này không?</p>
+            <button class="bg-blue-500 text-white py-2 px-4 rounded mr-2 hover:bg-blue-700" (click)="confirmDelete()">
+                Xác nhận</button>
+            <button class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700"
+                (click)="cancelDelete()">Hủy</button>
+        </div>
+    </div>
+
 </div>

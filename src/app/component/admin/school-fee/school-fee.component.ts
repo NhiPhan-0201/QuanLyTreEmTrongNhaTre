@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SchoolFeeService } from '../../../../APIService/school-fee.service';
 import { HocPhi } from '../../../../models/HocPhi';
 import { NhomLop } from '../../../../models/NhomLop';
+import { ToastService } from '../../../../app/service/toast.service';
 
 @Component({
   selector: 'app-school-fee',
@@ -21,10 +22,15 @@ export class SchoolFeeComponent implements OnInit {
   filteredFees: HocPhi[] = [];
   schoolFeeForm: FormGroup;
   editingFee: HocPhi | null = null;
+
   showPopup: boolean = false;
+  showDeletePopup: boolean = false;
+
   classes: NhomLop[] = [];
   years: number[] = [];
   months: number[] = [];
+
+  deleteId: number | null = null;
 
   selectedClass: string;
   selectedYear: number;
@@ -37,7 +43,8 @@ export class SchoolFeeComponent implements OnInit {
 
   constructor(
     private schoolFeeService: SchoolFeeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastService: ToastService
   ) {
     this.schoolFeeForm = this.fb.group({
       tenHocPhi: ['', Validators.required],
@@ -66,7 +73,7 @@ export class SchoolFeeComponent implements OnInit {
         this.filteredFees = this.schoolFees;
         this.applyFilters();
       },
-      error: (error) => alert('Lỗi khi tải danh sách học phí:' + error.EM)
+      error: (error) => this.toastService.showError('Lỗi khi tải danh sách học phí')
     });
   }
 
@@ -75,7 +82,7 @@ export class SchoolFeeComponent implements OnInit {
       next: (data) => {
         this.classes = data || [];
       },
-      error: (error) => alert('Lỗi khi tải danh sách nhóm lớp:' + error.EM)
+      error: (error) => this.toastService.showError('Lỗi khi tải danh sách nhóm lớp')
     });
   }
 
@@ -140,40 +147,59 @@ export class SchoolFeeComponent implements OnInit {
         next: () => {
           this.loadSchoolFees();
           this.closePopup();
+          this.toastService.showSuccess('Cập nhật học phí thành công');
         },
-        error: (error) => alert('Lỗi khi cập nhật học phí:' + error)
+        error: (error) => this.toastService.showError('Lỗi khi cập nhật học phí')
       });
     } else {
       this.schoolFeeService.addSchoolFee(schoolFee).subscribe({
         next: () => {
           this.loadSchoolFees();
           this.closePopup();
+          this.toastService.showSuccess('Thêm học phí thành công');
+        },
+        error: (error) => this.toastService.showError('Lỗi khi thêm học phí')
+      });
+    }
+  }
+
+  openDeletePopup(id: number) {
+    this.showDeletePopup = true;
+    this.deleteId = id;
+  }
+
+  confirmDelete() {
+    if (this.deleteId !== null) {
+      this.schoolFeeService.deleteSchoolFee(this.deleteId).subscribe({
+        next: () => {
+          this.loadSchoolFees()
+          this.cancelDelete()
+          this.toastService.showSuccess('Xóa học phí thành công');
         },
         error: (error) => {
-          alert('Lỗi khi thêm học phí:' + error.message)
+          this.toastService.showError('Lỗi khi xóa học phí');
         }
       });
     }
   }
 
-  deleteSchoolFee(id: number): void {
-    this.schoolFeeService.deleteSchoolFee(id).subscribe({
-      next: (message) => {
-        if (message) {
-          alert(message);
-        }
-        this.loadSchoolFees()
-      },
-      error: (error) => {
-        alert('Lỗi khi xóa học phí: ' + (error.error || error.message));
-        console.error(JSON.stringify(error));
-      }
-    });
+  cancelDelete() {
+    this.showDeletePopup = false;;
+    this.deleteId = null;
   }
 
   editSchoolFee(fee: HocPhi): void {
     this.editingFee = fee;
-    this.schoolFeeForm.patchValue(fee);
+
+    this.schoolFeeForm.patchValue({
+      tenHocPhi: fee.tenHocPhi,
+      mucHocPhi: fee.mucHocPhi,
+      idNhomLop: fee.nhomLop.id,
+      nam: fee.nam,
+      thang: fee.thang
+    });
+
+    // Hiển thị popup chỉnh sửa
     this.showPopup = true;
   }
 

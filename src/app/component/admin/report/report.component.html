@@ -1,35 +1,90 @@
-<div class="tabs">
-    <button (click)="showTab('totalStudent')" [class.active]="activeTab === 'totalStudent'">Tổng số học sinh</button>
-    <button (click)="showTab('studentByClass')" [class.active]="activeTab === 'studentByClass'">Số học sinh theo
-        lớp</button>
-    <button (click)="showTab('studentByGroup')" [class.active]="activeTab === 'studentByGroup'">Số học sinh theo
-        nhóm</button>
-    <button (click)="showTab('monthlyFee')" [class.active]="activeTab === 'monthlyFee'">Học phí theo lớp</button>
-    <button (click)="showTab('absence')" [class.active]="activeTab === 'absence'">Vắng và Trễ</button>
-    <button (click)="showTab('absenceByClass')" [class.active]="activeTab === 'absenceByClass'">Vắng và Trễ theo
-        lớp</button>
-</div>
+<div class="admin-report flex flex-col p-5 bg-gray-100 rounded-lg shadow-lg mx-auto font-sans">
+    <h2 class="text-2xl font-semibold mb-5 text-gray-800">Quản lý Học Phí</h2>
+    <div class="tabs flex gap-4 mb-5 justify-center">
+        <button (click)="showTab('totalStudent')" [class.active]="activeTab === 'totalStudent'"
+            class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105">
+            Số học sinh toàn trường
+        </button>
+        <button (click)="showTab('studentByClass')" [class.active]="activeTab === 'studentByClass'"
+            class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105">
+            Số học sinh theo lớp
+        </button>
+        <button (click)="showTab('studentByGroup')" [class.active]="activeTab === 'studentByGroup'"
+            class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105">
+            Số học sinh theo nhóm lớp
+        </button>
+        <button (click)="showTab('monthlyFee')" [class.active]="activeTab === 'monthlyFee'"
+            class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105">
+            Học phí theo lớp
+        </button>
+        <button (click)="showTab('absence')" [class.active]="activeTab === 'absence'"
+            class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105">
+            Vắng trễ toàn trường
+        </button>
+        <button (click)="showTab('absenceByClass')" [class.active]="activeTab === 'absenceByClass'"
+            class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105">
+            Vắng trễ theo lớp
+        </button>
+    </div>
 
-<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'totalStudent' }">
-    <canvas #totalStudentChart></canvas>
-</div>
+    <div class="chart-container flex justify-center mb-5 bg-white"
+        [ngClass]="{ 'hidden': activeTab !== 'totalStudent' }">
+        <canvas #totalStudentChart class="w-9/12 max-w-3xl max-h-96 aspect-[16/9]"></canvas>
+    </div>
 
-<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'studentByClass' }">
-    <canvas #studentByClassChart></canvas>
-</div>
+    <div class="chart-container flex justify-center mb-5 bg-white"
+        [ngClass]="{ 'hidden': activeTab !== 'studentByClass' }">
+        <canvas #studentByClassChart class="w-9/12 max-w-3xl max-h-96 aspect-[16/9]"></canvas>
+    </div>
 
-<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'studentByGroup' }">
-    <canvas #studentByGroupChart></canvas>
-</div>
+    <div class="chart-container flex justify-center mb-5 bg-white"
+        [ngClass]="{ 'hidden': activeTab !== 'studentByGroup' }">
+        <canvas #studentByGroupChart class="w-9/12 max-w-3xl max-h-96 aspect-[16/9]"></canvas>
+    </div>
 
-<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'monthlyFee' }">
-    <canvas #monthlyFeeChart></canvas>
-</div>
+    <div class="chart-container flex justify-center mb-5 bg-white" [ngClass]="{ 'hidden': activeTab !== 'monthlyFee' }">
+        <canvas #monthlyFeeChart class="w-9/12 max-w-3xl max-h-96 aspect-[16/9]"></canvas>
+    </div>
 
-<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'absence' }">
-    <canvas #absenceChart></canvas>
-</div>
+    <div class="chart-container flex justify-center mb-5 bg-white" [ngClass]="{ 'hidden': activeTab !== 'absence' }">
+        <canvas #absenceChart class="w-9/12 max-w-3xl max-h-96 aspect-[16/9]"></canvas>
+    </div>
 
-<div class="chart-container" [ngClass]="{ 'hidden': activeTab !== 'absenceByClass' }">
-    <canvas #absenceByClassChart></canvas>
+    <div class="chart-container flex flex-col justify-center mb-5 bg-white"
+        [ngClass]="{ 'hidden': activeTab !== 'absenceByClass' }">
+
+        <div class="flex mb-5 space-x-4 justify-center">
+
+            <div class="flex items-center space-x-1">
+                <label for="classSelect" class="text-sm font-medium text-gray-700 whitespace-nowrap">Chọn lớp:</label>
+                <select id="classSelect" [(ngModel)]="selectedClassId" (change)="onClassChange(selectedClassId)"
+                    class="mt-1 block w-36 py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option *ngFor="let classItem of classes" [value]="classItem.id">{{ classItem.tenLop }}</option>
+                </select>
+            </div>
+
+            <div class="flex items-center space-x-1">
+                <label for="yearSelect" class="text-sm font-medium text-gray-700 whitespace-nowrap">Chọn năm:</label>
+                <select id="yearSelect" [(ngModel)]="selectedYear" (change)="onYearChange(selectedYear)"
+                    class="mt-1 block w-28 py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="0">Tất cả</option>
+                    <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+                </select>
+            </div>
+
+            <div class="flex items-center space-x-1">
+                <label for="monthSelect" class="text-sm font-medium text-gray-700 whitespace-nowrap">Chọn tháng:</label>
+                <select id="monthSelect" [(ngModel)]="selectedMonth" (change)="onMonthChange(selectedMonth)"
+                    class="mt-1 block w-28 py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="0">Tất cả</option>
+                    <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="flex justify-center w-full">
+            <canvas id="AbsenceByClass" #absenceByClassChart class="w-9/12 max-w-3xl max-h-96 aspect-[16/9]"></canvas>
+        </div>
+    </div>
 </div>
