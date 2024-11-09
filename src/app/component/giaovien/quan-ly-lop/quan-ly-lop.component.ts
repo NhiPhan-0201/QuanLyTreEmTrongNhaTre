@@ -49,7 +49,9 @@ export class QuanLyLopComponent implements OnInit {
     if (idGV !== null) {
       this.fetchClasses(idGV);
     } else {
+      this.fetchClasses(2);
       console.error('idAccount không tồn tại trong localStorage');
+      console.log(idGVString);
     }
   }
 

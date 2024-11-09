@@ -11,6 +11,8 @@ import { FeedbackComponent } from './component/phuhuynh/feedback/feedback.compon
 import { ViewSchoolfeeComponent } from './component/phuhuynh/school-fee/view-schoolfee/view-schoolfee.component';
 import { PayComponent } from './component/phuhuynh/school-fee/pay/pay.component';
 import { ViewComponent } from './component/phuhuynh/roll-call/view/view.component';
+import { XemDanhGiaTreComponent } from './component/phuhuynh/xem-danh-gia-tre/xem-danh-gia-tre.component';
+import { PHXemThucDonComponent } from './component/phuhuynh/xem-thuc-don/xem-thuc-don.component';
 
 import { AdminManagementPageComponent } from './component/admin/admin-management-page/admin-management-page.component';
 import { AccountManagementComponent } from './component/admin/admin-management-page/account-management/account-management.component';
@@ -29,6 +31,9 @@ import { GiaovienDiemdanhComponent } from './giaovien/giaovien-diemdanh/giaovien
 import { GiaovienDanhsachthongbaoComponent } from './giaovien/giaovien-danhsachthongbao/giaovien-danhsachthongbao.component';
 import { GiaovienNoidungthongbaoComponent } from './giaovien/giaovien-noidungthongbao/giaovien-noidungthongbao.component';
 import { GiaovienThongtinhocsinhComponent } from './giaovien/giaovien-thongtinhocsinh/giaovien-thongtinhocsinh.component';
+import { QuanLyLopComponent} from './component/giaovien/quan-ly-lop/quan-ly-lop.component';
+import { QuanLyNhomLopComponent} from './component/giaovien/quan-ly-nhom-lop/quan-ly-nhom-lop.component';
+import { XemThucDonComponent} from './component/giaovien/xem-thuc-don/xem-thuc-don.component';
 //
 
 import { HomeComponent } from './layout/home/home.component';
@@ -55,6 +60,9 @@ export const routes: Routes = [
       { path: 'thongtinhocsinh', component: GiaovienThongtinhocsinhComponent },
       { path: 'danhsachthongbao', component: GiaovienDanhsachthongbaoComponent },
       { path: 'noidungthongbao/:uniqueId', component: GiaovienNoidungthongbaoComponent },
+      { path: 'xemlop', component: QuanLyLopComponent },
+      { path: 'xemnhomlop', component: QuanLyNhomLopComponent },
+      { path: 'xemthucdon', component: XemThucDonComponent },
       { path: '', redirectTo: 'danhsachhocsinh', pathMatch: 'full' }  // Đường dẫn mặc định
     ]
   },
@@ -76,6 +84,8 @@ export const routes: Routes = [
   { path: 'phuhuynh/feedback', component: FeedbackComponent },
   { path: 'phuhuynh/roll-call', component: ViewComponent },
   { path: 'phuhuynh/school-fee', component: PayComponent },
-  { path: 'phuhuynh/school-fee', component: ViewSchoolfeeComponent }
+  { path: 'phuhuynh/school-fee', component: ViewSchoolfeeComponent },
+  { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
+  { path: 'xemthucdon', component: PHXemThucDonComponent },
 
 ];
