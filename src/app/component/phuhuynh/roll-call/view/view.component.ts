@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DiemDanhService } from '../../../../APIService/DiemDanhService.service';
-import { XinNghiService } from '../../../../APIService/xinnghi.service';
+import { DiemDanhService } from '../../../../../APIService/DiemDanhService.service';
+import { XinNghiService } from '../../../../../APIService/xinnghi.service';
 
 @Component({
   selector: 'app-view',
