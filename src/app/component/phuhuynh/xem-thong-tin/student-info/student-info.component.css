@@ -1,0 +1,79 @@
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: rgb(29, 197, 20);
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgba(29, 197, 20, 0.1);
+}
+
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-container input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  margin-right: 10px;
+}
+
+.search-container button {
+  padding: 8px 12px;
+  background-color: #1e8a26;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-container button:hover {
+  background-color: #155d21;
+}
+
+
+.student-card, .parent-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 10px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.student-card:hover, .parent-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.container {
+  border: 2px solid rgba(17, 143, 197, 0.455);
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+
+.student-info, .parent-card {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.no-data {
+  text-align: center;
+  margin-top: 20px;
+  color: #888;
+}

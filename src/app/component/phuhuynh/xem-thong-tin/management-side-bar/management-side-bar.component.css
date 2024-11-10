@@ -1,0 +1,132 @@
+.side-bar-container {
+  position: fixed;
+  height: 100%;
+  z-index: 0;
+}
+
+.btn-toggle-side-bar {
+  color: white;
+  font-size: xx-large;
+  display: flex;
+  z-index: 2;
+}
+
+.btn-toggle-side-bar i {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.btn-toggle-side-bar.side-bar-toggled {
+  background-color: var(--dark-primary-background-color);
+  width: 100dvw;
+}
+
+.management-side-bar {
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  width: 250px;
+  background-color: var(--dark-primary-background-color);
+  overflow-y: auto;
+  width: 100dvw;
+}
+
+.management-side-bar.side-bar-toggled {
+  display: flex;
+}
+
+.management-side-bar ul {
+  margin-top: 50px;
+}
+
+.management-side-bar .category-button {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  color: var(--dark-primary-text-color);
+  text-decoration: none;
+  font-size: 18px;
+  text-align: start;
+}
+
+.management-side-bar .category-button.active,
+.management-side-bar .category-button.active:hover {
+  background-color: #233950;
+  color: #0866ff;
+}
+
+.management-side-bar .category-button:hover {
+  background-color: #3a3b3c;
+  color: white;
+}
+
+.management-side-bar ul {
+  padding-inline-start: 0px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.management-side-bar li {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.management-side-bar a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 700px) {
+
+  .side-bar-container {
+    height: 100%;
+    width: 30dvw;
+  }
+
+  .btn-toggle-side-bar.side-bar-toggled {
+    width: 100%;
+  }
+
+  .management-side-bar.side-bar-toggled {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+
+  .side-bar-container {
+    position: relative;
+    width: 15dvw;
+  }
+
+  .btn-toggle-side-bar {
+    position: relative;
+    display: none;
+  }
+
+  .btn-toggle-side-bar.side-bar-toggled {
+    width: 100%;
+  }
+
+  .management-side-bar {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .management-side-bar.side-bar-toggled {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+}

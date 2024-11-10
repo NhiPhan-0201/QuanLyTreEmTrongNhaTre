@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="sidebar">
+    <ul>
+      <li *ngFor="let item of sideBarItems" 
+          [class.active]="item.active" 
+          (click)="onSideBarItemClick(item)">
+        {{ item.name }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <router-outlet></router-outlet> <!-- Hiển thị component tương ứng -->
+  </div>
+</div>
