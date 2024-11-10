@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HocPhiService } from '../../../../APIService/ViewSchoolFee.service'
-import { HocPhi } from '../../../../models/HocPhi';
+import { HocPhiService } from '../../../../../APIService/ViewSchoolFee.service'
+import { HocPhi } from '../../../../../models/HocPhi';
 
 @Component({
   selector: 'app-view-schoolfee',
