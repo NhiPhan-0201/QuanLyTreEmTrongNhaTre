@@ -1,36 +1,48 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { stat } from 'node:fs';
+import { Router } from '@angular/router';
+import { DiemDanhService } from '../../../../APIService/DiemDanhService.service';
+import { XinNghiService } from '../../../../APIService/xinnghi.service';
 
 @Component({
   selector: 'app-view',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './view.component.html',
-  styleUrl: './view.component.css'
+  styleUrls: ['./view.component.css']
 })
 export class ViewComponent {
-  constructor(private router: Router) {}
-
-  navigateTo(path: string) {
-    this.router.navigate([`/${path}`]);
-  }
-
-  isModalOpen = false;
+  attendanceData: { [key: string]: string } = {};
   firstName = '';
   lastName = '';
   gender = 'male';
   reason = '';
   date = '';
+  isModalOpen = false;
 
-  attendanceData: { [key: string]: string } = {
-    '2024-09-17': 'Có mặt',
-    '2024-09-18': 'Vắng có phép',
-    '2024-09-19': 'Vắng không phép'
-  };
+  constructor(
+    private router: Router,
+    private diemDanhService: DiemDanhService,
+    private xinNghiService: XinNghiService
+  ) {}
 
+  navigateTo(path: string) {
+    this.router.navigate([`/${path}`]);
+  }
+
+  loadAttendanceData() {
+    const studentId = 'student-id';
+    this.diemDanhService.getAttendanceByStudentId(studentId).subscribe(data => {
+      this.attendanceData = data.reduce((acc: any, curr: any) => {
+        acc[curr.date] = curr.status;
+        return acc;
+      }, {});
+    });
+  }
 
   openRegisterForm() {
     this.isModalOpen = true;
@@ -41,18 +53,25 @@ export class ViewComponent {
   }
 
   submitForm() {
-    // Xử lý logic gửi form ở đây
-    console.log('Form data:', {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      gender: this.gender,
-      reason: this.reason,
-      date: this.date,
-    });
-    this.closeRegisterForm();
+    const leaveRequest = {
+      id_tre: '1',
+      ngay_thang_nam: this.date,
+      ly_do: this.reason
+    };
+
+    this.xinNghiService.submitLeaveRequest(leaveRequest).subscribe(
+      response => {
+        console.log('Đăng ký nghỉ thành công:', response);
+        this.loadAttendanceData();
+        this.closeRegisterForm();
+      },
+      error => {
+        console.error('Lỗi khi đăng ký nghỉ:', error);
+      }
+    );
   }
 
   getStatusText(date: string): string {
-    return this.attendanceData[date] || ''; // Trả về trạng thái nếu tồn tại, ngược lại trả về chuỗi rỗng
+    return this.attendanceData[date] || '';
   }
 }
