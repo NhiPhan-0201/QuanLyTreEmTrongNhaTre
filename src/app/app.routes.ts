@@ -83,8 +83,8 @@ export const routes: Routes = [
   { path: 'phuhuynh/xem-thong-bao', component: XemThongBaoComponent },
   { path: 'phuhuynh/feedback', component: feedbackComponent },
   { path: 'phuhuynh/roll-call', component: ViewComponent },
-  { path: 'phuhuynh/school-fee', component: PayComponent },
-  { path: 'phuhuynh/school-fee', component: ViewSchoolfeeComponent },
+  { path: 'phuhuynh/school-fee/pay', component: PayComponent },
+  { path: 'phuhuynh/school-fee/view', component: ViewSchoolfeeComponent },
   { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
   { path: 'xemthucdon', component: PHXemThucDonComponent },
 
