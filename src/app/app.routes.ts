@@ -7,7 +7,7 @@ import { XemThongBaoComponent } from './component/phuhuynh/xem-thong-bao/xem-tho
 
 
 
-import { FeedbackComponent } from './component/phuhuynh/feedback/feedback.component';
+import { feedbackComponent } from './component/phuhuynh/feedback/feedback.component';
 import { ViewSchoolfeeComponent } from './component/phuhuynh/school-fee/view-schoolfee/view-schoolfee.component';
 import { PayComponent } from './component/phuhuynh/school-fee/pay/pay.component';
 import { ViewComponent } from './component/phuhuynh/roll-call/view/view.component';
@@ -81,7 +81,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'phuhuynh/xem-thong-bao', component: XemThongBaoComponent },
-  { path: 'phuhuynh/feedback', component: FeedbackComponent },
+  { path: 'phuhuynh/feedback', component: feedbackComponent },
   { path: 'phuhuynh/roll-call', component: ViewComponent },
   { path: 'phuhuynh/school-fee', component: PayComponent },
   { path: 'phuhuynh/school-fee', component: ViewSchoolfeeComponent },
