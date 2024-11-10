@@ -41,6 +41,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { VerifyOtpComponent } from './auth/verify-otp/verify-otp.component';
 //
+import { TeacherInfoComponent } from './component/phuhuynh/xem-thong-tin/teacher-info/teacher-info.component';
+import { XemThongTinComponent } from './component/phuhuynh/xem-thong-tin/xem-thong-tin.component';
+import { StudentInfoComponent } from './component/phuhuynh/xem-thong-tin/student-info/student-info.component';
 
 export const routes: Routes = [
 
@@ -87,5 +90,12 @@ export const routes: Routes = [
   { path: 'phuhuynh/school-fee/view', component: ViewSchoolfeeComponent },
   { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
   { path: 'xemthucdon', component: PHXemThucDonComponent },
+  {
+    path: 'xem-thong-tin', component: XemThongTinComponent, children: [
+      { path: '', redirectTo: 'student-info', pathMatch: 'full' },
+      { path: 'student-info', component: StudentInfoComponent },
+      { path: 'teacher-info', component: TeacherInfoComponent }
+    ]
+  }
 
 ];
