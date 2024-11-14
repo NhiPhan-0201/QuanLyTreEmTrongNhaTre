@@ -1,0 +1,24 @@
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li *ngFor="let item of sideBarItems" 
+          [class.active]="item.active" 
+          (click)="onSideBarItemClick(item)">
+        {{ item.name }}
+        <ul *ngIf="item.children && item.expanded">
+          <li *ngFor="let child of item.children" 
+              [class.active]="child.active" 
+              (click)="onSideBarItemClick(child)">
+            {{ child.name }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
