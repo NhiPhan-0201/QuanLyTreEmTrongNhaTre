@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 
 import { NotificationsComponent } from './component/giaovien/notifications/notifications-page.component';
 import { TimetablesComponent } from './component/giaovien/timetable-management/timetable.component';
-import { XemThongBaoComponent } from './component/phuhuynh/xem-thong-bao/xem-thong-bao.component';
 
 
 
@@ -40,10 +39,13 @@ import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { VerifyOtpComponent } from './auth/verify-otp/verify-otp.component';
-//
-import { TeacherInfoComponent } from './component/phuhuynh/xem-thong-tin/teacher-info/teacher-info.component';
-import { XemThongTinComponent } from './component/phuhuynh/xem-thong-tin/xem-thong-tin.component';
-import { StudentInfoComponent } from './component/phuhuynh/xem-thong-tin/student-info/student-info.component';
+
+// Phuhuynh
+import { XemThongBaoComponent } from './component/phuhuynh/xem-thong-bao/xem-thong-bao.component';
+import { ThoiKhoaBieuComponent } from './component/phuhuynh/xem-thoi-khoa-bieu/xem-thoi-khoa-bieu.component';
+import { PhuhuynhComponent } from './component/phuhuynh/phuhuynh.component';
+import { StudentInfoComponent } from './component/phuhuynh/student-info/student-info.component';
+import { TeacherInfoComponent } from './component/phuhuynh/teacher-info/teacher-info.component';
 
 export const routes: Routes = [
 
@@ -83,19 +85,21 @@ export const routes: Routes = [
       { path: 'report', component: ReportComponent },
     ]
   },
-  { path: 'phuhuynh/xem-thong-bao', component: XemThongBaoComponent },
   { path: 'phuhuynh/feedback', component: feedbackComponent },
   { path: 'phuhuynh/roll-call', component: ViewComponent },
   { path: 'phuhuynh/school-fee/pay', component: PayComponent },
   { path: 'phuhuynh/school-fee/view', component: ViewSchoolfeeComponent },
   { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
   { path: 'xemthucdon', component: PHXemThucDonComponent },
+  
+  // Phu huynh
   {
-    path: 'xem-thong-tin', component: XemThongTinComponent, children: [
-      { path: '', redirectTo: 'student-info', pathMatch: 'full' },
+    path: 'phuhuynh', component: PhuhuynhComponent , children: [
+      { path: '', redirectTo: 'xem-thong-bao', pathMatch: 'full' },
+      { path: 'xem-thong-bao', component: XemThongBaoComponent },
+      { path: 'xem-thoi-khoa-bieu', component: ThoiKhoaBieuComponent },
       { path: 'student-info', component: StudentInfoComponent },
       { path: 'teacher-info', component: TeacherInfoComponent }
     ]
   }
-
 ];
