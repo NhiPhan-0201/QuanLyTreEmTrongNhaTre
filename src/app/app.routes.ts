@@ -86,7 +86,7 @@ export const routes: Routes = [
   },
   { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
   { path: 'xemthucdon', component: PHXemThucDonComponent },
-  
+
   // Phu huynh
   {
     path: 'phuhuynh', component: PhuhuynhComponent , children: [
@@ -100,5 +100,6 @@ export const routes: Routes = [
       { path: 'school-fee/pay', component: PayComponent },
       { path: 'school-fee/view-schoolfee', component: ViewSchoolfeeComponent }
     ]
-  }
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

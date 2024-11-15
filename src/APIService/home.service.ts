@@ -6,12 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HomeService {
-
-  private apiUrl = 'http://localhost:8080'; // Spring Boot backend URL
+  private apiUrl = 'http://localhost:8080/api/account'; // Replace with your API endpoint
 
   constructor(private http: HttpClient) { }
 
-  getAccountId(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/getAccountId`); // Adjust endpoint as necessary
+  getAccountInfo(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/info`);
   }
 }
