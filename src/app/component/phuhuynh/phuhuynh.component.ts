@@ -22,10 +22,13 @@ export class PhuhuynhComponent implements OnInit {
         { name: 'Thông tin học sinh', path: 'student-info' },
         { name: 'Thông tin giáo viên', path: 'teacher-info' }
       ]
-    }
+    },
+    { name: 'Điểm danh', path: 'roll-call' },
+    { name: 'Học phí', path: 'school-fee/view-schoolfee' },
+    { name: 'Ý kiến', path: 'feedback' },
   ];
 
-  sidebarOpen: boolean = true;  // Sidebar luôn mở
+  sidebarOpen: boolean = true;
 
   constructor(private router: Router) {}
 
