@@ -16,13 +16,15 @@ export class PhuhuynhComponent implements OnInit {
     { name: 'Thông báo', path: 'xem-thong-bao' },
     { name: 'Thời khóa biểu', path: 'xem-thoi-khoa-bieu' },
     {
-      name: 'Thông tin', 
-      path: '', 
+      name: 'Thông tin',
+      path: '',
       children: [
         { name: 'Thông tin học sinh', path: 'student-info' },
         { name: 'Thông tin giáo viên', path: 'teacher-info' }
       ]
     },
+    { name: 'Xem thực đơn', path: 'xemthucdon' },
+    { name: 'Xem đánh giá trẻ', path: 'xemdanhgiatre' },
     { name: 'Điểm danh', path: 'roll-call' },
     { name: 'Học phí', path: 'school-fee/view-schoolfee' },
     { name: 'Ý kiến', path: 'feedback' },
