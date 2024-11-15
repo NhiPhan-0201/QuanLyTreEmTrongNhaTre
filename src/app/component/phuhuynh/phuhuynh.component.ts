@@ -24,7 +24,7 @@ export class PhuhuynhComponent implements OnInit {
       ]
     },
     { name: 'Xem thực đơn', path: 'xemthucdon' },
-    { name: 'Xem đnahs giá trẻ', path: 'xemdanhgiatre' },
+    { name: 'Xem đánh giá trẻ', path: 'xemdanhgiatre' },
     { name: 'Điểm danh', path: 'roll-call' },
     { name: 'Học phí', path: 'school-fee/view-schoolfee' },
     { name: 'Ý kiến', path: 'feedback' },
