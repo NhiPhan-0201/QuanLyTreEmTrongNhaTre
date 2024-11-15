@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GiaovienDanhsachthongbaoComponent } from './giaovien-danhsachthongbao.component';
+import { GiaovienDanhsachthongbaoComponent } from './notification-list.component';
 
 describe('GiaovienDanhsachthongbaoComponent', () => {
   let component: GiaovienDanhsachthongbaoComponent;

@@ -13,11 +13,11 @@ interface Class {
 }
 
 @Component({
-  selector: 'app-quan-ly-lop',
+  selector: 'app-class-management',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './quan-ly-lop.component.html',
-  styleUrls: ['./quan-ly-lop.component.css'],
+  templateUrl: './class-management.component.html',
+  styleUrls: ['./class-management.component.css'],
   styles: [
     `
       .class-list {

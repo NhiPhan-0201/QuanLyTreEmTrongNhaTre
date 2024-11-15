@@ -3,11 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-quan-ly-nhom-lop',
+  selector: 'app-class-group-management',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './quan-ly-nhom-lop.component.html',
-  styleUrls: ['./quan-ly-nhom-lop.component.css']
+  templateUrl: './class-group-management.component.html',
+  styleUrls: ['./class-group-management.component.css']
 })
 export class QuanLyNhomLopComponent implements OnInit {
   nhomLop: any[] = [];

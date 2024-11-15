@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-xem-thuc-don',
+  selector: 'view-meal-menu',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './xem-thuc-don.component.html',
-  styleUrl: './xem-thuc-don.component.css'
+  templateUrl: './view-meal-menu.component.html',
+  styleUrl: './view-meal-menu.component.css'
 })
 export class XemThucDonComponent implements OnInit {
   menuData: any[] = [];

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ThongTinHocSinh } from '../../../models/ThongTinHocSinh';
+import { ThongTinHocSinh } from '../../../../models/ThongTinHocSinh';
 
 @Component({
-  selector: 'app-giaovien-thongtinhocsinh',
+  selector: 'app-student-info',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './giaovien-thongtinhocsinh.component.html',
-  styleUrl: './giaovien-thongtinhocsinh.component.css'
+  templateUrl: './student-info.component.html',
+  styleUrl: './student-info.component.css'
 })
 export class GiaovienThongtinhocsinhComponent {
   studentDetail: ThongTinHocSinh | null = null;

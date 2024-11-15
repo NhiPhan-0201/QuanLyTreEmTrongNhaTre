@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DiemDanhService } from '../../../APIService/diemdanh.service';
-import { DiemDanh } from '../../../models/DiemDanh';
+import { DiemDanhService } from '../../../../APIService/diemdanh.service';
+import { DiemDanh } from '../../../../models/DiemDanh';
 import { map, switchMap } from 'rxjs/operators';
 import { of, forkJoin, Observable } from 'rxjs';
 
-import { ThongTinHocSinh } from '../../../models/ThongTinHocSinh';
+import { ThongTinHocSinh } from '../../../../models/ThongTinHocSinh';
 import { Router } from '@angular/router';
 
 interface LopHoc {
@@ -15,11 +15,11 @@ interface LopHoc {
 }
 
 @Component({
-  selector: 'app-giaovien-diemdanh',
+  selector: 'app-attendance-records',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './giaovien-diemdanh.component.html',
-  styleUrls: ['./giaovien-diemdanh.component.css']
+  templateUrl: './attendance-records.component.html',
+  styleUrls: ['./attendance-records.component.css']
 })
 export class GiaovienDiemdanhComponent implements OnInit {
   hocSinhList: DiemDanh[] = [];

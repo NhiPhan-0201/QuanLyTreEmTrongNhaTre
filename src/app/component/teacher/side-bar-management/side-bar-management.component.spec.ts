@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GiaovienManagementPageComponent } from './giaovien-management-page.component';
+import { GiaovienManagementPageComponent } from './side-bar-management.component';
 
 describe('GiaovienManagementPageComponent', () => {
   let component: GiaovienManagementPageComponent;

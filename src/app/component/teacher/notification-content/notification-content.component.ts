@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ThongBaoService } from '../../../APIService/thongbao.service';
+import { ThongBaoService } from '../../../../APIService/thongbao.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,11 +14,11 @@ interface ThongBao {
 }
 
 @Component({
-  selector: 'app-giaovien-noidungthongbao',
+  selector: 'app-notification-content',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './giaovien-noidungthongbao.component.html',
-  styleUrl: './giaovien-noidungthongbao.component.css'
+  templateUrl: './notification-content.component.html',
+  styleUrl: './notification-content.component.css'
 })
 export class GiaovienNoidungthongbaoComponent implements OnInit {
   thongBao$: Observable<ThongBao | undefined> = of(undefined);

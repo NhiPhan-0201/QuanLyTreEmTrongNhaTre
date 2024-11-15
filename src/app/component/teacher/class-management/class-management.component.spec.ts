@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuanLyNhomLopComponent } from './quan-ly-nhom-lop.component';
+import { QuanLyLopComponent } from './class-management.component';
 
-describe('QuanLyNhomLopComponent', () => {
-  let component: QuanLyNhomLopComponent;
-  let fixture: ComponentFixture<QuanLyNhomLopComponent>;
+describe('QuanLyLopComponent', () => {
+  let component: QuanLyLopComponent;
+  let fixture: ComponentFixture<QuanLyLopComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QuanLyNhomLopComponent]
+      imports: [QuanLyLopComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(QuanLyNhomLopComponent);
+    fixture = TestBed.createComponent(QuanLyLopComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ThongBaoService } from '../../../APIService/thongbao.service';
+import { ThongBaoService } from '../../../../APIService/thongbao.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -12,11 +12,11 @@ interface ThongBao {
 }
 
 @Component({
-  selector: 'app-giaovien-danhsachthongbao',
+  selector: 'app-notification-list',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './giaovien-danhsachthongbao.component.html',
-  styleUrl: './giaovien-danhsachthongbao.component.css'
+  templateUrl: './notification-list.component.html',
+  styleUrl: './notification-list.component.css'
 })
 export class GiaovienDanhsachthongbaoComponent implements OnInit {
   thongBaoList: ThongBao[] = [];

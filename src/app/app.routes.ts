@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 
-import { NotificationsComponent } from './component/giaovien/notifications/notifications-page.component';
-import { TimetablesComponent } from './component/giaovien/timetable-management/timetable.component';
-
-
-
 import { feedbackComponent } from './component/phuhuynh/feedback/feedback.component';
 import { ViewSchoolfeeComponent } from './component/phuhuynh/school-fee/view-schoolfee/view-schoolfee.component';
 import { PayComponent } from './component/phuhuynh/school-fee/pay/pay.component';
@@ -23,16 +18,18 @@ import { AdminFeedbackComponent } from './component/admin/feedback/feedback.comp
 import { SchoolFeeComponent } from './component/admin/school-fee/school-fee.component';
 import { ReportComponent } from './component/admin/report/report.component';
 
-// giao vien
-import { GiaovienManagementPageComponent } from './giaovien/giaovien-management-page/giaovien-management-page.component';
-import { GiaovienDanhsachhocsinhComponent } from './giaovien/giaovien-danhsachhocsinh/giaovien-danhsachhocsinh.component';
-import { GiaovienDiemdanhComponent } from './giaovien/giaovien-diemdanh/giaovien-diemdanh.component';
-import { GiaovienDanhsachthongbaoComponent } from './giaovien/giaovien-danhsachthongbao/giaovien-danhsachthongbao.component';
-import { GiaovienNoidungthongbaoComponent } from './giaovien/giaovien-noidungthongbao/giaovien-noidungthongbao.component';
-import { GiaovienThongtinhocsinhComponent } from './giaovien/giaovien-thongtinhocsinh/giaovien-thongtinhocsinh.component';
-import { QuanLyLopComponent} from './component/giaovien/quan-ly-lop/quan-ly-lop.component';
-import { QuanLyNhomLopComponent} from './component/giaovien/quan-ly-nhom-lop/quan-ly-nhom-lop.component';
-import { XemThucDonComponent} from './component/giaovien/xem-thuc-don/xem-thuc-don.component';
+// Giao Vien
+import { GiaovienManagementPageComponent } from './component/teacher/side-bar-management/side-bar-management.component';
+import { GiaovienDanhsachhocsinhComponent } from './component/teacher/student-list/student-list.component';
+import { GiaovienDiemdanhComponent } from './component/teacher/attendance-records/attendance-records.component';
+import { GiaovienDanhsachthongbaoComponent } from './component/teacher/notification-list/notification-list.component';
+import { GiaovienNoidungthongbaoComponent } from './component/teacher/notification-content/notification-content.component';
+import { GiaovienThongtinhocsinhComponent } from './component/teacher/student-info/student-info.component';
+import { QuanLyLopComponent} from './component/teacher/class-management/class-management.component';
+import { QuanLyNhomLopComponent} from './component/teacher/class-group-management/quan-ly-nhom-loclass-group-management.component';
+import { XemThucDonComponent} from './component/teacher/view-meal-menu/view-meal-menu.component';
+import { NotificationsComponent } from './component/teacher/notifications/notifications-page.component';
+import { TimetablesComponent } from './component/teacher/timetable-management/timetable.component';
 //
 
 import { HomeComponent } from './layout/home/home.component';
@@ -60,15 +57,17 @@ export const routes: Routes = [
   // giaovien routes
   {
     path: 'giaovien-management', component: GiaovienManagementPageComponent, children: [
-      { path: 'danhsachhocsinh', component: GiaovienDanhsachhocsinhComponent },
-      { path: 'diemdanh', component: GiaovienDiemdanhComponent },
-      { path: 'thongtinhocsinh', component: GiaovienThongtinhocsinhComponent },
-      { path: 'danhsachthongbao', component: GiaovienDanhsachthongbaoComponent },
-      { path: 'noidungthongbao/:uniqueId', component: GiaovienNoidungthongbaoComponent },
-      { path: 'xemlop', component: QuanLyLopComponent },
-      { path: 'xemnhomlop', component: QuanLyNhomLopComponent },
-      { path: 'xemthucdon', component: XemThucDonComponent },
-      { path: '', redirectTo: 'danhsachhocsinh', pathMatch: 'full' }  // Đường dẫn mặc định
+      { path: 'teacher/student-list', component: GiaovienDanhsachhocsinhComponent },
+      { path: 'teacher/attendance-records', component: GiaovienDiemdanhComponent },
+      { path: 'teacher/student-info', component: GiaovienThongtinhocsinhComponent },
+      { path: 'teacher/notification-list', component: GiaovienDanhsachthongbaoComponent },
+      { path: 'teacher/notification-content/:uniqueId', component: GiaovienNoidungthongbaoComponent },
+      { path: 'teacher/class-management', component: QuanLyLopComponent },
+      { path: 'teacher/class-group-management', component: QuanLyNhomLopComponent },
+      { path: 'teacher/view-meal-menu', component: XemThucDonComponent },
+      { path: 'teacher/notifications', component: NotificationsComponent },
+      { path: 'teacher/timetable-management', component: TimetablesComponent },
+      { path: '', redirectTo: 'teacher/student-list', pathMatch: 'full' }  // Đường dẫn mặc định
     ]
   },
   //

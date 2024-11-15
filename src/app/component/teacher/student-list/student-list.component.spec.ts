@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GiaovienDanhsachhocsinhComponent } from './giaovien-danhsachhocsinh.component';
+import { GiaovienDanhsachhocsinhComponent } from './student-list.component';
 
 describe('GiaovienDanhsachhocsinhComponent', () => {
   let component: GiaovienDanhsachhocsinhComponent;
