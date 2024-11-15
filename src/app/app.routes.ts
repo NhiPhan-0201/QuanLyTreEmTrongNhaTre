@@ -85,10 +85,6 @@ export const routes: Routes = [
       { path: 'report', component: ReportComponent },
     ]
   },
-  { path: 'phuhuynh/feedback', component: feedbackComponent },
-  { path: 'phuhuynh/roll-call', component: ViewComponent },
-  { path: 'phuhuynh/school-fee/pay', component: PayComponent },
-  { path: 'phuhuynh/school-fee/view', component: ViewSchoolfeeComponent },
   { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
   { path: 'xemthucdon', component: PHXemThucDonComponent },
   
@@ -99,7 +95,11 @@ export const routes: Routes = [
       { path: 'xem-thong-bao', component: XemThongBaoComponent },
       { path: 'xem-thoi-khoa-bieu', component: ThoiKhoaBieuComponent },
       { path: 'student-info', component: StudentInfoComponent },
-      { path: 'teacher-info', component: TeacherInfoComponent }
+      { path: 'teacher-info', component: TeacherInfoComponent },
+      { path: 'feedback', component: feedbackComponent },
+      { path: 'roll-call', component: ViewComponent },
+      { path: 'school-fee/pay', component: PayComponent },
+      { path: 'school-fee/view-schoolfee', component: ViewSchoolfeeComponent }
     ]
   }
 ];
