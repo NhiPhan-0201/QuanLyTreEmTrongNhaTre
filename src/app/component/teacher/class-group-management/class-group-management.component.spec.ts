@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuanLyNhomLopComponent } from './quan-ly-nhom-loclass-group-management.component';
+import { QuanLyNhomLopComponent } from './class-group-management.component';
 
 describe('QuanLyNhomLopComponent', () => {
   let component: QuanLyNhomLopComponent;

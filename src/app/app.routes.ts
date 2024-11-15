@@ -26,7 +26,7 @@ import { GiaovienDanhsachthongbaoComponent } from './component/teacher/notificat
 import { GiaovienNoidungthongbaoComponent } from './component/teacher/notification-content/notification-content.component';
 import { GiaovienThongtinhocsinhComponent } from './component/teacher/student-info/student-info.component';
 import { QuanLyLopComponent} from './component/teacher/class-management/class-management.component';
-import { QuanLyNhomLopComponent} from './component/teacher/class-group-management/quan-ly-nhom-loclass-group-management.component';
+import { QuanLyNhomLopComponent} from './component/teacher/class-group-management/class-group-management.component';
 import { XemThucDonComponent} from './component/teacher/view-meal-menu/view-meal-menu.component';
 import { NotificationsComponent } from './component/teacher/notifications/notifications-page.component';
 import { TimetablesComponent } from './component/teacher/timetable-management/timetable.component';
