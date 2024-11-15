@@ -84,9 +84,7 @@ export const routes: Routes = [
       { path: 'report', component: ReportComponent },
     ]
   },
-  { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
-  { path: 'xemthucdon', component: PHXemThucDonComponent },
-  
+
   // Phu huynh
   {
     path: 'phuhuynh', component: PhuhuynhComponent , children: [
@@ -98,7 +96,10 @@ export const routes: Routes = [
       { path: 'feedback', component: feedbackComponent },
       { path: 'roll-call', component: ViewComponent },
       { path: 'school-fee/pay', component: PayComponent },
-      { path: 'school-fee/view-schoolfee', component: ViewSchoolfeeComponent }
+      { path: 'school-fee/view-schoolfee', component: ViewSchoolfeeComponent },
+      { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
+      { path: 'xemthucdon', component: PHXemThucDonComponent },
+
     ]
   }
 ];
