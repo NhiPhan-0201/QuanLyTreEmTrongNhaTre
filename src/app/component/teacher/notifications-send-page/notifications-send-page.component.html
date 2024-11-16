@@ -1,0 +1,46 @@
+<div class="notification-container">
+  <div class="header">
+    <h2>Gửi thông báo</h2>
+  </div>
+
+  <form class="notification-form" (ngSubmit)="sendNotification()">
+    <div class="form-group">
+      <label for="title">Tiêu đề:</label>
+      <input
+        type="text"
+        id="title"
+        (input)="onInputChange('tieuDe', $event)"
+        placeholder="Nhập tiêu đề thông báo"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="content">Nội dung:</label>
+      <textarea
+        id="content"
+        (input)="onInputChange('noiDung', $event)"
+        placeholder="Nhập nội dung thông báo"
+        required
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <h4>Chọn lớp gửi thông báo:</h4>
+      <div *ngFor="let class of classes; let i = index">
+        <label>
+          <input
+            type="checkbox"
+            (change)="onCheckboxChange(i, $event)"
+          />
+          {{ class.name }}
+        </label>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button type="submit">Gửi</button>
+      <button type="button" (click)="resetForm()">Hủy</button>
+    </div>
+  </form>
+</div>
