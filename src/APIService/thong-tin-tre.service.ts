@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { CRUDService } from './interfaces/CRUD.service.interface';
 import { ThongTinTre } from '../models/ThongTinTre';
 import { ApiResponse } from '../models/ApiResponse.interface';
-import { access_token } from '../constants/test_api';
 import { Account } from '../models';
 import AutoRevokeService from './interfaces/auto-revoke.service.interface';
 @Injectable({

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { QuanLiLop } from '../models/QuanLiLop';
 import { ApiResponse } from '../models/ApiResponse.interface';
 import { CRUDService } from './interfaces/CRUD.service.interface';
-import { access_token } from '../constants/test_api';
 import AutoRevokeService from './interfaces/auto-revoke.service.interface';
 
 @Injectable({
