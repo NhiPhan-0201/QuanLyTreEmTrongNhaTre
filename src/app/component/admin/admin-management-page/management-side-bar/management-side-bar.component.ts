@@ -36,6 +36,10 @@ export class ManagementSideBarComponent {
   }
 
   handleClickItem(item: SideBarItem) {
+    if (item.path === '/home') {
+      this.router.navigate([item.path]);
+      return;
+    }
     this.router.navigate([`/admin/manage/${item.path}`]);
   }
 }

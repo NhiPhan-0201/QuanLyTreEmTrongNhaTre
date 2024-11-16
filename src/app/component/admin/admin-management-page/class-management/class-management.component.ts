@@ -1,4 +1,3 @@
-import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Account, NhomLop, QuanLiLop } from '../../../../../models';
 import { NhomLopService, QuanLiLopService, AccountService } from '../../../../../APIService';
@@ -7,7 +6,6 @@ import { ClassAddNewFormComponent } from './class-add-new-form/class-add-new-for
 import { ClassUpdateFormComponent } from './class-update-form/class-update-form.component';
 import { ClassDeleteConfirmationDialogComponent } from './class-delete-confirmation-dialog/class-delete-confirmation-dialog.component';
 import { CommonModule } from '@angular/common';
-import { AccountRole, AccountStatus } from '../../../../../constants/enums';
 import { ToastService } from '../../../../service';
 
 @Component({

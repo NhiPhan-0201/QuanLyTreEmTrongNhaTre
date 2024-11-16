@@ -1,16 +1,14 @@
-<div class="flex flex-col p-5 bg-gray-100 rounded-lg shadow-md mx-auto font-sans">
-  <div class="flex justify-between flex-wrap mb-5">
-    <input
-      class="w-full p-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200 ease-in-out"
-      type="text" placeholder="Search user..." (input)="onSearch($event)" />
-    <div class="flex justify-end w-full">
-      <button
-        class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 hover:scale-105 transition-transform duration-200"
+<div class="class-management-panel flex flex-col p-5 bg-gray-100 rounded-lg shadow-md mx-auto font-sans min-h-screen">
+  <div class="search-bar flex flex-col mb-5">
+    <input class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-2" type="text"
+      placeholder="Search user..." (input)="onSearch($event)" />
+    <div class="actions flex justify-end">
+      <button class="bg-blue-500 text-white rounded px-5 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
         (click)="handleOpenAddAccountForm()">Thêm tài khoản mới</button>
     </div>
   </div>
 
-  <h2 class="text-2xl mb-5 text-gray-800">Tài khoản phụ huynh</h2>
+  <h2 class="text-2xl mb-5 text-gray-800">Thông tin phụ huynh</h2>
   <table class="w-full mb-5 border-collapse bg-white rounded-lg overflow-hidden shadow">
     <thead>
       <tr>
