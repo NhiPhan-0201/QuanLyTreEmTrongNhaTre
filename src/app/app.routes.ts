@@ -85,7 +85,6 @@ export const routes: Routes = [
     ]
   },
 
-
   // Phu huynh
   {
     path: 'phuhuynh', component: PhuhuynhComponent , children: [
