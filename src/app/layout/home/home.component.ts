@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // Get the accountId from localStorage or another source if necessary
-    this.accountId = parseInt(localStorage.getItem('accountId') || '0', 10);
+    this.accountId = parseInt(localStorage.getItem('accountID') || '0', 10);
   }
 
   async navigateToUser(): Promise<void> {

@@ -57,50 +57,26 @@ export class AccountManagementComponent implements OnInit {
             this.isLoading = false;
           },
           error: (error) => {
-            console.error('Lỗi khi tải accounts:', error);
-            this.accounts = this.generateMockAccounts();
+            this.toastService.showError('Có lỗi xảy ra khi tải dữ liệu');
             this.isLoading = false;
             this.onSearch();
           }
         });
       },
       error: (error) => {
-        console.error('Lỗi khi tải accounts:', error);
-        this.accounts = this.generateMockAccounts();
+        this.toastService.showError('Có lỗi xảy ra khi tải dữ liệu');
         this.isLoading = false;
         this.onSearch();
       }
     });
   }
 
-  private generateMockAccounts() {
-    const mockAccounts = [];
-    for (let i = 0; i < 10; i++) {
-      mockAccounts.push({
-        id: i + 1,
-        username: 'admin' + i,
-        password: "quoc123",
-        role: AccountRole.GiaoVien,
-        status: 'Enabled',
-        giaoVien: {
-          id: i + 1,
-          hoTen: 'Nguyễn Văn A',
-          gioiTinh: i % 2 === 0 ? Gender.Nam : Gender.Nu,
-          soDienThoai: '0987654321',
-          email: 'admin' + i + '@gmail.com',
-          anh: `https://api.dicebear.com/9.x/avataaars/svg?seed=${i}`,
-        }
-      });
-    }
-    return mockAccounts;
-  }
-
 
   onSearch(event?: Event) {
     if (event) {
       this.searchTerm = (event.target as HTMLInputElement).value;
-    } else {
-      this.searchTerm = '';
+      this.currentGiaoVienAccountsPage = 1;
+      this.currentPhuHuynhAccountsPage = 1;
     }
 
     this.isLoading = true;
@@ -112,6 +88,11 @@ export class AccountManagementComponent implements OnInit {
       account.giaoVien?.hoTen.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
 
+    this.updatePaginatedAccounts();
+    this.isLoading = false;
+  }
+
+  updatePaginatedAccounts() {
     this.giaoVienAccounts = this.filteredAccounts.filter(account => account.role === 'GiaoVien');
     this.totalGiaoVienAccountsPage = Math.ceil(this.giaoVienAccounts.length / 5) || 1;
     this.giaoVienAccounts = this.giaoVienAccounts.slice((this.currentGiaoVienAccountsPage - 1) * 5, this.currentGiaoVienAccountsPage * 5);
@@ -119,12 +100,6 @@ export class AccountManagementComponent implements OnInit {
     this.phuHuynhAccounts = this.filteredAccounts.filter(account => account.role === 'PhuHuynh');
     this.totalPhuHuynhAccountsPage = Math.ceil(this.phuHuynhAccounts.length / 5) || 1;
     this.phuHuynhAccounts = this.phuHuynhAccounts.slice((this.currentPhuHuynhAccountsPage - 1) * 5, this.currentPhuHuynhAccountsPage * 5);
-
-    if (event) {
-      this.currentGiaoVienAccountsPage = 1;
-      this.currentPhuHuynhAccountsPage = 1;
-    }
-    this.isLoading = false;
   }
 
   handlePhuHuynhPageChange(page: number) {
@@ -155,6 +130,7 @@ export class AccountManagementComponent implements OnInit {
     this.accountService.delete(this.selectedAccount.id).subscribe({
       next: (_) => {
         this.accounts = this.accounts.filter(account => account.id !== this.selectedAccount.id);
+        this.searchTerm = '';
         this.onSearch();
         this.toastService.showSuccess('Xóa tài khoản thành công');
         this.closeForm();

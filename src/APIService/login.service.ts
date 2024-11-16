@@ -10,7 +10,7 @@ import { throwError } from 'rxjs';
 export class AuthService {
   private authUrl = 'http://localhost:8080/api/v1/auth/authenticate';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
     return this.http.post(this.authUrl, { username, password }).pipe(
@@ -25,5 +25,7 @@ export class AuthService {
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('refresh_token', refreshToken);
     localStorage.setItem('accountID', accountId);
+
+    console.log('Tokens saved:', { accessToken, refreshToken, accountId });
   }
 }

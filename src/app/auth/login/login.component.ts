@@ -20,7 +20,7 @@ export class LoginComponent {
   password: string = '';
   error: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   handleLogin() {
     this.authService.login(this.username, this.password).subscribe({
@@ -40,8 +40,8 @@ export class LoginComponent {
   }
   isPasswordVisible: boolean = false;
 
-    togglePasswordVisibility() {
-      this.isPasswordVisible = !this.isPasswordVisible;
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }
