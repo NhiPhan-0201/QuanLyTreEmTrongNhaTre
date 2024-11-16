@@ -1,4 +1,4 @@
-<div class="class-management-panel flex flex-col p-5 bg-gray-100 rounded-lg shadow-md mx-auto font-sans">
+<div class="class-management-panel flex flex-col p-5 bg-gray-100 rounded-lg shadow-md mx-auto font-sans min-h-screen">
   <div class="search-bar flex flex-col mb-5">
     <input class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-2" type="text"
       placeholder="Search user..." (input)="onSearch($event)" />
@@ -11,17 +11,17 @@
   <h2 class="text-2xl mb-5 text-gray-800">Thông tin lớp học</h2>
 
   <div class="class-management-table w-full mb-5 bg-white border-collapse rounded-lg overflow-hidden">
-    <ng-container *ngIf="!isLoading; else loadingTemplate">
-      <div class="hidden md:!grid md:grid-cols-7 border-b">
-        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Id</div>
-        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên lớp</div>
-        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên giáo viên</div>
-        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên phòng</div>
-        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Vị trí</div>
-        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Nhóm lớp</div>
-        <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Actions</div>
-      </div>
 
+    <div class="hidden md:!grid md:grid-cols-7 border-b">
+      <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Id</div>
+      <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên lớp</div>
+      <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên giáo viên</div>
+      <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Tên phòng</div>
+      <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Vị trí</div>
+      <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Nhóm lớp</div>
+      <div class="p-3 border border-gray-300 bg-blue-500 text-white font-bold uppercase text-sm">Actions</div>
+    </div>
+    <ng-container *ngIf="!isLoading; else loadingTemplate">
       <!-- Dạng bảng cho màn hình lớn -->
       <div class="hidden md:!grid md:grid-cols-7">
         <ng-container *ngFor="let lop of filtered_list_lop.slice((currentPage-1)*rowPerPage, currentPage * rowPerPage)">

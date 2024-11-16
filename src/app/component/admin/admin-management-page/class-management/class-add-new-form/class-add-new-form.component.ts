@@ -4,14 +4,15 @@ import { Account, NhomLop } from '../../../../../../models';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { validateData } from '../class-management.component';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../../../../service';
+import { QuanLiLopService } from '../../../../../../APIService';
 
 
 @Component({
   selector: 'app-class-add-new-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './class-add-new-form.component.html',
-  styleUrl: './class-add-new-form.component.css'
+  templateUrl: './class-add-new-form.component.html'
 })
 export class ClassAddNewFormComponent {
 
@@ -23,7 +24,7 @@ export class ClassAddNewFormComponent {
   newLopForm!: FormGroup;
   errors: any = {};
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private toastService: ToastService, private quanLiLopService: QuanLiLopService) {
     this.newLopForm = this.fb.group({
       tenLop: [''],
       idGiaoVien: [-1],
@@ -60,10 +61,21 @@ export class ClassAddNewFormComponent {
   }
 
   save() {
+    this.errors = validateData(this.newLopForm);
+
     if (Object.keys(this.errors).length === 0) {
-      if (this.newLopForm.value.idNhomLop === -1) delete this.newLopForm.value.idNhomLop;
-      this.saveLop.emit(this.newLopForm.value);
+      this.quanLiLopService.update(this.newLopForm.value).subscribe({
+        next: (res) => {
+          this.saveLop.emit(res);
+          this.toastService.showSuccess('Cập nhật lớp học thành công');
+          this.close();
+        },
+        error: (err) => {
+          this.toastService.showError('Lỗi khi cập nhật lớp học');
+        }
+      });
     }
+
   }
 
   getKeys(obj: any): string[] {

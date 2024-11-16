@@ -12,8 +12,7 @@ import { catchError, Observable, switchMap } from 'rxjs';
   selector: 'app-account-update-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './account-update-form.component.html',
-  styleUrls: ['./account-update-form.component.css']
+  templateUrl: './account-update-form.component.html'
 })
 export class AccountUpdateFormComponent implements OnChanges {
 

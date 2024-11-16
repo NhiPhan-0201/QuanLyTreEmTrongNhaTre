@@ -20,14 +20,14 @@ export class LoginComponent {
   password: string = '';
   error: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   handleLogin() {
     this.authService.login(this.username, this.password).subscribe({
       next: (response: any) => {
         const { access_token, refresh_token, idAccount } = response;
         this.authService.saveTokens(access_token, refresh_token, idAccount);
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       error: () => {
         this.error = 'Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin.';
@@ -40,8 +40,8 @@ export class LoginComponent {
   }
   isPasswordVisible: boolean = false;
 
-    togglePasswordVisibility() {
-      this.isPasswordVisible = !this.isPasswordVisible;
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

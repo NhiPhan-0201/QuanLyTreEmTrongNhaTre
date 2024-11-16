@@ -13,7 +13,6 @@ import { catchError, Observable, switchMap } from 'rxjs';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './account-add-new-form.component.html',
-  styleUrl: './account-add-new-form.component.css'
 })
 export class AccountAddNewFormComponent {
   newAccountForm: FormGroup;
@@ -43,7 +42,7 @@ export class AccountAddNewFormComponent {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
-      role: [this.ADMIN_ROLE, [Validators.required]],
+      role: [this.PARENT_ROLE, [Validators.required]],
       status: [this.ENABLED_STATUS, [Validators.required]],
       phuHuynh: this.fb.group({
         hoTenCha: '',

@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { ApiResponse } from "../models/ApiResponse.interface";
+import { ApiResponse } from "../../models/ApiResponse.interface";
 
 export interface CRUDService<Type> {
   getAll(): Observable<Type[]>;

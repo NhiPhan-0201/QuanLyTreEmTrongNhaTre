@@ -17,8 +17,7 @@ import { error } from 'console';
   selector: 'app-student-management',
   standalone: true,
   imports: [CommonModule, StudentAddNewFormComponent, StudentUpdateFormComponent, StudentDeleteConfirmationDialogComponent],
-  templateUrl: './student-management.component.html',
-  styleUrl: './student-management.component.css'
+  templateUrl: './student-management.component.html'
 })
 export class StudentManagementComponent implements OnInit {
 
@@ -59,7 +58,6 @@ export class StudentManagementComponent implements OnInit {
         this.loadParents();
       },
       error: (error) => {
-        console.error(error);
         this.toastService.showError('Lỗi khi tải danh sách lớp');
       }
     });
@@ -99,6 +97,7 @@ export class StudentManagementComponent implements OnInit {
         this.mapStudentClasses();
         this.mapStudentParents();
         this.onSearchStudent();
+        console.log(this.students);
         this.isLoading = false;
       },
       error: (err) => {
@@ -121,13 +120,14 @@ export class StudentManagementComponent implements OnInit {
       if (phuHuynhTre) {
         let phuHuynh = this.parents.find((p) => p.phuHuynh?.id === phuHuynhTre.phuHuynh.id);
         s.thongTinPhuHuynh = phuHuynh;
-        s.phuHuynhId = phuHuynh?.id || -1;
+        s.phuHuynhId = phuHuynh?.phuHuynh?.id || -1;
       }
     });
   }
 
   onSearchStudent = (event?: Event) => {
-    if (event?.target) {
+    if (event) {
+      this.currentPage = 1;
       this.searchValue = (event.target as HTMLInputElement).value;
     }
 
@@ -136,8 +136,6 @@ export class StudentManagementComponent implements OnInit {
     });
 
     this.totalPage = Math.ceil(this.filteredStudents.length / this.rowPerPage);
-    if (event)
-      this.currentPage = 1;
   }
 
   handleOpenAddStudentForm() {
@@ -196,7 +194,7 @@ export class StudentManagementComponent implements OnInit {
   }
 }
 
-export function validateData(formGroup: FormGroup, anh: File | null): any {
+export function validateData(formGroup: FormGroup, anh: File | null, oldFileChanged: boolean = false): any {
   let errors: any = {};
 
   if (!formGroup.value.hoTen) {

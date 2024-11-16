@@ -15,8 +15,7 @@ import { ToastService } from '../../../../../service';
   selector: 'app-student-update-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './student-update-form.component.html',
-  styleUrl: './student-update-form.component.css'
+  templateUrl: './student-update-form.component.html'
 })
 export class StudentUpdateFormComponent implements OnChanges {
 
@@ -53,6 +52,22 @@ export class StudentUpdateFormComponent implements OnChanges {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    const studentChange = changes['student'];
+
+    if (studentChange && studentChange.currentValue && this.student) {
+      this.updateStudentForm.patchValue({ ...this.student, classId: this.student.classId || -1 });
+
+      this.oldFileUrl = this.student.anh || '';
+      this.anhHocSinhPreview = this.oldFileUrl === '' ? null : this.oldFileUrl;
+      this.oldFileChanged = false;
+      this.anhHocSinhUploaded = null;
+    }
+
+    this.oldParentAccount = studentChange.currentValue?.thongTinPhuHuynh || null;
+    this.subscribeToFormControls(this.updateStudentForm);
+  }
+
   subscribeToFormControls(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach((key) => {
       const control = formGroup.get(key);
@@ -73,22 +88,6 @@ export class StudentUpdateFormComponent implements OnChanges {
         this.errors = validateData(this.updateStudentForm, this.anhHocSinhUploaded);
       }, 100);
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const studentChange = changes['student'];
-
-    if (studentChange && studentChange.currentValue && this.student) {
-      this.updateStudentForm.patchValue({ ...this.student, classId: this.student.classId || -1 });
-
-      this.oldFileUrl = this.student.anh || '';
-      this.anhHocSinhPreview = this.oldFileUrl === '' ? null : this.oldFileUrl;
-      this.oldFileChanged = false;
-      this.anhHocSinhUploaded = null;
-    }
-
-    this.oldParentAccount = this.parents.find((parent) => parent.phuHuynh?.id === this.updateStudentForm.value.phuHuynhId) || this.parents[0];
-    this.subscribeToFormControls(this.updateStudentForm);
   }
 
 
@@ -117,8 +116,7 @@ export class StudentUpdateFormComponent implements OnChanges {
   }
 
   save() {
-    this.errors = validateData(this.updateStudentForm, this.anhHocSinhUploaded);
-
+    this.errors = validateData(this.updateStudentForm, this.anhHocSinhUploaded, this.oldFileChanged);
     if (Object.keys(this.errors).length === 0) {
       let uploadObservable: Observable<ThongTinTre>;
 
@@ -154,7 +152,14 @@ export class StudentUpdateFormComponent implements OnChanges {
           this.toastService.showError('Lỗi khi cập nhật thông tin học sinh');
         }
       });
+    } else {
+      this.toastService.showError('Vui lòng kiểm tra lại thông tin');
+      console.log(this.errors);
     }
+  }
+
+  parseInt(value: any): number {
+    return parseInt(value);
   }
 
   onSearchParent(event: Event) {

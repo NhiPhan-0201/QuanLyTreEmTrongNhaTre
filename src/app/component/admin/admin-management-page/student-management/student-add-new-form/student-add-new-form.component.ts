@@ -13,8 +13,7 @@ import { catchError, Observable, switchMap } from 'rxjs';
   selector: 'app-student-add-new-form',
   templateUrl: './student-add-new-form.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
-  styleUrls: ['./student-add-new-form.component.css']
+  imports: [ReactiveFormsModule, FormsModule, CommonModule]
 })
 export class StudentAddNewFormComponent {
   @Input() classes: QuanLiLop[] = [];

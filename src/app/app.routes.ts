@@ -28,7 +28,7 @@ import { GiaovienThongtinhocsinhComponent } from './component/teacher/student-in
 import { QuanLyLopComponent} from './component/teacher/class-management/class-management.component';
 import { QuanLyNhomLopComponent} from './component/teacher/class-group-management/class-group-management.component';
 import { XemThucDonComponent} from './component/teacher/view-meal-menu/view-meal-menu.component';
-import { NotificationsComponent } from './component/teacher/notifications/notifications-page.component';
+import { NotificationsSendPageComponent } from './component/teacher/notifications-send-page/notifications-send-page.component';
 import { TimetablesComponent } from './component/teacher/timetable-management/timetable.component';
 //
 
@@ -47,7 +47,7 @@ import { TeacherInfoComponent } from './component/phuhuynh/teacher-info/teacher-
 export const routes: Routes = [
 
 
-  { path: 'teacher/notifications', component: NotificationsComponent },
+  { path: 'teacher/notifications', component: NotificationsSendPageComponent },
   { path: 'teacher/timetable-management', component: TimetablesComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -65,7 +65,7 @@ export const routes: Routes = [
       { path: 'teacher/class-management', component: QuanLyLopComponent },
       { path: 'teacher/class-group-management', component: QuanLyNhomLopComponent },
       { path: 'teacher/view-meal-menu', component: XemThucDonComponent },
-      { path: 'teacher/notifications', component: NotificationsComponent },
+      { path: 'teacher/notifications', component: NotificationsSendPageComponent },
       { path: 'teacher/timetable-management', component: TimetablesComponent },
       { path: '', redirectTo: 'teacher/student-list', pathMatch: 'full' }  // Đường dẫn mặc định
     ]
@@ -99,7 +99,7 @@ export const routes: Routes = [
       { path: 'school-fee/view-schoolfee', component: ViewSchoolfeeComponent },
       { path: 'xemdanhgiatre', component: XemDanhGiaTreComponent },
       { path: 'xemthucdon', component: PHXemThucDonComponent },
-
     ]
-  }
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

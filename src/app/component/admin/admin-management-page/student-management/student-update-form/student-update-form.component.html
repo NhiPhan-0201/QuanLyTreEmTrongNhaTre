@@ -1,5 +1,5 @@
 <div
-  class="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto overflow-y-auto h-auto max-h-[700px] transition-all duration-300 ease-in-out hover:shadow-2xl">
+  class="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto overflow-y-auto scrollbar-hide h-auto max-h-[700px] transition-all duration-300 ease-in-out hover:shadow-2xl">
   <h3 class="text-2xl font-semibold mb-6 text-center hover:text-green-500 transition-colors duration-200 ease-in-out">
     Chỉnh sửa thông tin học sinh
   </h3>
@@ -78,6 +78,7 @@
                   <td class="p-2 text-center">{{oldParentAccount.phuHuynh?.hoTenCha}}</td>
                   <td class="p-2 text-center">{{oldParentAccount.phuHuynh?.hoTenMe}}</td>
                 </tr>
+
               </tbody>
             </table>
           </div>
@@ -85,14 +86,6 @@
             <label class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Chọn phụ huynh
               mới:</label>
             <table class="w-full border-collapse">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th class="p-2 text-center">Username</th>
-                  <th class="p-2 text-center">Họ tên cha</th>
-                  <th class="p-2 text-center">Họ tên mẹ</th>
-                </tr>
-              </thead>
               <tbody>
                 <tr *ngFor="let account of filteredParents">
                   <ng-container *ngIf="account">

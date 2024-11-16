@@ -22,6 +22,7 @@ export class AdminManagementPageComponent implements OnInit {
       { name: 'Quản lý học phí', path: 'schoolFee' },
       { name: 'Báo cáo thống kê', path: 'report' }
     ];
+    this.sideBarItems.push({ name: 'Trở về trang chủ', path: '/home' });
   }
 
   refreshActiveItem = () => {
