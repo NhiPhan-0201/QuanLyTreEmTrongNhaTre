@@ -128,16 +128,7 @@ export class ClassManagementComponent implements OnInit {
     this.openUpdateLopForm = true;
   }
   handleUpdateLop(updatedLop: QuanLiLop) {
-    this.classService.update(updatedLop).subscribe({
-      next: (res) => {
-        this.list_lop = this.list_lop.map(lop => lop.id === res.id ? res : lop);
-        this.onSearch();
-        this.closeForm();
-      },
-      error: (error) => {
-        console.error('Error updating lop:', error);
-      }
-    });
+
   }
 
   handleOpenDeleteLopConfirmation(lop: QuanLiLop) {

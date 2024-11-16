@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { CommonModule } from '@angular/common';
 import { validateData } from '../class-management.component';
 import { Account, NhomLop, QuanLiLop } from '../../../../../../models';
+import { QuanLiLopService } from '../../../../../../APIService';
+import { ToastService } from '../../../../../service';
 
 @Component({
   selector: 'app-class-update-form',
@@ -21,7 +23,7 @@ export class ClassUpdateFormComponent implements OnChanges {
   errors: any = {};
 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private toastService: ToastService, private quanLiLopService: QuanLiLopService) { }
 
   ngOnChanges() {
     this.updateLopForm = this.fb.group({
@@ -60,9 +62,19 @@ export class ClassUpdateFormComponent implements OnChanges {
   }
 
   save() {
+    this.errors = validateData(this.updateLopForm);
+
     if (Object.keys(this.errors).length === 0) {
-      if (this.updateLopForm.value.idNhomLop === -1) delete this.updateLopForm.value.idNhomLop;
-      this.saveLop.emit(this.updateLopForm.value);
+      this.quanLiLopService.update(this.updateLopForm.value).subscribe({
+        next: (res) => {
+          this.saveLop.emit(res);
+          this.toastService.showSuccess('Cập nhật lớp học thành công');
+          this.close();
+        },
+        error: (err) => {
+          this.toastService.showError('Lỗi khi cập nhật lớp học');
+        }
+      });
     }
   }
 
