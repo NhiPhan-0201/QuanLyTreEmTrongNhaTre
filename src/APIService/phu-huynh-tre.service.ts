@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { } from '../models';
 import { CRUDService } from './interfaces/CRUD.service.interface';
-import { access_token } from '../constants/test_api';
 import AutoRevokeService from './interfaces/auto-revoke.service.interface';
 
 @Injectable({
