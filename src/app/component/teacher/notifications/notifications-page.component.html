@@ -1,0 +1,60 @@
+<div class="notification-container">
+  <div class="header">
+    <h2>Thông báo</h2>
+    <button class="send-btn" (click)="toggleSendNotificationMode()">Gửi thông báo mới</button>
+  </div>
+
+  <div class="main-content">
+    <div class="sidebar">
+      <ul>
+        <li [class.active]="activeMenu === 'all'" (click)="selectMenu('all')">Tất cả thông báo đã gửi</li>
+        <li [class.active]="activeMenu === 'classList'" (click)="selectMenu('classList')">Danh sách Lớp</li>
+      </ul>
+    </div>
+
+    <div class="notification-list">
+      <div *ngIf="isSendingNotification">
+        <input type="text" [(ngModel)]="newNotification.tieuDe" placeholder="Tiêu đề" required />
+        <textarea [(ngModel)]="newNotification.noiDung" placeholder="Nội dung" required></textarea>
+
+        <h4>Chọn lớp gửi thông báo:</h4>
+        <div *ngFor="let class of classes">
+          <input type="checkbox" [(ngModel)]="class.checked" /> {{ class.name }}
+        </div>
+
+        <button (click)="sendNotification()">Gửi</button>
+        <button (click)="cancelSend()">Hủy</button>
+      </div>
+
+      <div *ngIf="!isSendingNotification">
+        <div class="search-bar">
+          <input type="text" [(ngModel)]="searchQuery" placeholder="Tìm kiếm..." />
+          <button class="search-btn" (click)="searchNotifications()"><i class="fa fa-search"></i></button>
+        </div>
+        
+        <ul *ngIf="activeMenu === 'all'">
+          <li *ngFor="let notification of notifications">
+            <input type="checkbox" />
+            <span>Đến: (Phụ huynh lớp {{notification.quanLiLop?.tenLop}}) ({{ notification.tieuDe }})</span>
+          </li>
+        </ul>
+
+        <div *ngIf="activeMenu === 'classList'" class="class-list">
+          <h4>Danh sách Lớp</h4>
+          <ul>
+            <li *ngFor="let class of classes">
+              <span>{{ class.name }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Phân trang -->
+        <div class="pagination" *ngIf="activeMenu === 'all'">
+          <button (click)="previousPage()" [disabled]="currentPage === 1">Trước</button>
+          <span>Trang {{ currentPage }} trên {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages">Sau</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

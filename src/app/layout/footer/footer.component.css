@@ -1,0 +1,13 @@
+footer {
+  background-color: #FFE5CC;
+  color: #333;
+  font-size: 1em;
+}
+
+footer i {
+  color: #FF6F61;
+}
+
+footer a:hover {
+  color: #FF6F61;
+}

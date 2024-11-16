@@ -1,0 +1,88 @@
+<div class="student-add-new-form bg-white p-5 rounded-lg shadow-lg mx-auto overflow-y-auto max-h-[700px]">
+  <h3 class="text-xl font-semibold">Edit User</h3>
+  <form [formGroup]="newStudentForm" id="student-add-new-form" class="flex flex-col h-[90%] p-4 w-full">
+    <div class="form-row flex justify-center">
+      <div class="thong-tin-student form-col flex flex-col w-[20dvw] mr-8">
+        <h3 class="text-lg font-semibold">Học sinh mới</h3>
+
+        <label for="hoTen" class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Họ tên:</label>
+        <input type="text" id="hoTen" formControlName="hoTen"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500 transition-all duration-300 ease-in-out hover:scale-105 focus:scale-105">
+        <p *ngIf="errors?.hoTen" class="error-message text-red-600 text-sm font-bold mb-2">{{errors?.hoTen}}</p>
+
+        <label for="gioiTinh" class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Giới
+          tính:</label>
+        <select id="gioiTinh"
+          class="gioiTinh p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500 transition-all duration-300 ease-in-out hover:scale-105 focus:scale-105"
+          formControlName="gioiTinh">
+          <option [value]="FEMALE_GENDER">Nữ</option>
+          <option [value]="MALE_GENDER">Nam</option>
+        </select>
+        <p *ngIf="errors?.gioiTinh" class="error-message text-red-600 text-sm font-bold mb-2">{{errors?.gioiTinh}}</p>
+
+        <label for="ngaySinh" class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Ngày
+          sinh:</label>
+        <input type="date" id="ngaySinh" formControlName="ngaySinh"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500 transition-all duration-300 ease-in-out hover:scale-105 focus:scale-105">
+        <p *ngIf="errors?.ngaySinh" class="error-message text-red-600 text-sm font-bold mb-2">{{errors?.ngaySinh}}</p>
+
+        <label for="anh" class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Ảnh:</label>
+        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)"
+          accept="image/png, image/jpeg, image/gif, image/jpg, image/webp, image/svg, image/itif"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500 transition-all duration-300 ease-in-out hover:scale-105 focus:scale-105" />
+        <img [src]="anhHocSinhPreview" *ngIf="anhHocSinhPreview" class="max-w-full h-48 object-contain" />
+        <p *ngIf="errors?.anh" class="error-message text-red-600 text-sm font-bold mb-2">{{errors?.anh}}</p>
+
+        <label for="classId" class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Lớp:</label>
+        <select id="classId" formControlName="classId"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500 transition-all duration-300 ease-in-out hover:scale-105 focus:scale-105">
+          <option *ngFor="let classes of classes" [value]="classes.id">{{classes.tenLop}}</option>
+        </select>
+        <p *ngIf="errors?.classId" class="error-message text-red-600 text-sm font-bold mb-2">{{errors?.classId}}</p>
+      </div>
+
+      <div class="form-2-col flex flex-col w-[30dvw]">
+        <label for="searchParent" class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Tìm kiếm
+          phụ huynh:</label>
+        <input type="text" id="searchParent" (input)="onSearchParent($event)"
+          placeholder=" Nhập tên cha, tên mẹ hoặc tên tài khoản"
+          class="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-green-500 transition-all duration-300 ease-in-out hover:scale-105 focus:scale-105" />
+
+        <div class="search-results flex flex-col justify-center items-center mt-5" *ngIf="filteredParents.length > 0">
+          <label class="mb-2 hover:text-green-500 transition-colors duration-200 ease-in-out">Chọn phụ huynh:</label>
+          <table class="w-full border-collapse">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="p-2 text-center">Username</th>
+                <th class="p-2 text-center">Họ tên cha</th>
+                <th class="p-2 text-center">Họ tên mẹ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of filteredParents">
+                <ng-container *ngIf="account">
+                  <td class="p-2 text-center"><input type="radio" [value]="account.phuHuynh?.id"
+                      formControlName="phuHuynhId"></td>
+                  <td class="p-2 text-center">{{account.username}}</td>
+                  <td class="p-2 text-center">{{account.phuHuynh?.hoTenCha}}</td>
+                  <td class="p-2 text-center">{{account.phuHuynh?.hoTenMe}}</td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p *ngIf="errors?.phuHuynhId" class="error-message text-red-600 text-sm font-bold mb-2">{{errors?.phuHuynhId}}
+        </p>
+      </div>
+    </div>
+    <div class="form-actions flex justify-between mt-5">
+      <button type="button"
+        class="confirm-button bg-green-500 text-gray-800 rounded px-6 py-2 hover:scale-105 focus:scale-105 transition-all duration-300 ease-in-out"
+        (click)="save()">Lưu</button>
+      <button type="button"
+        class="cancel-button bg-gray-700 text-white rounded px-6 py-2 hover:scale-105 focus:scale-105 transition-all duration-300 ease-in-out"
+        (click)="close()">Hủy</button>
+    </div>
+  </form>
+</div>

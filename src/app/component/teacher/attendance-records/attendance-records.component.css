@@ -1,0 +1,51 @@
+.attendance-container {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .header label {
+    margin-right: 5px;
+  }
+  
+  .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .attendance-table th,
+  .attendance-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+  }
+  
+  .attendance-table th {
+    background-color: #d6e87a;
+    font-weight: bold;
+  }
+  
+  .attendance-table td input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  
+  .attendance-table tr:hover {
+    background-color: #f2f2f2;
+  }
+
+  .student-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .student-link:hover {
+    color: darkblue;
+    text-decoration: underline;
+  }

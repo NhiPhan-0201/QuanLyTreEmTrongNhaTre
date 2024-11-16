@@ -1,0 +1,28 @@
+<div class="timetable-container">
+    <h2>Thời Khóa Biểu</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ngày</th>
+          <th>Lớp</th>
+          <th>Hoạt Động</th>
+          <th>Thời Gian Bắt Đầu</th>
+          <th>Thời Gian Kết Thúc</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of thoiKhoaBieuList">
+          <td>{{ item.ngay | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ item.quanLiLop?.tenLop }}</td>
+          <td>{{ item.hoatDong }}</td>
+          <td>{{ item.thoiGianBatDau | date: 'shortTime' }}</td>
+          <td>{{ item.thoiGianKetThuc | date: 'shortTime' }}</td>
+          <td>
+            <button (click)="editTimetable(item)">Chỉnh Sửa</button>
+            <button class="delete-btn" (click)="deleteTimetable(item.id)">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,14 @@
+<div class="flex flex-col items-center justify-center h-full w-full bg-white text-gray-800 p-6 rounded-lg shadow-lg">
+  <div class="text-center mb-4">
+    <h1 class="text-xl font-bold mb-2">Bạn có chắc chắn muốn xóa tài khoản này?</h1>
+    <p class="text-sm text-gray-600">Việc xóa tài khoản sẽ không thể khôi phục lại được.</p>
+  </div>
+  <div class="flex justify-end w-full space-x-4">
+    <button
+      class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none hover:scale-125 transition-transform duration-300 ease-in-out"
+      (click)="delete()">Xóa</button>
+    <button
+      class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none hover:scale-125 transition-transform duration-300 ease-in-out"
+      (click)="close()">Hủy</button>
+  </div>
+</div>

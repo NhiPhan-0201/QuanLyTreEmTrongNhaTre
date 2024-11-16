@@ -1,0 +1,91 @@
+<div class="attendance-container">
+  <div class="header">Quản lý học sinh</div>
+
+  <div class="content">
+    <div class="menu-container">
+      <button class="menu-item" (click)="navigateTo('/phuhuynh/feedback')">Ý kiến</button>
+      <button class="menu-item" (click)="navigateTo('/phuhuynh/school-fee/view')">Xem học phí</button>
+      <button class="menu-item" (click)="navigateTo('/phuhuynh/school-fee/pay')">Thanh toán</button>
+      <button class="menu-item" (click)="navigateTo('/phuhuynh/roll-call')">Điểm danh</button>
+    </div>
+
+    <div class="attendance-details">
+      <div class="details-header">Lịch tháng 9</div>
+      <div class="student-info"><strong>HỌC SINH: NGUYỄN VĂN A</strong></div>
+
+      <div class="attendance-table">
+        <table>
+          <thead>
+            <tr>
+              <th>T2</th>
+              <th>T3</th>
+              <th>T4</th>
+              <th>T5</th>
+              <th>T6</th>
+              <th>T7</th>
+              <th>CN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Tuần 1 -->
+            <tr>
+              <td>1/9/2024</td><td>2/9/2024</td><td>3/9/2024</td><td>4/9/2024</td><td>5/9/2024</td><td></td><td></td>
+            </tr>
+            <!-- Tuần 2 -->
+            <tr>
+              <td>8/9/2024</td><td>9/9/2024</td><td>10/9/2024</td><td>11/9/2024</td><td>12/9/2024</td><td></td><td></td>
+            </tr>
+            <!-- Tuần 3 -->
+            <tr>
+              <td>15/9/2024</td><td>16/9/2024</td><td>17/9/2024 <div>{{ getStatusText('2024-09-17') }}</div></td><td>18/9/2024 <div>{{ getStatusText('2024-09-18') }}</div></td><td>19/9/2024 <div>{{ getStatusText('2024-09-19') }}</div></td><td></td><td></td>
+            </tr>
+            <!-- Tuần 4 -->
+            <tr>
+              <td>22/9/2024</td><td>23/9/2024</td><td>24/9/2024</td><td>25/9/2024</td><td>26/9/2024</td><td></td><td></td>
+            </tr>
+            <!-- Tuần 5 -->
+            <tr>
+              <td>29/9/2024</td><td>30/9/2024</td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button class="register-button" (click)="openRegisterForm()">Đăng ký nghỉ</button>
+</div>
+
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Đăng Ký Nghỉ</h2>
+    <form>
+      <div class="form-group">
+        <label>Họ</label>
+        <input type="text" [(ngModel)]="firstName" name="firstName" required />
+      </div>
+      <div class="form-group">
+        <label>Tên</label>
+        <input type="text" [(ngModel)]="lastName" name="lastName" required />
+      </div>
+      <div class="form-group">
+        <label>Giới tính</label>
+        <select [(ngModel)]="gender" name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Lí do</label>
+        <input type="text" [(ngModel)]="reason" name="reason" required />
+      </div>
+      <div class="form-group">
+        <label>Ngày</label>
+        <input type="date" [(ngModel)]="date" name="date" required />
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="confirm-button" (click)="submitForm()">Confirm</button>
+        <button type="button" class="cancel-button" (click)="closeRegisterForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

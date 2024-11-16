@@ -1,0 +1,123 @@
+<div class="student-management-panel flex flex-col p-5 bg-gray-100 rounded-lg shadow-lg mx-auto font-sans">
+  <h2 class="text-2xl font-semibold mb-5 text-gray-800">Quản lý thông tin trẻ</h2>
+
+  <div class="search-bar flex flex-wrap justify-between mb-5">
+    <input
+      class="w-full md:w-2/3 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-3 md:mb-0 hover:shadow-lg transition-shadow"
+      type="text" placeholder="Tìm kiếm theo tên..." (input)="onSearchStudent($event)" />
+    <div class="actions flex justify-end w-full md:w-1/3">
+      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105"
+        (click)="handleOpenAddStudentForm()">
+        Thêm học sinh mới
+      </button>
+    </div>
+  </div>
+
+  <!-- Hiển thị bảng trên màn hình lớn -->
+  <div class="hidden md:!block">
+    <table class="student-management-table w-full mb-5 border-collapse bg-white rounded-lg overflow-hidden">
+      <thead>
+        <tr class="bg-blue-500 text-white uppercase text-sm font-semibold">
+          <th class="text-center px-3 py-2">Họ và tên</th>
+          <th class="text-center px-3 py-2">Ngày sinh</th>
+          <th class="text-center px-3 py-2">Giới tính</th>
+          <th class="text-center px-3 py-2">Lớp</th>
+          <th class="text-center px-3 py-2">Ảnh</th>
+          <th class="text-center px-3 py-2">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="!isLoading; else loadingHocSinhTemplate">
+          <tr *ngFor="let student of filteredStudents.slice((currentPage - 1) * rowPerPage, currentPage * rowPerPage)"
+            class="odd:bg-white even:bg-gray-50 border-b transition-colors hover:bg-gray-200 duration-500">
+            <td class="text-center px-3 py-2 border">{{ student.hoTen }}</td>
+            <td class="text-center px-3 py-2 border">{{ student.ngaySinh }}</td>
+            <td class="text-center px-3 py-2 border">{{ student.gioiTinh }}</td>
+            <td class="text-center px-3 py-2 border">{{ student.quanLiLop?.tenLop || 'Chưa có lớp' }}</td>
+            <td class="text-center px-3 py-2 border">
+              <div class="image-container w-24 h-24 mx-auto hover:scale-[1.4] hover:z-10 transform duration-300">
+                <img class="w-full h-full object-cover rounded" [src]="student.anh" alt="avatar" />
+              </div>
+            </td>
+            <td class="px-3 py-2 border text-center">
+              <button
+                class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition-transform duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                (click)="handleOpenUpdateStudentForm(student)">Edit</button>
+              <span class="mx-2">|</span>
+              <button
+                class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition-transform duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                (click)="handleOpenDeleteStudentConfirmation(student)">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Hiển thị dạng stacked trên màn hình nhỏ -->
+  <div class="md:hidden">
+    <ng-container
+      *ngFor="let student of filteredStudents.slice((currentPage - 1) * rowPerPage, currentPage * rowPerPage)">
+      <div class="block bg-white rounded-lg p-4 shadow mb-4 transition-transform hover:shadow-lg hover:scale-105">
+        <div class="font-semibold">{{ student.hoTen }}</div>
+        <div>Ngày sinh: {{ student.ngaySinh }}</div>
+        <div>Giới tính: {{ student.gioiTinh }}</div>
+        <div>Lớp: {{ student.quanLiLop?.tenLop || 'Chưa có lớp' }}</div>
+        <div class="image-container w-24 h-24 mx-auto">
+          <img class="w-full h-full object-cover rounded" [src]="student.anh" alt="avatar" />
+        </div>
+        <div class="mt-2">
+          <button class="text-blue-500 hover:underline hover:scale-105 transition-transform"
+            (click)="handleOpenUpdateStudentForm(student)">Edit</button>
+          <span class="mx-2">|</span>
+          <button class="text-red-500 hover:underline hover:scale-105 transition-transform"
+            (click)="handleOpenDeleteStudentConfirmation(student)">Delete</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="page-navigator flex justify-between items-center mt-5">
+    <button
+      class="prev bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors hover:scale-105"
+      [disabled]="currentPage === 1" (click)="handlePageChange(currentPage - 1)">
+      Prev
+    </button>
+    <span class="text-gray-800 text-lg">{{ currentPage }}/{{ totalPage }}</span>
+    <button
+      class="next bg-blue-500 text-white py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors hover:scale-105"
+      [disabled]="currentPage >= totalPage" (click)="handlePageChange(currentPage + 1)">
+      Next
+    </button>
+  </div>
+
+  <!-- Loading Template -->
+  <ng-template #loadingHocSinhTemplate>
+    <tr>
+      <td colspan="6" class="p-5">
+        <div class="loading-container flex justify-center items-center">
+          <div class="loading w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <!-- Overlay Components -->
+  <div *ngIf="openAddStudentForm"
+    class="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <app-student-add-new-form (closeForm)="closeForm()" (saveStudent)="handleSaveNewStudent($event)" [classes]="classes"
+      [parents]="parents"></app-student-add-new-form>
+  </div>
+
+  <div *ngIf="openUpdateStudentForm"
+    class="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <app-student-update-form [student]="selectedStudent" (closeForm)="closeForm()"
+      (updateStudent)="handleUpdateStudent($event)" [classes]="classes" [parents]="parents"></app-student-update-form>
+  </div>
+
+  <div *ngIf="openDeleteConfirmationDialog"
+    class="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <app-student-delete-confirmation-dialog (closeDialog)="closeForm()"
+      (deleteStudent)="handleDeleteStudent()"></app-student-delete-confirmation-dialog>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { ThongTinTre } from "./ThongTinTre";
+import { ThongTinTre } from ".";
 
 export interface XinNghi {
   id: number;

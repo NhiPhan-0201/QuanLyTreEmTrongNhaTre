@@ -1,0 +1,60 @@
+<div class="attendance-container">
+  <div class="header">
+    <label>Chọn lớp:</label>
+    <select [(ngModel)]="selectedClassId" (change)="onClassChange()">
+      <option *ngFor="let lop of classList" [value]="lop.classId">
+        {{ lop.tenLop || 'Lớp ' + lop.classId }}
+      </option>
+    </select>
+  </div>
+
+  <table class="attendance-table">
+    <thead>
+      <tr>
+        <th>Tên học sinh</th>
+        <th>Ngày sinh</th>
+        <th>Giới tính</th>
+        <th>Đi học</th>
+        <th>Nghỉ phép</th>
+        <th>Vắng</th>
+        <th>Đi trễ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hs of hocSinhList">
+        <!-- Thêm thẻ <a> để trông giống như một liên kết -->
+        <td><a href="javascript:void(0)" (click)="onStudentClick(hs)" class="student-link">{{ hs.hoTen }}</a></td>
+        <td>{{ hs.ngaySinh | date: 'dd-MM-yyyy' }}</td>
+        <td>{{ hs.gioiTinh }}</td>
+        <td>
+          <input
+            type="checkbox"
+            (change)="updateTrangThai(hs, 'CoMat')"
+            [checked]="hs.trangThai === 'CoMat'"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            (change)="updateTrangThai(hs, 'VangCoPhep')"
+            [checked]="hs.trangThai === 'VangCoPhep'"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            (change)="updateTrangThai(hs, 'VangKhongPhep')"
+            [checked]="hs.trangThai === 'VangKhongPhep'"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            (change)="updateTrangThai(hs, 'DiTre')"
+            [checked]="hs.trangThai === 'DiTre'"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,28 @@
+<div class="fixed top-2 right-2 transform transition-all duration-300" *ngIf="isVisible" [ngClass]="{
+    'animate-rightFadeIn': appearing,
+    'animate-rightFadeOut': !appearing,
+  }">
+  <div class="flex pl-8 w-80 border-l-4 p-4 pt-6 items-center" [ngClass]="{
+    'bg-green-100 border-green-500': type === 'success',
+    'bg-red-100 border-red-500': type === 'error',
+    'bg-yellow-100 border-yellow-500': type === 'warning',
+    'bg-blue-100 border-blue-500': type === 'info'
+  }">
+    <div class="w-6 h-6 rounded-full flex items-center justify-center border-2 border-opacity-50" [ngClass]="{
+        'bg-green-500': type === 'success',
+        'bg-red-500': type === 'error',
+        'bg-yellow-500': type === 'warning',
+        'bg-blue-500': type === 'info'
+      }">
+      <i [ngClass]="getIcons(type)"></i>
+    </div>
+    <div class="flex flex-col pl-4">
+      <h4 class="font-bold">{{ titles[type] }}</h4>
+      <p>{{ message }}</p>
+    </div>
+    <button (click)="closeToast()"
+      class="absolute top-0 right-0 text-inherit font-bold hover:bg-opacity-25 rounded-lg px-2 py-1">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

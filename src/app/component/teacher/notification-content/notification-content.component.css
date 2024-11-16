@@ -1,0 +1,73 @@
+/* Chiếm toàn bộ chiều rộng cột bên phải */
+.chi-tiet-thong-bao-container {
+    width: calc(100% - 40px); 
+    padding: 20px;
+    background-color: #f8d7da;
+    border-left: 3px solid #dc3545;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box; 
+    position: relative; 
+}
+
+/* Tiêu đề chính */
+.chi-tiet-thong-bao-container h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #dc3545;
+    padding: 10px;
+    margin: 0 0 20px 0;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Tiêu đề thông báo */
+.thong-bao-title {
+    font-size: 18px;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.thong-bao-title:hover {
+    text-decoration: underline;
+}
+
+/* Loại thông báo */
+.thong-bao-date {
+    font-size: 14px;
+    color: #6c757d;
+    margin-left: 10px;
+    font-style: italic;
+}
+
+/* Nội dung thông báo */
+.thong-bao-content {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    padding: 10px 0;
+}
+
+/* Nút Trở về */
+.view-other-notices {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #20c997;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.view-other-notices:hover {
+    background-color: #17a2b8;
+}

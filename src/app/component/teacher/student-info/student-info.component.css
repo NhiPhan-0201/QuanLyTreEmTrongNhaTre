@@ -1,0 +1,132 @@
+/* Container tổng của thông tin học sinh */
+.thongtin-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0; /* Loại bỏ margin để đẩy sát góc trên trái */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+/* Phần nội dung thông tin */
+.thongtin-content {
+    flex: 1;
+}
+
+/* Tiêu đề chính */
+.thongtin-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left; /* Căn trái tiêu đề */
+}
+
+/* Đặt chung cho các hàng thông tin */
+.thongtin-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Đặt chung cho các nhãn (label) */
+.thongtin-label {
+    width: 150px;
+    font-weight: bold;
+    color: #555;
+    text-align: left; /* Căn trái nhãn */
+}
+
+/* Đặt chung cho các giá trị hiển thị thông tin */
+.thongtin-value {
+    flex: 1;
+    background-color: #ddd;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: #333;
+    text-align: left; /* Căn trái giá trị */
+}
+
+.thongtin-address {
+    flex: 1; /* Sử dụng flex: 1 để chiếm toàn bộ chiều rộng */
+    background-color: #ddd;
+    padding: 12px;
+    border-radius: 5px;
+    color: #333;
+    font-size: 0.9em;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    min-height: 60px; /* Đảm bảo có chiều cao để hiển thị đầy đủ địa chỉ */
+}
+
+/* Nhóm thông tin với SĐT */
+.thongtin-row.double-info {
+    display: flex;
+    align-items: center;
+}
+
+/* Phần họ tên cha/mẹ */
+.thongtin-name {
+    flex: 2.5; /* Chiều rộng cho phần họ tên cha/mẹ */
+    background-color: #ddd;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: #333;
+    text-align: left;
+    margin-right: 10px; /* Khoảng cách giữa họ tên và SĐT */
+}
+
+/* Phần chữ "SĐT:" */
+.thongtin-sdt-label {
+    margin-right: 10px; /* Khoảng cách giữa "SĐT:" và số điện thoại */
+    font-weight: bold;
+}
+
+/* Phần SĐT */
+.thongtin-phone {
+    flex: 1; /* Chiều rộng cho SĐT */
+    background-color: #ddd;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: #333;
+    text-align: left;
+}
+
+/* Ảnh đại diện */
+.thongtin-avatar {
+    width: 120px; /* Tăng kích thước ảnh */
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Nút trở về */
+.thongtin-back-button {
+    display: inline-block;
+    padding: 10px 20px; /* kích thước nút */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em; /* kích thước chữ */
+    text-align: center;
+    text-decoration: none;
+    position: absolute;
+    right: 10px; /* Dịch nút sang phải */
+    bottom: 10px; /* Dịch nút xuống phía dưới */
+}
+
+.thongtin-back-button:hover {
+    background-color: #0056b3;
+}
+
+/* Đảm bảo container có vị trí tương đối để căn chỉnh nút */
+.thongtin-container {
+    position: relative;
+}

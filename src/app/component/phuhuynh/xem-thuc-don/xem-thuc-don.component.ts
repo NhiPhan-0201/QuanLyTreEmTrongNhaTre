@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './xem-thuc-don.component.html',
   styleUrl: './xem-thuc-don.component.css'
 })
-export class XemThucDonComponent implements OnInit {
+export class PHXemThucDonComponent implements OnInit {
   menuData: any[] = [];
   selectedDate: string = '';
 
@@ -24,30 +24,30 @@ export class XemThucDonComponent implements OnInit {
     .subscribe((data) => {
       this.menuData = data;
     });
-    // this.menuData = [
-    //   {
-    //     "id": 1,
-    //     "menuDate": [2024, 9, 19],
-    //     "sang": "Cháo gà, Bánh mì kẹp, Trứng ốp la",
-    //     "trua": "Súp rau củ, Cơm chiên, Gà xào nấm",
-    //     "chieu": "Sữa chua, Trái cây, Bánh flan",
-    //     "nhomLop": {
-    //       "id": 1,
-    //       "tenNhom": "Cơm nát"
-    //     }
-    //   },
-    //   {
-    //     "id": 2,
-    //     "menuDate": [2024, 9, 20],
-    //     "sang": null,
-    //     "trua": "Canh bí đỏ, Cơm trắng, Cá kho tộ",
-    //     "chieu": "Nước ép táo, Sinh tố dưa hấu, Sữa đậu nành",
-    //     "nhomLop": {
-    //       "id": 1,
-    //       "tenNhom": "Cơm nát"
-    //     }
-    //   }
-    // ];
+    this.menuData = [
+      {
+        "id": 1,
+        "menuDate": [2024, 9, 19],
+        "sang": "Cháo gà, Bánh mì kẹp, Trứng ốp la",
+        "trua": "Súp rau củ, Cơm chiên, Gà xào nấm",
+        "chieu": "Sữa chua, Trái cây, Bánh flan",
+        "nhomLop": {
+          "id": 1,
+          "tenNhom": "Cơm nát"
+        }
+      },
+      {
+        "id": 2,
+        "menuDate": [2024, 9, 20],
+        "sang": null,
+        "trua": "Canh bí đỏ, Cơm trắng, Cá kho tộ",
+        "chieu": "Nước ép táo, Sinh tố dưa hấu, Sữa đậu nành",
+        "nhomLop": {
+          "id": 1,
+          "tenNhom": "Cơm nát"
+        }
+      }
+    ];
   }
 
   filterByDate(): void {

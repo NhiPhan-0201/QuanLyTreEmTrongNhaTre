@@ -1,5 +1,4 @@
-import { NhomLop } from "./NhomLop";
-import { ThongTinGiaoVien } from "./ThongTinGiaoVien";
+import { NhomLop, ThongTinGiaoVien } from ".";
 
 export interface QuanLiLop {
   id: number;

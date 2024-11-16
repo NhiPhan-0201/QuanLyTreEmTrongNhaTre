@@ -1,0 +1,10 @@
+<div class="thong-bao-container">
+    <h2 class="thong-bao-header">Danh sách thông báo:</h2>
+    <div class="thong-bao-list">
+        <a *ngFor="let thongBao of thongBaoList; let i = index" 
+           (click)="viewThongBao(thongBao.uniqueId)"
+           class="thong-bao-item">
+            {{ i + 1 }}. {{ thongBao.tieuDe }}. ({{thongBao.loaiThongBao}})
+        </a>
+    </div>
+</div>

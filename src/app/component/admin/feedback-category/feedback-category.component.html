@@ -1,0 +1,73 @@
+<div class="feedback-management-panel flex flex-col p-5 bg-gray-100 rounded-lg shadow-lg mx-auto font-sans">
+  <h2 class="text-2xl font-semibold mb-5 text-gray-800">Quản lý Thể loại Ý kiến</h2>
+
+  <!-- Nút để mở form thêm mới -->
+  <div class="search-bar flex flex-wrap justify-between mb-5">
+    <input
+      class="w-full md:w-2/3 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-3 md:mb-0 hover:shadow-lg transition-shadow"
+      type="text" [(ngModel)]="searchQuery" (input)="searchCategories()" placeholder="Tìm kiếm theo tên thể loại">
+    <div class="actions flex justify-end w-full md:w-1/3">
+      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors hover:scale-105"
+        (click)="openAddCategory()">Thêm mới</button>
+    </div>
+  </div>
+  <!-- Bảng hiển thị thể loại -->
+  <div class="w-full mb-5">
+    <table class="w-full border-collapse bg-white rounded-lg overflow-hidden">
+      <thead>
+        <tr class="bg-blue-500 text-white uppercase text-sm font-semibold">
+          <th class="text-center px-3 py-2">ID</th>
+          <th class="text-center px-3 py-2">Tên Thể loại</th>
+          <th class="text-center px-3 py-2">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of filteredCategories"
+          class="odd:bg-white even:bg-gray-50 border-b transition-colors hover:bg-gray-200 duration-500">
+          <td class="text-center px-3 py-2 border">{{ category.id }}</td>
+          <td class="text-center px-3 py-2 border">{{ category.tenTheLoai }}</td>
+          <td class="text-center px-3 py-2 border">
+            <button
+              class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition-transform duration-300 hover:scale-105"
+              (click)="openEditCategory(category)">Sửa</button>
+            <span class="mx-2">|</span>
+            <button
+              class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition-transform duration-300 hover:scale-105"
+              (click)="openDeletePopup(category.id)">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Popup xác nhận xóa -->
+  <div class="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" *ngIf="showPopup">
+    <div class="popup-content bg-white rounded-lg p-6 shadow-lg w-1/3 text-center">
+      <h4 class="text-lg font-semibold mb-4">Xác nhận xóa</h4>
+      <p class="mb-5">Bạn có chắc chắn muốn xóa học phí này không?</p>
+      <button class="bg-blue-500 text-white py-2 px-4 rounded mr-2 hover:bg-blue-700" (click)="confirmDelete()">Xác
+        nhận</button>
+      <button class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700" (click)="cancelDelete()">Hủy</button>
+    </div>
+  </div>
+
+  <!-- Popup cho form thêm/sửa -->
+  <div class="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" *ngIf="showFormPopup">
+    <div class="popup-content bg-white rounded-lg p-6 shadow-lg w-1/3">
+      <h2 class="text-xl font-semibold mb-4">{{ isEditMode ? 'Sửa Thể loại' : 'Thêm Thể loại' }}</h2>
+      <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <div class="form-group">
+          <input id="tenTheLoai" formControlName="tenTheLoai"
+            class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover:shadow-lg transition-shadow"
+            placeholder="Nhập tên thể loại..." required />
+        </div>
+        <div class="flex justify-end space-x-3">
+          <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">{{ isEditMode ? 'Cập
+            nhật' : 'Thêm mới' }}</button>
+          <button type="button" (click)="closeForm()"
+            class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">Hủy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

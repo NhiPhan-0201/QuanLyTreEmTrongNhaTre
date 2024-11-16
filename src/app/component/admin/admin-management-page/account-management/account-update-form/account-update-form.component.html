@@ -1,0 +1,123 @@
+<div
+  class="account-update-form bg-white p-5 rounded-lg shadow-lg max-w-xl mx-auto w-full h-auto max-h-[700px] overflow-y-auto">
+  <h3 class="text-lg font-bold mb-4">Edit User</h3>
+  <form [formGroup]="updateAccountForm" id="account-update-form" class="flex flex-col">
+    <div class="form-row flex justify-center space-x-10">
+      <div class="thong-tin-account form-col flex flex-col w-[45%]">
+        <h3 class="text-md font-semibold mb-4">Account Information</h3>
+        <label for="username" class="mb-2">Username:</label>
+        <input type="text" id="username" formControlName="username"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.username">{{ errors?.username }}</h4>
+
+        <label for="password" class="mb-2">Mật khẩu:</label>
+        <input type="password" id="password" formControlName="password"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.password">{{ errors?.password }}</h4>
+
+        <label for="confirmPassword" class="mb-2">Nhập lại mật khẩu:</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.confirmPassword">{{ errors?.confirmPassword }}
+        </h4>
+
+        <label for="status" class="mb-2">Trạng thái:</label>
+        <select id="status"
+          class="status p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4"
+          formControlName="status">
+          <option [value]="ENABLED_STATUS">Đang sử dụng</option>
+          <option [value]="DISABLED_STATUS">Không còn sử dụng</option>
+        </select>
+
+        <img [src]="anhGiaoVienPreview" *ngIf="anhGiaoVienPreview && updateAccountForm.value.role === TEACHER_ROLE"
+          class="h-48 w-auto object-contain" />
+      </div>
+
+      <div class="thong-tin-phu-huynh form-col flex flex-col w-[45%]" formGroupName="phuHuynh"
+        *ngIf="updateAccountForm.value.role === PARENT_ROLE">
+        <h3 class="text-md font-semibold mb-4">Parent Information</h3>
+        <label for="hoTenCha" class="mb-2">Họ tên cha:</label>
+        <input type="text" id="hoTenCha" formControlName="hoTenCha"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.hoTenCha">{{ errors?.hoTenCha }}</h4>
+
+        <label for="hoTenMe" class="mb-2">Họ tên mẹ:</label>
+        <input type="text" id="hoTenMe" formControlName="hoTenMe"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.hoTenMe">{{ errors?.hoTenMe }}</h4>
+
+        <label for="sdtCha" class="mb-2">Số điện thoại cha:</label>
+        <input type="text" id="sdtCha" formControlName="sdtCha"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.sdtCha">{{ errors?.sdtCha }}</h4>
+
+        <label for="sdtMe" class="mb-2">Số điện thoại mẹ:</label>
+        <input type="text" id="sdtMe" formControlName="sdtMe"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.sdtMe">{{ errors?.sdtMe }}</h4>
+
+        <label for="emailCha" class="mb-2">Email cha:</label>
+        <input type="text" id="emailCha" formControlName="emailCha"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.emailCha">{{ errors?.emailCha }}</h4>
+
+        <label for="emailMe" class="mb-2">Email mẹ:</label>
+        <input type="text" id="emailMe" formControlName="emailMe"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.emailMe">{{ errors?.emailMe }}</h4>
+
+        <label for="diaChi" class="mb-2">Địa chỉ:</label>
+        <input type="text" id="diaChi" formControlName="diaChi"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.diaChi">{{ errors?.diaChi }}</h4>
+      </div>
+
+      <div class="thong-tin-giao-vien form-col flex flex-col w-[45%]" formGroupName="giaoVien"
+        *ngIf="updateAccountForm.value.role === TEACHER_ROLE">
+        <h3 class="text-md font-semibold mb-4">Teacher Information</h3>
+        <label for="hoTen" class="mb-2">Họ tên:</label>
+        <input type="text" id="hoTen" formControlName="hoTen"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.hoTen">{{ errors?.hoTen }}</h4>
+
+        <label for="gioiTinh" class="mb-2">Giới tính:</label>
+        <select id="gioiTinh" class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4"
+          formControlName="gioiTinh">
+          <option [value]="MALE_GENDER">Nam</option>
+          <option [value]="FEMALE_GENDER">Nữ</option>
+        </select>
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.gioiTinh">{{ errors?.gioiTinh }}</h4>
+
+        <label for="soDienThoai" class="mb-2">Số điện thoại:</label>
+        <input type="text" id="soDienThoai" formControlName="soDienThoai"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.soDienThoai">{{ errors?.soDienThoai }}</h4>
+
+        <label for="diaChi" class="mb-2">Địa chỉ:</label>
+        <input type="text" id="diaChi" formControlName="diaChi"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+        <h4 class="text-red-500 text-sm font-bold mb-2" *ngIf="errors?.diaChi">{{ errors?.diaChi }}</h4>
+
+        <label for="anh" class="mb-2">Ảnh:</label>
+        <input id="anh" type="file" #filePicker (change)="onImagePicked($event)"
+          accept="image/png, image/jpeg, image/gif, image/jpg, image/webp, image/svg, image/itif"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-green-500 mb-4" />
+
+        <div class="flex justify-between mb-2">
+          <button type="button" class="bg-gray-300 text-gray-700 rounded px-4 py-2 hover:bg-gray-400"
+            (click)="cancelUploadAnh()" *ngIf="oldFileChanged">Reset</button>
+          <button type="button" class="bg-gray-300 text-gray-700 rounded px-4 py-2 hover:bg-gray-400"
+            (click)="deleteAnh()" *ngIf="anhGiaoVienPreview">Xóa ảnh</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-between mt-8">
+      <button type="submit"
+        class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 focus:outline-none transition-transform duration-200 ease-in-out hover:scale-125 focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 active:scale-95"
+        (click)="save()">Lưu</button>
+      <button type="button"
+        class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 focus:outline-none transition-transform duration-200 ease-in-out hover:scale-125 focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 active:scale-95"
+        (click)="close()">Hủy</button>
+    </div>
+  </form>
+</div>
