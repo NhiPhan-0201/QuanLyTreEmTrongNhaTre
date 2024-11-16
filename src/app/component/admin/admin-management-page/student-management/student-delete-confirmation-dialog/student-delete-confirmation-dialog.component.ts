@@ -4,8 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-student-delete-confirmation-dialog',
   standalone: true,
   imports: [],
-  templateUrl: './student-delete-confirmation-dialog.component.html',
-  styleUrl: './student-delete-confirmation-dialog.component.css'
+  templateUrl: './student-delete-confirmation-dialog.component.html'
 })
 export class StudentDeleteConfirmationDialogComponent {
 

@@ -14,8 +14,7 @@ import { ToastService } from '../../../../service';
   selector: 'app-account-management',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, AccountUpdateFormComponent, AccountAddNewFormComponent, AccountDeleteConfirmationDialogComponent],
-  templateUrl: './account-management.component.html',
-  styleUrls: ['./account-management.component.css']
+  templateUrl: './account-management.component.html'
 })
 export class AccountManagementComponent implements OnInit {
   searchTerm: string = '';

@@ -4,31 +4,31 @@ import { Observable } from 'rxjs';
 import { Account } from '../models/Account';
 import { CRUDService } from './interfaces/CRUD.service.interface';
 import { AccountRole } from '../constants/enums';
-import TokenService from './interfaces/token-service.interface';
+import AutoRevokeService from './interfaces/auto-revoke.service.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService extends TokenService implements CRUDService<Account> {
+export class AccountService extends AutoRevokeService implements CRUDService<Account> {
   private apiUrl = 'http://localhost:8080/api/v1/admin/account';
 
-  constructor(protected http: HttpClient) {
-    super();
+  constructor(private _http: HttpClient) {
+    super(_http);
   }
 
   getParents(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.apiUrl}/parent`, { headers: this.getAuthorization() });
+    return this.http.get<Account[]>(`${this.apiUrl}/parent`);
   }
 
   getTeachers(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.apiUrl}/teacher`, { headers: this.getAuthorization() });
+    return this.http.get<Account[]>(`${this.apiUrl}/teacher`);
   }
   getAll(): Observable<Account[]> {
-    return this.http.get<Account[]>(this.apiUrl, { headers: this.getAuthorization() });
+    return this.http.get<Account[]>(this.apiUrl);
   }
 
   get(id: number): Observable<Account> {
-    return this.http.get<Account>(`${this.apiUrl}/${id}`, { headers: this.getAuthorization() });
+    return this.http.get<Account>(`${this.apiUrl}/${id}`);
   }
 
   add(account: Account): Observable<Account> {
@@ -40,7 +40,7 @@ export class AccountService extends TokenService implements CRUDService<Account>
       ...(account.role === AccountRole.GiaoVien ? { giaoVien: account.giaoVien } : {}),
       ...(account.role === AccountRole.PhuHuynh ? { phuHuynh: account.phuHuynh } : {})
     }
-    return this.http.post<Account>(this.apiUrl, formData, { headers: this.getAuthorization() });
+    return this.http.post<Account>(this.apiUrl, formData);
   }
 
   update(account: Account): Observable<Account> {
@@ -52,10 +52,10 @@ export class AccountService extends TokenService implements CRUDService<Account>
       ...(account.role === AccountRole.GiaoVien ? { giaoVien: account.giaoVien } : {}),
       ...(account.role === AccountRole.PhuHuynh ? { phuHuynh: account.phuHuynh } : {})
     }
-    return this.http.put<Account>(`${this.apiUrl}/${account.id}`, formData, { headers: this.getAuthorization() });
+    return this.http.put<Account>(`${this.apiUrl}/${account.id}`, formData);
   }
 
   delete(id: number): Observable<null | string> {
-    return this.http.delete<null | string>(`${this.apiUrl}/${id}`, { headers: this.getAuthorization() });
+    return this.http.delete<null | string>(`${this.apiUrl}/${id}`);
   }
 }

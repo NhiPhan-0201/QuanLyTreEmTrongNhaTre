@@ -8,13 +8,13 @@ import { ClassUpdateFormComponent } from './class-update-form/class-update-form.
 import { ClassDeleteConfirmationDialogComponent } from './class-delete-confirmation-dialog/class-delete-confirmation-dialog.component';
 import { CommonModule } from '@angular/common';
 import { AccountRole, AccountStatus } from '../../../../../constants/enums';
+import { ToastService } from '../../../../service';
 
 @Component({
   selector: 'app-class-management',
   standalone: true,
   imports: [ClassAddNewFormComponent, ClassUpdateFormComponent, ClassDeleteConfirmationDialogComponent, CommonModule],
-  templateUrl: './class-management.component.html',
-  styleUrl: './class-management.component.css'
+  templateUrl: './class-management.component.html'
 })
 export class ClassManagementComponent implements OnInit {
   searchTerm: string = '';
@@ -34,7 +34,7 @@ export class ClassManagementComponent implements OnInit {
   totalPage: number = 1;
   rowPerPage: number = 5;
 
-  constructor(private classService: QuanLiLopService, private accountService: AccountService, private classGroupService: NhomLopService) { }
+  constructor(private toastService: ToastService, private classService: QuanLiLopService, private accountService: AccountService, private classGroupService: NhomLopService) { }
 
   ngOnInit(): void {
     this.loadListLop();
@@ -49,7 +49,7 @@ export class ClassManagementComponent implements OnInit {
         this.loadGiaoVien();
       },
       error: (error) => {
-        console.error('Lỗi khi tải list_lop:', error);
+        this.toastService.showError('Lỗi khi tải danh sách lớp');
       }
     });
   }
@@ -63,7 +63,7 @@ export class ClassManagementComponent implements OnInit {
         this.loadNhomLop();
       },
       error: (error) => {
-        console.error('Lỗi khi tải list_giaoVienAccount:', error);
+        this.toastService.showError('Lỗi khi tải danh sách giáo viên');
       }
     });
   }
@@ -104,9 +104,8 @@ export class ClassManagementComponent implements OnInit {
 
   onSearch(event?: Event) {
     if (event) {
+      this.currentPage = 1;
       this.searchTerm = (event.target as HTMLInputElement).value;
-    } else {
-      this.searchTerm = '';
     }
 
     this.isLoading = true;
@@ -119,10 +118,6 @@ export class ClassManagementComponent implements OnInit {
     );
 
     this.totalPage = Math.ceil(this.filtered_list_lop.length / this.rowPerPage);
-
-    if (event) {
-      this.currentPage = 1;
-    }
     this.isLoading = false;
   }
 

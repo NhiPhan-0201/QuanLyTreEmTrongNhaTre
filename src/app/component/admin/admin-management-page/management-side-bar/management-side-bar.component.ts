@@ -7,8 +7,7 @@ import { SideBarItem } from '../admin-management-page.component';
   selector: 'app-management-side-bar',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './management-side-bar.component.html',
-  styleUrl: './management-side-bar.component.css'
+  templateUrl: './management-side-bar.component.html'
 })
 export class ManagementSideBarComponent {
 

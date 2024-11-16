@@ -6,23 +6,23 @@ import { ThongTinTre } from '../models/ThongTinTre';
 import { ApiResponse } from '../models/ApiResponse.interface';
 import { access_token } from '../constants/test_api';
 import { Account } from '../models';
-import TokenService from './interfaces/token-service.interface';
+import AutoRevokeService from './interfaces/auto-revoke.service.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class ThongTinTreService extends TokenService implements CRUDService<ThongTinTre> {
+export class ThongTinTreService extends AutoRevokeService implements CRUDService<ThongTinTre> {
   private apiUrl = 'http://localhost:8080/api/v1/admin/children';
 
-  constructor(protected http: HttpClient) {
-    super();
+  constructor(protected _http: HttpClient) {
+    super(_http);
   }
 
   getAll(): Observable<ThongTinTre[]> {
-    return this.http.get<ThongTinTre[]>(this.apiUrl, { headers: this.getAuthorization() });
+    return this.http.get<ThongTinTre[]>(this.apiUrl);
   }
 
   get(id: number): Observable<ThongTinTre> {
-    return this.http.get<ThongTinTre>(`${this.apiUrl}/${id}`, { headers: this.getAuthorization() });
+    return this.http.get<ThongTinTre>(`${this.apiUrl}/${id}`);
   }
 
   add(t: ThongTinTre): Observable<ThongTinTre> {
@@ -34,7 +34,7 @@ export class ThongTinTreService extends TokenService implements CRUDService<Thon
       username: (t.thongTinPhuHuynh as Account).username,
       anh: t.anh
     }
-    return this.http.post<ThongTinTre>(this.apiUrl, formData, { headers: this.getAuthorization() });
+    return this.http.post<ThongTinTre>(this.apiUrl, formData);
   }
 
   update(t: ThongTinTre): Observable<ThongTinTre> {
@@ -46,10 +46,10 @@ export class ThongTinTreService extends TokenService implements CRUDService<Thon
       username: (t.thongTinPhuHuynh as Account).username,
       anh: t.anh
     }
-    return this.http.put<ThongTinTre>(`${this.apiUrl}/${t.id}`, formData, { headers: this.getAuthorization() });
+    return this.http.put<ThongTinTre>(`${this.apiUrl}/${t.id}`, formData);
   }
 
   delete(id: number): Observable<null | string> {
-    return this.http.delete<null | string>(`${this.apiUrl}/${id}`, { headers: this.getAuthorization() });
+    return this.http.delete<null | string>(`${this.apiUrl}/${id}`);
   }
 }

@@ -3,34 +3,34 @@ import { NhomLop } from "../models";
 import { CRUDService } from "./interfaces/CRUD.service.interface";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import TokenService from "./interfaces/token-service.interface";
+import AutoRevokeService from "./interfaces/auto-revoke.service.interface";
 
 @Injectable({ providedIn: 'root' })
 
-export class NhomLopService extends TokenService implements CRUDService<NhomLop> {
+export class NhomLopService extends AutoRevokeService implements CRUDService<NhomLop> {
   private apiUrl: string = "http://localhost:8080/api/v1/nhom-lop";
 
-  constructor(protected http: HttpClient) {
-    super();
+  constructor(protected _http: HttpClient) {
+    super(_http);
   }
 
   getAll(): Observable<NhomLop[]> {
-    return this.http.get<NhomLop[]>(this.apiUrl, { headers: this.getAuthorization() });
+    return this.http.get<NhomLop[]>(this.apiUrl);
   }
 
   get(id: number): Observable<NhomLop> {
-    return this.http.get<NhomLop>(`${this.apiUrl}/${id}`, { headers: this.getAuthorization() });
+    return this.http.get<NhomLop>(`${this.apiUrl}/${id}`);
   }
 
   add(entity: NhomLop): Observable<NhomLop> {
-    return this.http.post<NhomLop>(this.apiUrl, entity, { headers: this.getAuthorization() });
+    return this.http.post<NhomLop>(this.apiUrl, entity);
   }
 
   update(entity: NhomLop): Observable<NhomLop> {
-    return this.http.put<NhomLop>(this.apiUrl, entity, { headers: this.getAuthorization() });
+    return this.http.put<NhomLop>(this.apiUrl, entity);
   }
 
   delete(id: number): Observable<string | null> {
-    return this.http.delete<string | null>(`${this.apiUrl}/${id}`, { headers: this.getAuthorization() });
+    return this.http.delete<string | null>(`${this.apiUrl}/${id}`);
   }
 }

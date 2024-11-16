@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-class-add-new-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './class-add-new-form.component.html',
-  styleUrl: './class-add-new-form.component.css'
+  templateUrl: './class-add-new-form.component.html'
 })
 export class ClassAddNewFormComponent {
 

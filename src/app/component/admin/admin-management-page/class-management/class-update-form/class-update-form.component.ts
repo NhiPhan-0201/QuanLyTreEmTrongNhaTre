@@ -8,8 +8,7 @@ import { Account, NhomLop, QuanLiLop } from '../../../../../../models';
   selector: 'app-class-update-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './class-update-form.component.html',
-  styleUrl: './class-update-form.component.css'
+  templateUrl: './class-update-form.component.html'
 })
 export class ClassUpdateFormComponent implements OnChanges {
   @Input() selectedLop!: QuanLiLop;
