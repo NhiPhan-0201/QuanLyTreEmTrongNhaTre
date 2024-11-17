@@ -161,7 +161,12 @@ export class AccountAddNewFormComponent {
           this.close();
         },
         error: (err) => {
-          this.toastService.showError('Lỗi khi cập nhật tài khoản');
+          if (err.status === 409 || err.error === "User name or email exist. Create account fail.") {
+            this.toastService.showError('Tên đăng nhập đã tồn tại');
+            this.errors = { ...this.errors, username: 'Tên đăng nhập đã tồn tại' };
+          } else {
+            this.toastService.showError('Lỗi khi cập nhật tài khoản');
+          }
         }
       });
     }
