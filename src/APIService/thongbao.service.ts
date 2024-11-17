@@ -18,9 +18,6 @@ interface ThongBao {
 export class ThongBaoService {
     private apiUrl = 'http://localhost:8080/api/v1/thong-bao-truong/lay-tat-ca';
 
-    // Token mặc định cung cấp trực tiếp
-    private defaultToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ3V5ZW50aGlhbiIsImlhdCI6MTczMDk3NTk4MiwiZXhwIjoxNzMxMDYyMzgyfQ.48I5V431s9fBTU6hmOK56fx-2kGX5Hu5gVCOsAeE96A';
-
     // Dữ liệu mẫu để hiển thị khi không thể gọi API
     private sampleData: ThongBao[] = [
         {
@@ -49,12 +46,10 @@ export class ThongBaoService {
     constructor(private http: HttpClient) {}
   
     private getHeaders(): HttpHeaders {
-        let token = this.defaultToken;
-        if (typeof window !== 'undefined' && localStorage.getItem('AccessToken')) {
-            token = localStorage.getItem('AccessToken')!;
-        }
+        const token = (typeof window !== 'undefined' && localStorage.getItem('access_token'));
         return new HttpHeaders({
-            'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         });
     }
 

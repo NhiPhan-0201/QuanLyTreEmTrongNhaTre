@@ -33,9 +33,28 @@ export class GiaovienDiemdanhComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadClassList();
+    this.loadTeacherClasses();
   }
   
+  // Lấy danh sách các lớp giáo viên phụ trách
+  loadTeacherClasses(): void {
+    this.diemDanhService.getTeacherClasses().subscribe((classes) => {
+      this.classList = classes.map(cls => ({
+        classId: cls.id, // Dùng `id` từ API làm `classId`
+        tenLop: cls.tenLop,
+        tenPhong: cls.tenPhong,
+        viTri: cls.viTri
+      }));
+
+      if (this.classList.length > 0) {
+        this.selectedClassId = this.classList[0].classId; // Mặc định chọn lớp đầu tiên
+        this.onClassChange(); // Gọi sau khi có danh sách lớp
+      } else {
+        console.warn('Không có lớp nào được giáo viên phụ trách.');
+      }
+    });
+  }
+
   loadClassList(): void {
     this.diemDanhService.getAllStudents().subscribe((students) => {
       const uniqueClasses: { [key: number]: LopHoc } = {};
@@ -52,24 +71,45 @@ export class GiaovienDiemdanhComponent implements OnInit {
     });
   }
 
-  onClassChange(): void {
-    console.log("Selected class ID:", this.selectedClassId);
+  // onClassChange(): void {
+  //   console.log("Selected class ID:", this.selectedClassId);
 
+  //   this.diemDanhService.getAllStudents().subscribe(students => {
+  //     const selectedClassIdNumber = Number(this.selectedClassId);
+
+  //     this.hocSinhList = students.filter(student => student.classId === selectedClassIdNumber);
+  //     console.log("Filtered hocSinhList:", this.hocSinhList);
+
+  //     if (this.hocSinhList.length > 0) {
+  //       this.checkAndCreateDiemDanhForAll().subscribe(() => {
+  //         // Gọi hàm getDiemDanhList sau khi hoàn thành tạo điểm danh
+  //         this.getDiemDanhList().subscribe(() => {
+  //           console.log('Danh sách trạng thái điểm danh đã được cập nhật sau khi tạo.');
+  //         });
+  //       });
+  //     } else {
+  //       console.log('No students found for the selected class ID.');
+  //     }
+  //   });
+  // }
+
+  onClassChange(): void {
+    // console.log("Selected class ID:", this.selectedClassId); // Id class được chọn
+  
     this.diemDanhService.getAllStudents().subscribe(students => {
       const selectedClassIdNumber = Number(this.selectedClassId);
-
+  
       this.hocSinhList = students.filter(student => student.classId === selectedClassIdNumber);
-      console.log("Filtered hocSinhList:", this.hocSinhList);
-
+      // console.log("Filtered hocSinhList:", this.hocSinhList);
+  
       if (this.hocSinhList.length > 0) {
         this.checkAndCreateDiemDanhForAll().subscribe(() => {
-          // Gọi hàm getDiemDanhList sau khi hoàn thành tạo điểm danh
           this.getDiemDanhList().subscribe(() => {
             console.log('Danh sách trạng thái điểm danh đã được cập nhật sau khi tạo.');
           });
         });
       } else {
-        console.log('No students found for the selected class ID.');
+        console.log('Không tìm thấy học sinh cho lớp đã chọn.');
       }
     });
   }
@@ -105,7 +145,7 @@ export class GiaovienDiemdanhComponent implements OnInit {
 
     return forkJoin(observables).pipe(
       map((data: (DiemDanh | null)[]) => {
-        console.log("Raw data from API:", data); // Kiểm tra dữ liệu thô từ API
+        // console.log("Raw data from API:", data); // Kiểm tra dữ liệu thô từ API
 
         // Cập nhật `trangThai` của từng học sinh trong `hocSinhList` dựa trên `data`
         this.hocSinhList.forEach(student => {
@@ -118,7 +158,7 @@ export class GiaovienDiemdanhComponent implements OnInit {
           }
         });
 
-        console.log("Updated hocSinhList:", this.hocSinhList); // Kiểm tra kết quả cuối cùng
+        // console.log("Updated hocSinhList:", this.hocSinhList); // Kiểm tra kết quả cuối cùng
 
         // Gọi detectChanges() để cập nhật giao diện
         this.cdr.detectChanges();
@@ -168,7 +208,7 @@ export class GiaovienDiemdanhComponent implements OnInit {
             emailMe: parentInfo.emailMe || ''
       };
       localStorage.setItem('studentDetail', JSON.stringify(studentDetail));
-      this.router.navigate(['/giaovien-management/thongtinhocsinh']);
+      this.router.navigate(['/giaovien-management/teacher/student-info']);
     });
   }
 }
