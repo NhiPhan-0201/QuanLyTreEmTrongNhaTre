@@ -4,18 +4,18 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DiemDanh } from '../models/DiemDanh';
+import { LopHoc } from '../models/LopHoc';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DiemDanhService {
   private apiUrl = 'http://localhost:8080/api/v1/diem-danh';
-  private defaultToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ3V5ZW50aGlhbiIsImlhdCI6MTczMDk3NTk4MiwiZXhwIjoxNzMxMDYyMzgyfQ.48I5V431s9fBTU6hmOK56fx-2kGX5Hu5gVCOsAeE96A'; 
-
+  
   constructor(private http: HttpClient) {}
 
   private getHeaders(): HttpHeaders {
-    const token = (typeof window !== 'undefined' && localStorage.getItem('AccessToken')) || this.defaultToken;
+    const token = (typeof window !== 'undefined' && localStorage.getItem('access_token'));
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -74,6 +74,15 @@ export class DiemDanhService {
         console.error('Lỗi khi cập nhật điểm danh:', error);
         return of({ message: 'Không thể cập nhật điểm danh' }); // Thông báo lỗi mặc định nếu gặp lỗi
       })
+    );
+  }
+
+  // Thêm phương thức để lấy danh sách các lớp mà giáo viên phụ trách
+  getTeacherClasses(): Observable<LopHoc[]> {
+    return this.http.get<LopHoc[]>(`http://localhost:8080/api/v1/giaovien/get-all-class-of-teacher`, {
+      headers: this.getHeaders()
+    }).pipe(
+      catchError(() => of([])) // Trả về danh sách trống nếu gặp lỗi
     );
   }
 }
