@@ -9,7 +9,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class ClassDeleteConfirmationDialogComponent {
 
   @Output() closeDialog = new EventEmitter<void>();
-  @Output() deleteAccount = new EventEmitter<void>();
+  @Output() deleteLop = new EventEmitter<void>();
 
   constructor() { }
 
@@ -18,6 +18,6 @@ export class ClassDeleteConfirmationDialogComponent {
   }
 
   delete() {
-    this.deleteAccount.emit();
+    this.deleteLop.emit();
   }
 }

@@ -1,9 +1,9 @@
 <div
   class="class-update-form p-6 bg-white shadow-md rounded-lg w-full min-w-[40dvw] transition-all duration-300 ease-in-out transform scale-95 hover:scale-100 animate-fadeIn">
   <h3 class="text-xl font-bold mb-4 w-full">Thêm lớp mới</h3>
-  <form [formGroup]="newLopForm" id="account-update-form">
+  <form [formGroup]="newLopForm" id="class-update-form">
     <div class="form-row mb-4 w-full">
-      <div class="thong-tin-account form-col w-full">
+      <div class="thong-tin-class form-col w-full">
 
         <!-- Tên lớp -->
         <label for="tenLop" class="block text-sm font-medium text-gray-700">Tên lớp:</label>
@@ -16,7 +16,7 @@
         <select id="idGiaoVien" formControlName="idGiaoVien"
           class="mt-1 block w-full border border-gray-300 rounded-md p-2 transition-all duration-200 ease-in-out focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none transform focus:scale-105">
           <option [value]="-1">Không có giáo viên</option>
-          <option *ngFor="let account of giaoViens" [value]="account.id">{{ account.giaoVien?.hoTen }}</option>
+          <option *ngFor="let giaoVien of giaoViens" [value]="giaoVien.id">{{ giaoVien?.hoTen }}</option>
         </select>
         <h4 class="error-message text-red-600 text-sm mt-1" *ngIf="errors?.idGiaoVien">{{ errors?.idGiaoVien }}</h4>
 

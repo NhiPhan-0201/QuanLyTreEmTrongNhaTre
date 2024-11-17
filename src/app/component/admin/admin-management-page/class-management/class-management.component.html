@@ -27,10 +27,10 @@
         <ng-container *ngFor="let lop of filtered_list_lop.slice((currentPage-1)*rowPerPage, currentPage * rowPerPage)">
           <div class="p-3 border border-gray-300">{{ lop.id }}</div>
           <div class="p-3 border border-gray-300">{{ lop.tenLop }}</div>
-          <div class="p-3 border border-gray-300">{{ lop.thongTinGiaoVien?.hoTen }}</div>
+          <div class="p-3 border border-gray-300">{{ mapGiaoVien_Lop(lop.idGiaoVien)?.hoTen }}</div>
           <div class="p-3 border border-gray-300">{{ lop.tenPhong }}</div>
           <div class="p-3 border border-gray-300">{{ lop.viTri }}</div>
-          <div class="p-3 border border-gray-300">{{ lop.nhomLop?.tenNhom }}</div>
+          <div class="p-3 border border-gray-300">{{ mapLop_NhomLop(lop.idNhomLop)?.tenNhom }}</div>
           <div class="p-3 border border-gray-300 flex justify-between">
             <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
               (click)="handleOpenUpdateLopForm(lop)">Edit</button>
@@ -46,10 +46,13 @@
           <div class="p-3 border border-gray-300 mb-2">
             <div class="flex justify-between"><strong>Id:</strong> {{ lop.id }}</div>
             <div class="flex justify-between"><strong>Tên lớp:</strong> {{ lop.tenLop }}</div>
-            <div class="flex justify-between"><strong>Tên giáo viên:</strong> {{ lop.thongTinGiaoVien?.hoTen }}</div>
+            <div class="flex justify-between">
+              <strong>Tên giáo viên:</strong> {{ mapGiaoVien_Lop(lop.idGiaoVien)?.hoTen}}
+            </div>
             <div class="flex justify-between"><strong>Tên phòng:</strong> {{ lop.tenPhong }}</div>
             <div class="flex justify-between"><strong>Vị trí:</strong> {{ lop.viTri }}</div>
-            <div class="flex justify-between"><strong>Nhóm lớp:</strong> {{ lop.nhomLop?.tenNhom }}</div>
+            <div class="flex justify-between"><strong>Nhóm lớp:</strong> {{ mapLop_NhomLop(lop.idNhomLop)?.tenNhom }}
+            </div>
             <div class="flex justify-end mt-2">
               <button class="bg-yellow-500 text-white px-2 py-1 mr-8 rounded hover:bg-yellow-600"
                 (click)="handleOpenUpdateLopForm(lop)">Edit</button>
@@ -78,13 +81,14 @@
 
   <div *ngIf="openUpdateLopForm"
     class="overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-    <app-class-update-form [selectedLop]="selectedLop" [giaoViens]="list_giaoVienAccount" [listNhomLop]="list_nhomLop"
+    <app-class-update-form [selectedLop]="selectedLop" [giaoViens]="list_giaoVien" [listNhomLop]="list_nhomLop"
       (closeForm)="closeForm()" (saveLop)="handleUpdateLop($event)" />
   </div>
 
   <div *ngIf="openAddLopForm"
     class="overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-    <app-class-add-new-form (closeForm)="closeForm()" (saveLop)="handleSaveNewLop($event)" />
+    <app-class-add-new-form (closeForm)="closeForm()" [giaoViens]="list_giaoVien" [listNhomLop]="list_nhomLop"
+      (saveLop)="handleSaveNewLop($event)" />
   </div>
 
   <div *ngIf="openDeleteConfirmationDialog"

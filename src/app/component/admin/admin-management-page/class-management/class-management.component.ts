@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Account, NhomLop, QuanLiLop } from '../../../../../models';
-import { NhomLopService, QuanLiLopService, AccountService } from '../../../../../APIService';
+import { ThongTinGiaoVien, NhomLop, QuanLiLop } from '../../../../../models';
+import { NhomLopService, QuanLiLopService, ThongTinGiaoVienService } from '../../../../../APIService';
 import { FormGroup } from '@angular/forms';
 import { ClassAddNewFormComponent } from './class-add-new-form/class-add-new-form.component';
 import { ClassUpdateFormComponent } from './class-update-form/class-update-form.component';
@@ -24,7 +24,7 @@ export class ClassManagementComponent implements OnInit {
   selectedLop!: QuanLiLop;
 
   list_nhomLop!: NhomLop[];
-  list_giaoVienAccount!: Account[];
+  list_giaoVien!: ThongTinGiaoVien[];
   list_lop!: QuanLiLop[];
   filtered_list_lop!: QuanLiLop[];
 
@@ -32,7 +32,7 @@ export class ClassManagementComponent implements OnInit {
   totalPage: number = 1;
   rowPerPage: number = 5;
 
-  constructor(private toastService: ToastService, private classService: QuanLiLopService, private accountService: AccountService, private classGroupService: NhomLopService) { }
+  constructor(private toastService: ToastService, private classService: QuanLiLopService, private thongTinGiaoVienService: ThongTinGiaoVienService, private classGroupService: NhomLopService) { }
 
   ngOnInit(): void {
     this.loadListLop();
@@ -54,10 +54,9 @@ export class ClassManagementComponent implements OnInit {
 
   loadGiaoVien() {
     this.isLoading = true;
-    this.accountService.getTeachers().subscribe({
+    this.thongTinGiaoVienService.getAll().subscribe({
       next: (res) => {
-        this.list_giaoVienAccount = res;
-        this.mapGiaoVien_Lop();
+        this.list_giaoVien = res;
         this.loadNhomLop();
       },
       error: (error) => {
@@ -66,13 +65,8 @@ export class ClassManagementComponent implements OnInit {
     });
   }
 
-  mapGiaoVien_Lop() {
-    this.list_lop = this.list_lop.map(lop => {
-      if (lop.idGiaoVien) {
-        lop.thongTinGiaoVien = this.list_giaoVienAccount.find(gv => gv.id === lop.idGiaoVien)?.giaoVien;
-      }
-      return lop;
-    });
+  mapGiaoVien_Lop(idGiaoVien: number) {
+    return this.list_giaoVien.find(gv => gv.id === idGiaoVien);
   }
 
   loadNhomLop() {
@@ -80,7 +74,7 @@ export class ClassManagementComponent implements OnInit {
     this.classGroupService.getAll().subscribe({
       next: (res) => {
         this.list_nhomLop = res;
-        this.mapLop_NhomLop();
+        console.log('list_lop:', this.list_lop);
         this.isLoading = false;
         this.onSearch();
       },
@@ -91,13 +85,9 @@ export class ClassManagementComponent implements OnInit {
     });
   }
 
-  mapLop_NhomLop() {
-    this.list_lop = this.list_lop.map(lop => {
-      if (lop.idNhomLop) {
-        lop.nhomLop = this.list_nhomLop.find(nl => nl.id === lop.idNhomLop);
-      }
-      return lop;
-    });
+  mapLop_NhomLop(idNhomLop: number | undefined) {
+    if (!idNhomLop) return undefined;
+    return this.list_nhomLop.find(nl => nl.id === idNhomLop);
   }
 
   onSearch(event?: Event) {
@@ -128,7 +118,19 @@ export class ClassManagementComponent implements OnInit {
     this.openUpdateLopForm = true;
   }
   handleUpdateLop(updatedLop: QuanLiLop) {
-
+    console.log('updatedLop:', updatedLop);
+    this.list_lop = this.list_lop.map(lop => {
+      if (lop.id === updatedLop.id) {
+        return updatedLop;
+      }
+      return lop;
+    });
+    this.filtered_list_lop = this.filtered_list_lop.map(lop => {
+      if (lop.id === updatedLop.id) {
+        return updatedLop;
+      }
+      return lop;
+    });
   }
 
   handleOpenDeleteLopConfirmation(lop: QuanLiLop) {
@@ -151,16 +153,8 @@ export class ClassManagementComponent implements OnInit {
     this.openAddLopForm = true;
   }
   handleSaveNewLop(newLop: QuanLiLop) {
-    this.classService.add(newLop).subscribe({
-      next: (res) => {
-        this.list_lop.push(res);
-        this.onSearch();
-        this.closeForm();
-      },
-      error: (error) => {
-        console.error('Error saving new lop:', error);
-      }
-    });
+    this.list_lop.push(newLop);
+    this.filtered_list_lop.push(newLop);
   }
 
   closeForm() {
@@ -179,7 +173,7 @@ export function validateData(formGroup: FormGroup) {
     errors.tenLop = 'Tên lớp không được để trống';
   }
 
-  if (!formGroup.get('idGiaoVien')?.value || formGroup.get('idGiaoVien')?.value === -1) {
+  if (!formGroup.get('idGiaoVien')?.value || parseInt(formGroup.get('idGiaoVien')?.value) === -1) {
     errors.idGiaoVien = 'Giáo viên không được để trống';
   }
 

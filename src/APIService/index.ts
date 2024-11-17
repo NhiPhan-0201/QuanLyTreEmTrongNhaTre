@@ -4,6 +4,7 @@ import { QuanLiLopService } from "./quan-li-lop.service";
 import { UploadService } from "./upload.service";
 import { NhomLopService } from "./nhom-lop-service";
 import { PhuHuynhTreService } from "./phu-huynh-tre.service";
+import { ThongTinGiaoVienService } from "./thong-tin-giao-vien.service";
 
 export {
   AccountService,
@@ -11,5 +12,6 @@ export {
   QuanLiLopService,
   UploadService,
   NhomLopService,
-  PhuHuynhTreService
+  PhuHuynhTreService,
+  ThongTinGiaoVienService
 }

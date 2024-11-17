@@ -1,6 +1,6 @@
 import { error } from 'console';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Account, NhomLop } from '../../../../../../models';
+import { ThongTinGiaoVien, NhomLop } from '../../../../../../models';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { validateData } from '../class-management.component';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,7 @@ import { QuanLiLopService } from '../../../../../../APIService';
 })
 export class ClassAddNewFormComponent {
 
-  @Input() giaoViens!: Account[];
+  @Input() giaoViens!: ThongTinGiaoVien[];
   @Input() listNhomLop!: NhomLop[];
   @Output() saveLop: EventEmitter<any> = new EventEmitter<any>();
   @Output() closeForm: EventEmitter<any> = new EventEmitter<any>();
@@ -64,7 +64,17 @@ export class ClassAddNewFormComponent {
     this.errors = validateData(this.newLopForm);
 
     if (Object.keys(this.errors).length === 0) {
-      this.quanLiLopService.update(this.newLopForm.value).subscribe({
+      if (parseInt(this.newLopForm.value.idGiaoVien) === -1)
+        delete this.newLopForm.value.idGiaoVien;
+      else
+        this.newLopForm.value.idGiaoVien = parseInt(this.newLopForm.value.idGiaoVien);
+
+      if (parseInt(this.newLopForm.value.idNhomLop) === -1)
+        delete this.newLopForm.value.idNhomLop;
+      else
+        this.newLopForm.value.idNhomLop = parseInt(this.newLopForm.value.idNhomLop);
+
+      this.quanLiLopService.add(this.newLopForm.value).subscribe({
         next: (res) => {
           this.saveLop.emit(res);
           this.toastService.showSuccess('Cập nhật lớp học thành công');
