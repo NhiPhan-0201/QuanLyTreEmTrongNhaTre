@@ -22,9 +22,9 @@
   <div *ngFor="let item of filteredThoiKhoaBieuList" class="schedule-item">
     <h3>{{ formatDate(item.ngay) }}</h3>
     <p><strong>Hoạt động:</strong> {{ item.hoatDong }}</p>
-    <p *ngIf="item.idLop"><strong>Tên lớp:</strong> {{ item.idLop.tenLop }}</p>
+    <!-- <p *ngIf="item.idLop"><strong>Tên lớp:</strong> {{ item.idLop.tenLop }}</p>
     <p *ngIf="item.idLop"><strong>Tên phòng:</strong> {{ item.idLop.tenPhong }}</p>
     <p *ngIf="item.idLop"><strong>Vị trí:</strong> {{ item.idLop.viTri }}</p>
-    <p><strong>Thời gian:</strong> {{ formatTime(item.thoiGianBatDau) }} - {{ formatTime(item.thoiGianKetThuc) }}</p>
+    <p><strong>Thời gian:</strong> {{ formatTime(item.thoiGianBatDau) }} - {{ formatTime(item.thoiGianKetThuc) }}</p> -->
   </div>
 </div>

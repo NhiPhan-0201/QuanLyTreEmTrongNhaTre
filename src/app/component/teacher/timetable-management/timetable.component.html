@@ -1,28 +1,29 @@
-<div class="timetable-container">
-    <h2>Thời Khóa Biểu</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Ngày</th>
-          <th>Lớp</th>
-          <th>Hoạt Động</th>
-          <th>Thời Gian Bắt Đầu</th>
-          <th>Thời Gian Kết Thúc</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of thoiKhoaBieuList">
-          <td>{{ item.ngay | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ item.quanLiLop?.tenLop }}</td>
-          <td>{{ item.hoatDong }}</td>
-          <td>{{ item.thoiGianBatDau | date: 'shortTime' }}</td>
-          <td>{{ item.thoiGianKetThuc | date: 'shortTime' }}</td>
-          <td>
-            <button (click)="editTimetable(item)">Chỉnh Sửa</button>
-            <button class="delete-btn" (click)="deleteTimetable(item.id)">Xóa</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="class-management-panel flex flex-col p-5 bg-gray-100 rounded-lg shadow-md mx-auto font-sans min-h-screen">
+  <h2 class="text-2xl font-semibold mb-4 text-blue-600">Thời Khóa Biểu</h2>
+
+  <table class="min-w-full bg-white border-collapse rounded-lg overflow-hidden shadow">
+    <thead>
+      <tr class="bg-blue-500 text-white">
+        <th class="py-2 px-4 border-b text-center">Ngày</th>
+        <th class="py-2 px-4 border-b text-center">Lớp</th>
+        <th class="py-2 px-4 border-b text-center">Hoạt Động</th>
+        <th class="py-2 px-4 border-b text-center">Thời Gian Bắt Đầu</th>
+        <th class="py-2 px-4 border-b text-center">Thời Gian Kết Thúc</th>
+        <th class="py-2 px-4 border-b text-center">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of thoiKhoaBieuList" class="hover:bg-blue-100 transition-colors duration-200">
+        <td class="py-2 px-4 border-b text-center">{{ item.ngay }}</td>
+        <td class="py-2 px-4 border-b text-center">{{ item.quanLiLop?.tenLop }}</td>
+        <td class="py-2 px-4 border-b text-center">{{ item.hoatDong }}</td>
+        <td class="py-2 px-4 border-b text-center">{{ item.thoiGianBatDau}}</td>
+        <td class="py-2 px-4 border-b text-center">{{ item.thoiGianKetThuc}}</td>
+        <td class="py-2 px-4 border-b text-center">
+          <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-200" (click)="editTimetable(item)">Chỉnh Sửa</button>
+          <button class="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-colors duration-200" (click)="deleteTimetable(item.id)">Xóa</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

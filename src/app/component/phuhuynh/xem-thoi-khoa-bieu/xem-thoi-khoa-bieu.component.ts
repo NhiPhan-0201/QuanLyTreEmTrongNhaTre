@@ -14,10 +14,10 @@ export interface QuanLiLop {
 export interface ThoiKhoaBieu {
   id: number;
   ngay: Date;
-  idLop: QuanLiLop;
+  idLop: number;
   hoatDong: string;
-  thoiGianBatDau: Date;
-  thoiGianKetThuc: Date;
+  thoiGianBatDau: string;
+  thoiGianKetThuc: string;
 }
 
 @Component({

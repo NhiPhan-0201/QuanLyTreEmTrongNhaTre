@@ -19,7 +19,8 @@ import { SchoolFeeComponent } from './component/admin/school-fee/school-fee.comp
 import { ReportComponent } from './component/admin/report/report.component';
 
 // Giao Vien
-import { GiaovienManagementPageComponent } from './component/teacher/side-bar-management/side-bar-management.component';
+import { TeacherManagementPageComponent } from './component/teacher/teacher-management-page.component';
+//import { GiaovienManagementPageComponent } from './component/teacher/side-bar-management(old)/side-bar-management.component';
 import { GiaovienDanhsachhocsinhComponent } from './component/teacher/student-list/student-list.component';
 import { GiaovienDiemdanhComponent } from './component/teacher/attendance-records/attendance-records.component';
 import { GiaovienDanhsachthongbaoComponent } from './component/teacher/notification-list/notification-list.component';
@@ -48,8 +49,8 @@ import { TeacherInfoComponent } from './component/phuhuynh/teacher-info/teacher-
 export const routes: Routes = [
 
 
-  { path: 'teacher/notifications', component: NotificationsSendPageComponent },
-  { path: 'teacher/timetable-management', component: TimetablesComponent },
+  // { path: 'teacher/notifications', component: NotificationsSendPageComponent },
+  // { path: 'teacher/timetable-management', component: TimetablesComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -57,18 +58,18 @@ export const routes: Routes = [
 
   // giaovien routes
   {
-    path: 'giaovien-management', component: GiaovienManagementPageComponent, children: [
-      { path: 'teacher/student-list', component: GiaovienDanhsachhocsinhComponent },
-      { path: 'teacher/attendance-records', component: GiaovienDiemdanhComponent },
+    path: 'teacher/manage', component: TeacherManagementPageComponent, children: [
+      { path: 'student-list', component: GiaovienDanhsachhocsinhComponent },
+      { path: 'attendance-records', component: GiaovienDiemdanhComponent },
       { path: 'teacher/student-info', component: GiaovienThongtinhocsinhComponent },
-      { path: 'teacher/notification-list', component: GiaovienDanhsachthongbaoComponent },
+      { path: 'notification-list', component: GiaovienDanhsachthongbaoComponent },
       { path: 'teacher/notification-content/:uniqueId', component: GiaovienNoidungthongbaoComponent },
-      { path: 'teacher/class-management', component: QuanLyLopComponent },
-      { path: 'teacher/class-group-management', component: QuanLyNhomLopComponent },
-      { path: 'teacher/view-meal-menu', component: XemThucDonComponent },
-      { path: 'teacher/notifications', component: NotificationsSendPageComponent },
-      { path: 'teacher/timetable-management', component: TimetablesComponent },
-      { path: '', redirectTo: 'teacher/student-list', pathMatch: 'full' }  // Đường dẫn mặc định
+      { path: 'class-management', component: QuanLyLopComponent },
+      { path: 'class-group-management', component: QuanLyNhomLopComponent },
+      { path: 'view-meal-menu', component: XemThucDonComponent },
+      { path: 'notifications', component: NotificationsSendPageComponent },
+      { path: 'timetable-management', component: TimetablesComponent },
+      { path: '', redirectTo: 'student-list', pathMatch: 'full' }  // Đường dẫn mặc định
     ]
   },
   //

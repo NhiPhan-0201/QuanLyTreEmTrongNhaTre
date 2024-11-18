@@ -1,0 +1,23 @@
+<div class="header">
+  <h1>Trang Giáo Viên</h1>
+</div>
+
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Danh sách chức năng</h2>
+    <ul>
+      <li><button routerLink="teacher/student-list" routerLinkActive="active"><i class="icon">📋</i> Danh sách học sinh</button></li>
+      <li><button routerLink="teacher/attendance-records" routerLinkActive="active"><i class="icon">📋</i> Điểm danh</button></li>
+      <li><button routerLink="teacher/notification-list" routerLinkActive="active"><i class="icon">📋</i> Danh sách thông báo</button></li>
+      <li><button routerLink="teacher/class-management" routerLinkActive="active"><i class="icon">📋</i> Xem lớp</button></li>
+      <li><button routerLink="teacher/class-group-management" routerLinkActive="active"><i class="icon">📋</i> Xem nhóm lớp</button></li>
+      <li><button routerLink="teacher/view-meal-menu" routerLinkActive="active"><i class="icon">📋</i> Xem thực đơn</button></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

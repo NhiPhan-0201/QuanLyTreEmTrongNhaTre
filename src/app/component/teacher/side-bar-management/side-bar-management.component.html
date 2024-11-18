@@ -1,23 +1,26 @@
-<div class="header">
-  <h1>Trang Giáo Viên</h1>
-</div>
+<div class="relative select-none" (mouseleave)="onMouseLeave()">
+  <div class="cursor-pointer text-2xl p-2" (click)="toggleSidebar()" (mouseenter)="onMouseEnter()">
+    ☰ <!-- Biểu tượng sidebar -->
+  </div>
 
-<div class="container">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>Danh sách chức năng</h2>
-    <ul>
-      <li><button routerLink="teacher/student-list" routerLinkActive="active"><i class="icon">📋</i> Danh sách học sinh</button></li>
-      <li><button routerLink="teacher/attendance-records" routerLinkActive="active"><i class="icon">📋</i> Điểm danh</button></li>
-      <li><button routerLink="teacher/notification-list" routerLinkActive="active"><i class="icon">📋</i> Danh sách thông báo</button></li>
-      <li><button routerLink="teacher/class-management" routerLinkActive="active"><i class="icon">📋</i> Xem lớp</button></li>
-      <li><button routerLink="teacher/class-group-management" routerLinkActive="active"><i class="icon">📋</i> Xem nhóm lớp</button></li>
-      <li><button routerLink="teacher/view-meal-menu" routerLinkActive="active"><i class="icon">📋</i> Xem thực đơn</button></li>
+  <div *ngIf="isOpen" class="absolute left-0 top-10 w-48 bg-white border border-gray-300 shadow-lg z-10 lg:hidden">
+    <h2 class="text-lg font-bold p-2">Sidebar Menu</h2>
+    <ul class="list-none p-0 m-0">
+      <li *ngFor="let item of sideBarItems"
+        [ngClass]="{'p-2 cursor-pointer border-b border-gray-300':true, 'bg-blue-500':item.active}"
+        (click)="handleClickItem(item)">
+        {{item.name}}
+      </li>
     </ul>
   </div>
 
-  <!-- Main Content -->
-  <div class="content">
-    <router-outlet></router-outlet>
+  <div *ngIf="!this.isClosed" class="bg-inherit border shadow-lg hidden lg:!flex flex-col">
+    <ul class="list-none p-0 m-0">
+      <li *ngFor="let item of sideBarItems"
+        [ngClass]="{'py-3 px-8 cursor-pointer border-b border-gray-300 select-none':true, 'bg-blue-500':item.active}"
+        (click)="handleClickItem(item)">
+        {{item.name}}
+      </li>
+    </ul>
   </div>
 </div>

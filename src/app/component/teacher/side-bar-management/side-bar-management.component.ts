@@ -1,17 +1,45 @@
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { SideBarItem } from '../teacher-management-page.component';
 
 @Component({
-  selector: 'app-side-bar-management',
+  selector: 'app-teacher-management-side-bar',
   standalone: true,
-  imports: [RouterModule],  
-  templateUrl: './side-bar-management.component.html',
-  styleUrls: ['./side-bar-management.component.css']  
+  imports: [CommonModule],
+  templateUrl: './side-bar-management.component.html'
 })
-export class GiaovienManagementPageComponent {
-  constructor(private router: Router) {}
+export class SideBarManagementComponent {
 
-  goBack() {
-    this.router.navigate(['/']); // Điều hướng đến trang chính hoặc bất kỳ trang nào khác
+  @Input() sideBarItems!: SideBarItem[];
+
+  sideBarToggled = "side-bar-not-toggled";
+  hoverSideBarToggle = false;
+  hoverSideBar = false;
+
+  constructor(private router: Router) { }
+
+  isOpen = false;
+  isClosed = false;
+
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
+    this.isClosed = !this.isClosed;
+  }
+
+  onMouseEnter() {
+    this.isOpen = true;
+  }
+
+  onMouseLeave() {
+    this.isOpen = false;
+  }
+
+  handleClickItem(item: SideBarItem) {
+    if (item.path === '/home') {
+      this.router.navigate([item.path]);
+      return;
+    }
+    this.router.navigate([`/teacher/manage/${item.path}`]);
   }
 }
