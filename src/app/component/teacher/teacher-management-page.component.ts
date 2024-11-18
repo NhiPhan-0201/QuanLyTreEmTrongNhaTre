@@ -21,7 +21,8 @@ export class TeacherManagementPageComponent implements OnInit {
       { name: 'Xem nhóm lớp', path: 'class-group-management' },
       { name: 'Xem thực đơn', path: 'view-meal-menu' },
       { name: 'Gửi thông báo', path: 'notifications' },
-      { name: 'Xem thời khóa biểu', path: 'timetable-management' }
+      { name: 'Xem thời khóa biểu', path: 'timetable-management' },
+      { name: 'Xem đánh giá', path: 'rating' }
     ];
     this.sideBarItems.push({ name: 'Trở về trang chủ', path: '/home' });
   }

@@ -32,6 +32,7 @@ import { QuanLyNhomLopComponent} from './component/teacher/class-group-managemen
 import { XemThucDonComponent} from './component/teacher/view-meal-menu/view-meal-menu.component';
 import { NotificationsSendPageComponent } from './component/teacher/notifications-send-page/notifications-send-page.component';
 import { TimetablesComponent } from './component/teacher/timetable-management/timetable.component';
+import { RatingComponent } from './component/teacher/rating/rating.component';
 //
 
 import { HomeComponent } from './layout/home/home.component';
@@ -69,6 +70,7 @@ export const routes: Routes = [
       { path: 'view-meal-menu', component: XemThucDonComponent },
       { path: 'notifications', component: NotificationsSendPageComponent },
       { path: 'timetable-management', component: TimetablesComponent },
+      { path: 'rating', component: RatingComponent },
       { path: '', redirectTo: 'student-list', pathMatch: 'full' }  // Đường dẫn mặc định
     ]
   },

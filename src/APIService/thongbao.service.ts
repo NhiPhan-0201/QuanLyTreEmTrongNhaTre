@@ -73,4 +73,16 @@ export class ThongBaoService {
             })
         );
     }
+
+    // saveThongBao(thongBao: ThongBao): Observable<any> {
+    //     const headers = this.getHeaders();
+    //     const url = 'http://localhost:8080/api/v1/thong-bao'; // Cập nhật đường dẫn API theo hệ thống của bạn
+      
+    //     return this.http.post<any>(url, thongBao, { headers }).pipe(
+    //       catchError((error) => {
+    //         console.error('Lỗi khi gửi thông báo:', error);
+    //         return of({ success: false, message: 'Không thể gửi thông báo' });
+    //       })
+    //     );
+    //   }
 }
