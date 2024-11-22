@@ -26,17 +26,16 @@ export class EvaluationService {
     return headers;
   }
 
-  // Lấy danh sách đánh giá
+
   getEvaluations(): Observable<DanhGiaTreEm[]> {
-    return this.http.get<DanhGiaTreEm[]>(`${this.apiUrl}`);
+    const headers = this.createHeaders();
+    return this.http.get<DanhGiaTreEm[]>(this.apiUrl, { headers });
   }
 
-  // Cập nhật đánh giá học sinh
   updateEvaluation(updatedItem: DanhGiaTreEm): Observable<DanhGiaTreEm> {
     return this.http.put<DanhGiaTreEm>(`${this.apiUrl}/${updatedItem.id}`, updatedItem);
   }
 
-  // Xóa một đánh giá
   deleteEvaluation(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

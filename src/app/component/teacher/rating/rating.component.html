@@ -13,10 +13,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of evaluations" class="hover:bg-blue-100 transition-colors duration-200">
-          <td class="py-2 px-4 border-b text-center">{{ item.ThongTinTreEm?.hoTen }}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.ThongTinGiaoVien?.hoTen }}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.danhGia }}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.diemSo }}</td>
+          <td class="py-2 px-4 border-b text-center">{{ item.id_tre || 'N/A'}}</td>
+          <td class="py-2 px-4 border-b text-center">{{ item.id_giao_vien || 'N/A'}}</td>
+          <td class="py-2 px-4 border-b text-center">{{ item.danh_gia || 'Không có đánh giá'}}</td>
+          <td class="py-2 px-4 border-b text-center">{{ item.diem_so || 'N/A'}}</td>
           <td class="py-2 px-4 border-b text-center">
             <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-200" (click)="editEvaluation(item)">Chỉnh Sửa</button>
             <button class="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-colors duration-200" (click)="deleteEvaluation(item.id)">Xóa</button>

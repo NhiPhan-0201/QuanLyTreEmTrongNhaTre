@@ -21,14 +21,21 @@ export class RatingComponent implements OnInit {
     this.getEvaluations();
   }
 
-  // Phương thức để lấy danh sách đánh giá
   getEvaluations(): void {
     this.isLoading = true;
     this.evaluationService.getEvaluations().subscribe({
-      next: (data) => {
-        this.evaluations = data;
-        this.isLoading = false;
-      },
+        next: (data) => {
+            this.evaluations = data.map((item) => ({
+              id: item.id,
+              idTre: item.idTre,
+              ThongTinTreEm: item.ThongTinTreEm,
+              idGiaoVien: item.idGiaoVien,
+              ThongTinGiaoVien: item.ThongTinGiaoVien,
+              danhGia: item.danhGia,
+              diemSo: item.diemSo,
+            }));
+            this.isLoading = false;
+          },
       error: (err) => {
         console.error('Lỗi khi lấy danh sách đánh giá:', err);
         this.toastService.showError('Không thể tải dữ liệu đánh giá');
@@ -37,13 +44,11 @@ export class RatingComponent implements OnInit {
     });
   }
 
-  // Phương thức để chỉnh sửa một đánh giá
   editEvaluation(item: DanhGiaTreEm): void {
-    this.selectedEvaluation = { ...item }; // Sao chép dữ liệu đánh giá cần chỉnh sửa
+    this.selectedEvaluation = { ...item };
     console.log('Editing:', this.selectedEvaluation);
   }
 
-  // Phương thức để lưu đánh giá đã chỉnh sửa
   saveEvaluation(updatedItem: DanhGiaTreEm): void {
     if (!updatedItem.id) {
       console.error('Dữ liệu không hợp lệ, thiếu id');
@@ -54,8 +59,8 @@ export class RatingComponent implements OnInit {
     this.evaluationService.updateEvaluation(updatedItem).subscribe({
       next: (data) => {
         this.toastService.showSuccess('Cập nhật đánh giá thành công');
-        this.selectedEvaluation = null; // Đóng form sau khi lưu
-        this.getEvaluations(); // Cập nhật lại danh sách
+        this.selectedEvaluation = null;
+        this.getEvaluations();
         this.isLoading = false;
       },
       error: (err) => {
@@ -66,7 +71,6 @@ export class RatingComponent implements OnInit {
     });
   }
 
-  // Phương thức để xóa một đánh giá
   deleteEvaluation(id: number): void {
     const confirmDelete = confirm('Bạn có chắc chắn muốn xóa đánh giá này?');
     if (confirmDelete) {
@@ -74,7 +78,7 @@ export class RatingComponent implements OnInit {
       this.evaluationService.deleteEvaluation(id).subscribe({
         next: () => {
           this.toastService.showSuccess('Xóa đánh giá thành công');
-          this.getEvaluations(); // Cập nhật lại danh sách
+          this.getEvaluations();
           this.isLoading = false;
         },
         error: (err) => {

@@ -35,16 +35,21 @@ export class ThoiKhoaBieuService {
 
   constructor(private http: HttpClient) {}
 
-  private getHeaders(): HttpHeaders {
-    const token = (typeof window !== 'undefined' && localStorage.getItem('access_token'));
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-}
+  private getToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
+
+  private createHeaders(): HttpHeaders {
+    const token = this.getToken();
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    if (token) {
+      headers = headers.append('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  }
 
   getThoiKhoaBieu(): Observable<ThoiKhoaBieu[]> {
-    const headers = this.getHeaders();
+    const headers = this.createHeaders();
     return this.http.get<ThoiKhoaBieu[]>(this.apiUrl, { headers }).pipe(
       catchError((error) => {
         console.error('Lỗi khi gọi API, sử dụng dữ liệu mẫu:', error);
@@ -53,53 +58,23 @@ export class ThoiKhoaBieuService {
     );
   }
 
-  // Cập nhật thời khóa biểu
   updateThoiKhoaBieu(updatedItem: ThoiKhoaBieu): Observable<ThoiKhoaBieu> {
-    const headers = this.getHeaders();
+    const headers = this.createHeaders();
     return this.http.put<ThoiKhoaBieu>(`${this.apiUrl}/${updatedItem.id}`, updatedItem, { headers }).pipe(
       catchError((error) => {
         console.error('Lỗi khi cập nhật thời khóa biểu:', error);
-        return of(updatedItem); // Trả về dữ liệu gốc nếu lỗi
+        return of(updatedItem);
       })
     );
   }
 
-  // Xóa thời khóa biểu
   deleteThoiKhoaBieu(id: number): Observable<void> {
-    const headers = this.getHeaders();
+    const headers = this.createHeaders();
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers }).pipe(
       catchError((error) => {
         console.error('Lỗi khi xóa thời khóa biểu:', error);
-        return of(); // Nếu lỗi, trả về observable rỗng
+        return of();
       })
     );
   }
-  // private getAccessToken(): string | null {
-  //   const token = localStorage.getItem('access_token');
-  //   console.log('Access Token:', token); // Debug in token ra console
-  //   return token;
-  // }
-  // // Phương thức tạo headers với token
-  // private getHeaders(): HttpHeaders {
-  //   const token = this.getAccessToken();
-  //   if (!token) {
-  //     console.warn('Access token is missing!');
-  //   }
-  //   return new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': token ? `Bearer ${token}` : '',
-  //   });
-  // }
-
-  // // Lấy thời khóa biểu
-  // getThoiKhoaBieu(): Observable<ThoiKhoaBieu[]> {
-  //   const headers = this.getHeaders();
-  //   console.log('API Headers:', headers);
-  //   return this.http.get<ThoiKhoaBieu[]>(this.apiUrl, { headers }).pipe(
-  //     catchError((error) => {
-  //       console.error('Error calling API, using sample data:', error);
-  //       return of([]);
-  //     })
-  //   );
-  // }
 }

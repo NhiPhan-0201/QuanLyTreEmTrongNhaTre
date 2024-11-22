@@ -21,7 +21,6 @@ export class TimetablesComponent implements OnInit {
     this.getTimetable();
   }
 
-    // Phương thức để lấy thời khóa biểu từ service
     getTimetable(): void {
       this.isLoading = true;
       this.thoiKhoaBieuService.getThoiKhoaBieu().subscribe({
@@ -37,13 +36,12 @@ export class TimetablesComponent implements OnInit {
       });
     }
 
-  // Phương thức để chỉnh sửa một mục thời khóa biểu
   editTimetable(item: ThoiKhoaBieu): void {
-    this.selectedThoiKhoaBieu = { ...item }; // Sao chép dữ liệu mục thời khóa biểu cần chỉnh sửa
+    this.selectedThoiKhoaBieu = { ...item };
     console.log('Editing:', this.selectedThoiKhoaBieu);
   }
 
-  // Phương thức để lưu thời khóa biểu đã chỉnh sửa
+
   saveTimetable(updatedItem: ThoiKhoaBieu): void {
     if (!updatedItem.id) {
       console.error('Dữ liệu không hợp lệ, thiếu id');
@@ -54,8 +52,8 @@ export class TimetablesComponent implements OnInit {
     this.thoiKhoaBieuService.updateThoiKhoaBieu(updatedItem).subscribe({
       next: (data) => {
         this.toastService.showSuccess('Cập nhật thời khóa biểu thành công');
-        this.selectedThoiKhoaBieu = null; // Đóng form sau khi lưu
-        this.getTimetable(); // Cập nhật lại danh sách
+        this.selectedThoiKhoaBieu = null;
+        this.getTimetable();
         this.isLoading = false;
       },
       error: (err) => {
@@ -66,7 +64,6 @@ export class TimetablesComponent implements OnInit {
     });
   }
 
-  // Phương thức để xóa một mục thời khóa biểu
   deleteTimetable(id: number): void {
     const confirmDelete = confirm('Bạn có chắc chắn muốn xóa thời khóa biểu này?');
     if (confirmDelete) {
@@ -74,7 +71,7 @@ export class TimetablesComponent implements OnInit {
       this.thoiKhoaBieuService.deleteThoiKhoaBieu(id).subscribe({
         next: () => {
           this.toastService.showSuccess('Xóa thời khóa biểu thành công');
-          this.getTimetable(); // Cập nhật lại danh sách
+          this.getTimetable();
           this.isLoading = false;
         },
         error: (err) => {
