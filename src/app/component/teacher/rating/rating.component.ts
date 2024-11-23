@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { EvaluationService } from '../../../../APIService/rating.service'; // Đảm bảo đường dẫn đúng
 import { DanhGiaTreEm } from '../../../../models/DanhGiaTreEm';
 import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-rating',
-  templateUrl: './rating.component.html'
+  templateUrl: './rating.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class RatingComponent implements OnInit {
   evaluations: DanhGiaTreEm[] = [];
@@ -25,16 +29,9 @@ export class RatingComponent implements OnInit {
     this.isLoading = true;
     this.evaluationService.getEvaluations().subscribe({
         next: (data) => {
-            this.evaluations = data.map((item) => ({
-              id: item.id,
-              idTre: item.idTre,
-              ThongTinTreEm: item.ThongTinTreEm,
-              idGiaoVien: item.idGiaoVien,
-              ThongTinGiaoVien: item.ThongTinGiaoVien,
-              danhGia: item.danhGia,
-              diemSo: item.diemSo,
-            }));
+            this.evaluations = data;
             this.isLoading = false;
+            console.log('Loaded evaluations:', this.evaluations);
           },
       error: (err) => {
         console.error('Lỗi khi lấy danh sách đánh giá:', err);

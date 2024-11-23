@@ -12,17 +12,38 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of evaluations" class="hover:bg-blue-100 transition-colors duration-200">
-          <td class="py-2 px-4 border-b text-center">{{ item.id_tre || 'N/A'}}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.id_giao_vien || 'N/A'}}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.danh_gia || 'Không có đánh giá'}}</td>
-          <td class="py-2 px-4 border-b text-center">{{ item.diem_so || 'N/A'}}</td>
-          <td class="py-2 px-4 border-b text-center">
-            <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-200" (click)="editEvaluation(item)">Chỉnh Sửa</button>
-            <button class="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-colors duration-200" (click)="deleteEvaluation(item.id)">Xóa</button>
-          </td>
-        </tr>
+        <ng-container *ngFor="let item of evaluations">
+          <tr class="hover:bg-blue-100 transition-colors duration-200">
+            <td class="py-2 px-4 border-b text-center">{{ item.id_tre || 'N/A'}}</td>
+            <td class="py-2 px-4 border-b text-center">{{ item.id_giao_vien || 'N/A'}}</td>
+            <td class="py-2 px-4 border-b text-center">
+              <ng-container *ngIf="selectedEvaluation?.id === item.id; else displayDanhGia">
+                <input [(ngModel)]="selectedEvaluation!.danh_gia" class="border rounded px-2 py-1 w-full">
+              </ng-container>
+              <ng-template #displayDanhGia>{{ item.danh_gia || 'Không có đánh giá'}}</ng-template>
+            </td>
+            <td class="py-2 px-4 border-b text-center">
+              <ng-container *ngIf="selectedEvaluation?.id === item.id; else displayDiemSo">
+                <input type="number" [(ngModel)]="selectedEvaluation!.diem_so" class="border rounded px-2 py-1 w-full">
+              </ng-container>
+              <ng-template #displayDiemSo>{{ item.diem_so || 'N/A'}}</ng-template>
+            </td>
+            <td class="py-2 px-4 border-b text-center">
+              <ng-container *ngIf="selectedEvaluation?.id === item.id; else editButtons">
+                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 transition-colors duration-200" 
+                  (click)="saveEvaluation(selectedEvaluation!)">Lưu</button>
+                <button class="bg-gray-500 text-white px-4 py-2 rounded ml-2 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-colors duration-200" 
+                  (click)="selectedEvaluation = null">Hủy</button>
+              </ng-container>
+              <ng-template #editButtons>
+                <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-200" 
+                  (click)="editEvaluation(item)">Chỉnh Sửa</button>
+                <button class="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-colors duration-200" 
+                  (click)="deleteEvaluation(item.id)">Xóa</button>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
   </div>
-  

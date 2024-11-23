@@ -8,35 +8,55 @@ import { DanhGiaTreEm } from '../models/DanhGiaTreEm';
 })
 export class EvaluationService {
 
-  private apiUrl = 'http://localhost:8080/api/v1/danh-gia-tre-em/admin';
+  private baseUrl = 'http://localhost:8080/api/v1/danh-gia-tre-em';
+  private adminUrl = `${this.baseUrl}/admin`;
 
   constructor(private http: HttpClient) {}
 
   private getToken(): string | null {
     return localStorage.getItem('access_token');
-    // Hoặc sessionStorage.getItem('auth_token');
   }
 
   private createHeaders(): HttpHeaders {
     const token = this.getToken();
-    let headers = new HttpHeaders();
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+      
     if (token) {
-      headers = headers.append('Authorization', `Bearer ${token}`);
+      headers = headers.set('Authorization', `Bearer ${token}`);
     }
     return headers;
   }
 
-
   getEvaluations(): Observable<DanhGiaTreEm[]> {
     const headers = this.createHeaders();
-    return this.http.get<DanhGiaTreEm[]>(this.apiUrl, { headers });
+    return this.http.get<DanhGiaTreEm[]>(this.adminUrl, { 
+      headers,
+      withCredentials: true 
+    });
   }
 
   updateEvaluation(updatedItem: DanhGiaTreEm): Observable<DanhGiaTreEm> {
-    return this.http.put<DanhGiaTreEm>(`${this.apiUrl}/${updatedItem.id}`, updatedItem);
+    const headers = this.createHeaders();
+    return this.http.put<DanhGiaTreEm>(
+      this.baseUrl,
+      updatedItem,
+      { 
+        headers,
+        withCredentials: true
+      }
+    );
   }
 
   deleteEvaluation(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    const headers = this.createHeaders();
+    return this.http.delete<void>(
+      `${this.baseUrl}/${id}`, 
+      { 
+        headers,
+        withCredentials: true
+      }
+    );
   }
 }

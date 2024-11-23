@@ -3,13 +3,13 @@ import { ThongTinGiaoVien, ThongTinTre } from '.';
 export interface DanhGiaTreEm {
   id: number;
 
-  idTre: number;
+  id_tre: number;
   ThongTinTreEm?: ThongTinTre;
 
-  idGiaoVien: number;
+  id_giao_vien: number;
   ThongTinGiaoVien?: ThongTinGiaoVien;
 
-  danhGia?: string;
+  danh_gia?: string;
 
-  diemSo: number;
+  diem_so: number;
 }
