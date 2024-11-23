@@ -24,7 +24,7 @@ interface ThoiKhoaBieu {
   providedIn: 'root',
 })
 export class ThoiKhoaBieuService {
-  private apiUrl = 'http://localhost:8080/api/v1/thoikhoabieu';
+  private baseUrl = 'http://localhost:8080/api/thoikhoabieu';
   
   private sampleData: ThoiKhoaBieu[] = [
     { id: 1, ngay: new Date(2024, 8, 18), idLop: 1, hoatDong: 'Học vẽ', thoiGianBatDau: '15:00', thoiGianKetThuc: '15:00' },
@@ -50,7 +50,7 @@ export class ThoiKhoaBieuService {
 
   getThoiKhoaBieu(): Observable<ThoiKhoaBieu[]> {
     const headers = this.createHeaders();
-    return this.http.get<ThoiKhoaBieu[]>(this.apiUrl, { headers }).pipe(
+    return this.http.get<ThoiKhoaBieu[]>(this.baseUrl, { headers }).pipe(
       catchError((error) => {
         console.error('Lỗi khi gọi API, sử dụng dữ liệu mẫu:', error);
         return of(this.sampleData);
@@ -60,7 +60,7 @@ export class ThoiKhoaBieuService {
 
   updateThoiKhoaBieu(updatedItem: ThoiKhoaBieu): Observable<ThoiKhoaBieu> {
     const headers = this.createHeaders();
-    return this.http.put<ThoiKhoaBieu>(`${this.apiUrl}/${updatedItem.id}`, updatedItem, { headers }).pipe(
+    return this.http.put<ThoiKhoaBieu>(`${this.baseUrl}/${updatedItem.id}`, updatedItem, { headers }).pipe(
       catchError((error) => {
         console.error('Lỗi khi cập nhật thời khóa biểu:', error);
         return of(updatedItem);
@@ -70,7 +70,7 @@ export class ThoiKhoaBieuService {
 
   deleteThoiKhoaBieu(id: number): Observable<void> {
     const headers = this.createHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers }).pipe(
+    return this.http.delete<void>(`${this.baseUrl}/${id}`, { headers }).pipe(
       catchError((error) => {
         console.error('Lỗi khi xóa thời khóa biểu:', error);
         return of();

@@ -48,10 +48,6 @@ import { StudentInfoComponent } from './component/phuhuynh/student-info/student-
 import { TeacherInfoComponent } from './component/phuhuynh/teacher-info/teacher-info.component';
 
 export const routes: Routes = [
-
-
-  // { path: 'teacher/notifications', component: NotificationsSendPageComponent },
-  // { path: 'teacher/timetable-management', component: TimetablesComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -71,7 +67,7 @@ export const routes: Routes = [
       { path: 'notifications', component: NotificationsSendPageComponent },
       { path: 'timetable-management', component: TimetablesComponent },
       { path: 'rating', component: RatingComponent },
-      { path: '', redirectTo: 'student-list', pathMatch: 'full' }  // Đường dẫn mặc định
+      { path: '', redirectTo: 'student-list', pathMatch: 'full' }
     ]
   },
   //

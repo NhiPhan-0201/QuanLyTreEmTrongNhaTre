@@ -14,14 +14,44 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of thoiKhoaBieuList" class="hover:bg-blue-100 transition-colors duration-200">
-        <td class="py-2 px-4 border-b text-center">{{ item.ngay }}</td>
-        <td class="py-2 px-4 border-b text-center">{{ item.quanLiLop?.tenLop }}</td>
-        <td class="py-2 px-4 border-b text-center">{{ item.hoatDong }}</td>
-        <td class="py-2 px-4 border-b text-center">{{ item.thoiGianBatDau}}</td>
-        <td class="py-2 px-4 border-b text-center">{{ item.thoiGianKetThuc}}</td>
         <td class="py-2 px-4 border-b text-center">
-          <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-200" (click)="editTimetable(item)">Chỉnh Sửa</button>
-          <button class="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-colors duration-200" (click)="deleteTimetable(item.id)">Xóa</button>
+          <ng-container *ngIf="selectedThoiKhoaBieu?.id === item.id; else displayNgay">
+            <input type="date" [(ngModel)]="selectedThoiKhoaBieu!.ngay" class="border rounded px-2 py-1 w-full">
+          </ng-container>
+          <ng-template #displayNgay>{{ item.ngay }}</ng-template>
+        </td>
+        <td class="py-2 px-4 border-b text-center">{{ item.quanLiLop?.tenLop }}</td>
+        <td class="py-2 px-4 border-b text-center">
+          <ng-container *ngIf="selectedThoiKhoaBieu?.id === item.id; else displayHoatDong">
+            <input [(ngModel)]="selectedThoiKhoaBieu!.hoatDong" class="border rounded px-2 py-1 w-full">
+          </ng-container>
+          <ng-template #displayHoatDong>{{ item.hoatDong }}</ng-template>
+        </td>
+        <td class="py-2 px-4 border-b text-center">
+          <ng-container *ngIf="selectedThoiKhoaBieu?.id === item.id; else displayThoiGianBatDau">
+            <input type="time" [(ngModel)]="selectedThoiKhoaBieu!.thoiGianBatDau" class="border rounded px-2 py-1 w-full">
+          </ng-container>
+          <ng-template #displayThoiGianBatDau>{{ item.thoiGianBatDau }}</ng-template>
+        </td>
+        <td class="py-2 px-4 border-b text-center">
+          <ng-container *ngIf="selectedThoiKhoaBieu?.id === item.id; else displayThoiGianKetThuc">
+            <input type="time" [(ngModel)]="selectedThoiKhoaBieu!.thoiGianKetThuc" class="border rounded px-2 py-1 w-full">
+          </ng-container>
+          <ng-template #displayThoiGianKetThuc>{{ item.thoiGianKetThuc }}</ng-template>
+        </td>
+        <td class="py-2 px-4 border-b text-center">
+          <ng-container *ngIf="selectedThoiKhoaBieu?.id === item.id; else editButtons">
+            <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 transition-colors duration-200" 
+              (click)="saveTimetable(selectedThoiKhoaBieu!)">Lưu</button>
+            <button class="bg-gray-500 text-white px-4 py-2 rounded ml-2 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-colors duration-200" 
+              (click)="selectedThoiKhoaBieu = null">Hủy</button>
+          </ng-container>
+          <ng-template #editButtons>
+            <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-200" 
+              (click)="editTimetable(item)">Chỉnh Sửa</button>
+            <button class="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-colors duration-200" 
+              (click)="deleteTimetable(item.id)">Xóa</button>
+          </ng-template>
         </td>
       </tr>
     </tbody>
