@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EvaluationService } from '../../../../APIService/rating.service'; // Đảm bảo đường dẫn đúng
+import { EvaluationService } from '../../../../APIService/rating.service';
 import { DanhGiaTreEm } from '../../../../models/DanhGiaTreEm';
 import { ToastService } from '../../../service/toast.service';
 

@@ -1,58 +1,113 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ThongBaoTruong } from '../../../../models/ThongBaoTruong';
 import { ThongBaoLop } from '../../../../models/ThongBaoLop';
+import { NotificationService } from '../../../../APIService/send-notification.service';
+import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-notifications-send-page',
   templateUrl: './notifications-send-page.component.html',
-  styleUrls: ['./notifications-send-page.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule]
 })
-export class NotificationsSendPageComponent {
-  newNotification: ThongBaoLop = { id: 0, idLop: 0, tieuDe: '', noiDung: '' };
-  classes = [
-    { name: 'Lớp 1', checked: false },
-    { name: 'Lớp 2', checked: false },
-    { name: 'Lớp 3', checked: false },
-    { name: 'Lớp 4', checked: false },
-    { name: 'Lớp 5', checked: false }
-  ];
+export class NotificationsSendPageComponent implements OnInit {
+  classes: any[] = [];
+  selectedClassId: number | null = null;
+  notificationType: 'school' | 'class' = 'school';
+  
+  newNotification = {
+    id: 0,
+    tieuDe: '',
+    noiDung: '',
+    idLop: 0
+  };
+
+  constructor(
+    private notificationService: NotificationService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit() {
+    this.loadClasses();
+  }
+
+  loadClasses() {
+    this.notificationService.getClasses().subscribe({
+      next: (data) => {
+        this.classes = data;
+      },
+      error: (error) => {
+        console.error('Error loading classes:', error);
+        this.toastService.showError('Không thể tải danh sách lớp');
+      }
+    });
+  }
 
   sendNotification() {
-    const selectedClasses = this.classes
-      .filter((cls) => cls.checked)
-      .map((cls) => cls.name);
-  
     if (!this.newNotification.tieuDe || !this.newNotification.noiDung) {
-      alert('Vui lòng nhập đầy đủ thông tin.');
+      this.toastService.showError('Vui lòng nhập đầy đủ thông tin.');
       return;
     }
-  
-    if (selectedClasses.length === 0) {
-      alert('Vui lòng chọn ít nhất một lớp để gửi thông báo.');
+
+    if (this.notificationType === 'class' && !this.selectedClassId) {
+      this.toastService.showError('Vui lòng chọn lớp để gửi thông báo.');
       return;
     }
-  
-    console.log('Gửi thông báo:', {
-      tieuDe: this.newNotification.tieuDe,
-      noiDung: this.newNotification.noiDung,
-      classes: selectedClasses,
+
+    if (this.notificationType === 'school') {
+      const schoolNotification: ThongBaoTruong = {
+        id: this.newNotification.id,
+        tieuDe: this.newNotification.tieuDe,
+        noiDung: this.newNotification.noiDung
+      };
+      this.sendSchoolNotification(schoolNotification);
+    } else {
+      const classNotification: ThongBaoLop = {
+        id: this.newNotification.id,
+        idLop: this.selectedClassId!,
+        tieuDe: this.newNotification.tieuDe,
+        noiDung: this.newNotification.noiDung
+      };
+      this.sendClassNotification(classNotification);
+    }
+  }
+
+  private sendSchoolNotification(notification: ThongBaoTruong) {
+    this.notificationService.sendSchoolNotification(notification).subscribe({
+      next: (response) => {
+        this.toastService.showSuccess('Thông báo trường đã được gửi thành công!');
+        this.resetForm();
+      },
+      error: (error) => {
+        console.error('Error sending school notification:', error);
+        this.toastService.showError('Có lỗi xảy ra khi gửi thông báo.');
+      }
     });
-  
-    alert('Thông báo đã được gửi thành công!');
-    this.resetForm();
   }
-  
-  onInputChange(field: 'tieuDe' | 'noiDung', event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.newNotification[field] = value;
-  }
-  
-  onCheckboxChange(index: number, event: Event) {
-    const checked = (event.target as HTMLInputElement).checked;
-    this.classes[index].checked = checked;
+
+  private sendClassNotification(notification: ThongBaoLop) {
+    this.notificationService.sendClassNotification(notification).subscribe({
+      next: (response) => {
+        this.toastService.showSuccess('Thông báo lớp đã được gửi thành công!');
+        this.resetForm();
+      },
+      error: (error) => {
+        console.error('Error sending class notification:', error);
+        this.toastService.showError('Có lỗi xảy ra khi gửi thông báo.');
+      }
+    });
   }
 
   resetForm() {
-    this.newNotification = { id: 0, idLop: 0, tieuDe: '', noiDung: '' };
-    this.classes.forEach(cls => (cls.checked = false));
+    this.newNotification = {
+      id: 0,
+      tieuDe: '',
+      noiDung: '',
+      idLop: 0
+    };
+    this.selectedClassId = null;
   }
 }

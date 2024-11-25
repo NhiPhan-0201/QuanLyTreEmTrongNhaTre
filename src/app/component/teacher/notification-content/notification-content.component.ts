@@ -47,6 +47,6 @@ export class GiaovienNoidungthongbaoComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/giaovien-management/teacher/notification-list']);
+    this.router.navigate(['/teacher/manage/notification-list']);
   }
 }

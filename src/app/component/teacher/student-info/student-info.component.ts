@@ -28,6 +28,6 @@ export class GiaovienThongtinhocsinhComponent {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('studentDetail'); // Xóa dữ liệu khỏi localStorage khi trở về
     }
-    this.router.navigate(['/giaovien-management']);
+    this.router.navigate(['/teacher/manage']);
   }
 }

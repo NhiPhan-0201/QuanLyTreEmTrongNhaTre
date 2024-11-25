@@ -36,6 +36,6 @@ export class GiaovienDanhsachthongbaoComponent implements OnInit {
   }
 
   viewThongBao(uniqueId: string): void {
-    this.router.navigate(['/giaovien-management/teacher/notification-content', uniqueId]);
+    this.router.navigate(['/teacher/manage/notification-content', uniqueId]);
   }
 }

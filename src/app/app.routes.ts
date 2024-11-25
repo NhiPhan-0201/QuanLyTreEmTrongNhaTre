@@ -58,9 +58,9 @@ export const routes: Routes = [
     path: 'teacher/manage', component: TeacherManagementPageComponent, children: [
       { path: 'student-list', component: GiaovienDanhsachhocsinhComponent },
       { path: 'attendance-records', component: GiaovienDiemdanhComponent },
-      { path: 'teacher/student-info', component: GiaovienThongtinhocsinhComponent },
+      { path: 'student-info', component: GiaovienThongtinhocsinhComponent },
       { path: 'notification-list', component: GiaovienDanhsachthongbaoComponent },
-      { path: 'teacher/notification-content/:uniqueId', component: GiaovienNoidungthongbaoComponent },
+      { path: 'notification-content/:uniqueId', component: GiaovienNoidungthongbaoComponent },
       { path: 'class-management', component: QuanLyLopComponent },
       { path: 'class-group-management', component: QuanLyNhomLopComponent },
       { path: 'view-meal-menu', component: XemThucDonComponent },
